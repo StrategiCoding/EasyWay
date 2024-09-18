@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.CancellationTokens;
+using EasyWay.Internals.Events;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -10,7 +11,10 @@ namespace EasyWay
         {
             services.AddCancellationToken();
 
-            services.AddCommandHandlers(assemblies).AddQueryHandlers(assemblies);
+            services
+                .AddCommandHandlers(assemblies)
+                .AddQueryHandlers(assemblies)
+                .AddEventHandlers(assemblies);
         }
 
         private static IServiceCollection AddCommandHandlers(this IServiceCollection services, params Assembly[] assemblies)
