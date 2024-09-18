@@ -1,0 +1,23 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+
+namespace EasyWay
+{
+    public static class ExtensionAddEasyWay
+    {
+        public static void AddEasyWay(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            services.AddCommandHandlers(assemblies);
+        }
+
+        private static IServiceCollection AddCommandHandlers(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            services.Scan(s => s.FromAssemblies(assemblies)
+            .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+
+            return services;
+        }
+    }
+}
