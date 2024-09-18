@@ -14,8 +14,4 @@
 	  <PackageReference Include="Scrutor" Version="4.2.2" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Internals\" />
-	</ItemGroup>
-
 </Project>

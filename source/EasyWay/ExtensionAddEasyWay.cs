@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EasyWay.Internals.CancellationTokens;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace EasyWay
@@ -7,6 +8,8 @@ namespace EasyWay
     {
         public static void AddEasyWay(this IServiceCollection services, params Assembly[] assemblies)
         {
+            services.AddCancellationToken();
+
             services.AddCommandHandlers(assemblies);
         }
 

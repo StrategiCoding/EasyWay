@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EasyWay.Internals.CancellationTokens;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +17,14 @@ namespace EasyWay
             {
                 using (var scope = serviceProvider.CreateScope())
                 {
-                    await scope
-                    .ServiceProvider
-                    .GetRequiredService<ICommandHandler<TCommand>>().Handle(command, cancellationToken)
+                    var sp = scope.ServiceProvider;
+
+                    sp
+                    .GetRequiredService<CancellationTokenProvider>()
+                    .Set(cancellationToken);
+
+                    await sp
+                    .GetRequiredService<ICommandHandler<TCommand>>().Handle(command)
                     .ConfigureAwait(false);
                 }
             });
