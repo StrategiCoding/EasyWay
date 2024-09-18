@@ -28,6 +28,8 @@ var summaries = new[]
 
 app.MapCommand<SampleCommand>();
 
+app.MapQuery<SampleQuery, SampleQueryResult>();
+
 app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
