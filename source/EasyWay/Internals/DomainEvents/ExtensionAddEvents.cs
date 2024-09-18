@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace EasyWay.Internals.Events
+namespace EasyWay.Internals.DomainEvents
 {
     public static class ExtensionAddEvents
     {
-        public static IServiceCollection AddEventHandlers(this IServiceCollection services, params Assembly[] assemblies) 
+        public static IServiceCollection AddEventHandlers(this IServiceCollection services, params Assembly[] assemblies)
         {
             services.AddScoped<IEventPublisher, EventPublisher>();
 

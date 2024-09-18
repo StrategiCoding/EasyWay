@@ -1,5 +1,5 @@
 ﻿using EasyWay.Internals.CancellationTokens;
-using EasyWay.Internals.Events;
+using EasyWay.Internals.DomainEvents;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

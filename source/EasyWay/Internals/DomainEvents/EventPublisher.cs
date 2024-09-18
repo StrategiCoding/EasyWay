@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyWay.Internals.Events
+namespace EasyWay.Internals.DomainEvents
 {
     internal sealed class EventPublisher : IEventPublisher
     {
@@ -12,11 +12,11 @@ namespace EasyWay.Internals.Events
         }
 
         public async Task Publish<TEvent>(TEvent @event)
-            where TEvent : Event
+            where TEvent : DomainEvent
         {
             var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
 
-            foreach (var eventHandler in eventHandlers) 
+            foreach (var eventHandler in eventHandlers)
             {
                 await eventHandler.Handle(@event).ConfigureAwait(false);
             }
