@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples
 {
-    public class SampleQuery : IQuery<SampleQueryResult>
+    public class SampleQuery : Query<SampleQueryResult>
     {
     }
 }

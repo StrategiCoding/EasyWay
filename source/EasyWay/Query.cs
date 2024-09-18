@@ -4,5 +4,5 @@
     /// Represents a query
     /// </summary>
     /// <typeparam name="TResult">Result type</typeparam>
-    public interface IQuery<TResult>;
+    public abstract class Query<TResult>;
 }

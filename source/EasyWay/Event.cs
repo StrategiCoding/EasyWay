@@ -1,7 +1,7 @@
 ﻿namespace EasyWay
 {
     /// <summary>
-    /// Represents a command
+    /// Represents an event
     /// </summary>
-    public interface ICommand;
+    public abstract class Event;
 }

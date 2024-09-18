@@ -12,7 +12,7 @@ namespace EasyWay.Internals.Events
         }
 
         public async Task Publish<TEvent>(TEvent @event)
-            where TEvent : IEvent
+            where TEvent : Event
         {
             var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
 

@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples
 {
-    public class SampleEvent : IEvent
+    public class SampleEvent : Event
     {
         public Guid Id { get; } = Guid.NewGuid();
     }

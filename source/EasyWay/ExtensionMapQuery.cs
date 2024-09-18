@@ -9,7 +9,7 @@ namespace EasyWay
     public static class ExtensionMapQuery
     {
         public static RouteHandlerBuilder MapQuery<TQuery, TResult>(this IEndpointRouteBuilder endpoints)
-            where TQuery : class, IQuery<TResult>
+            where TQuery : Query<TResult>
         {
             return endpoints.MapPost(typeof(TQuery).Name, async ([FromBody] TQuery query, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
             {

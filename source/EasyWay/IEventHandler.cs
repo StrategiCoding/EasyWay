@@ -5,7 +5,7 @@
     /// </summary>
     /// <typeparam name="TEvent">The type of event being handled</typeparam>
     public interface IEventHandler<TEvent>
-        where TEvent : IEvent
+        where TEvent : Event
     {
         /// <summary>
         /// Handles an event

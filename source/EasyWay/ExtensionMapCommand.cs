@@ -9,7 +9,7 @@ namespace EasyWay
     public static class ExtensionMapCommand
     {
         public static RouteHandlerBuilder MapCommand<TCommand>(this IEndpointRouteBuilder endpoints)
-            where TCommand : class, ICommand
+            where TCommand : Command
         {
             return endpoints.MapPost(typeof(TCommand).Name, async ([FromBody] TCommand command, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
             {
