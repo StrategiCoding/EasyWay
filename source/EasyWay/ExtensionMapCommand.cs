@@ -11,9 +11,7 @@ namespace EasyWay
         public static RouteHandlerBuilder MapCommand<TCommand>(this IEndpointRouteBuilder endpoints)
             where TCommand : class, ICommand
         {
-            var url = typeof(TCommand).Name;
-
-            return endpoints.MapPost(url, async ([FromBody] TCommand command, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TCommand).Name, async ([FromBody] TCommand command, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
             {
                 using (var scope = serviceProvider.CreateScope())
                 {
@@ -24,7 +22,8 @@ namespace EasyWay
                     .Set(cancellationToken);
 
                     await sp
-                    .GetRequiredService<ICommandHandler<TCommand>>().Handle(command)
+                    .GetRequiredService<ICommandHandler<TCommand>>()
+                    .Handle(command)
                     .ConfigureAwait(false);
                 }
             });

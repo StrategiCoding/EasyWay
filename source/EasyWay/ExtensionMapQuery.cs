@@ -11,9 +11,7 @@ namespace EasyWay
         public static RouteHandlerBuilder MapQuery<TQuery, TResult>(this IEndpointRouteBuilder endpoints)
             where TQuery : class, IQuery<TResult>
         {
-            var url = typeof(TQuery).Name;
-
-            return endpoints.MapPost(url, async ([FromBody] TQuery query, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TQuery).Name, async ([FromBody] TQuery query, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
             {
                 using (var scope = serviceProvider.CreateScope())
                 {
@@ -24,7 +22,8 @@ namespace EasyWay
                     .Set(cancellationToken);
 
                     return await sp
-                    .GetRequiredService<IQueryHandler<TQuery, TResult>>().Handle(query)
+                    .GetRequiredService<IQueryHandler<TQuery, TResult>>()
+                    .Handle(query)
                     .ConfigureAwait(false);
                 }
             });
