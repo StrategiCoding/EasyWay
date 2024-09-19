@@ -9,6 +9,14 @@ namespace EasyWay
 
         protected Entity() { }
 
+        protected void CheckRule(BusinessRule businessRule)
+        {
+            if (!businessRule.IsFulfilled())
+            {
+                throw new BusinessRuleException(businessRule);
+            }
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())

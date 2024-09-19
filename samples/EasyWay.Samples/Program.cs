@@ -22,6 +22,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapCommand<SampleCommand>();
+app.MapCommand<ErrorCommand>();
 app.MapQuery<SampleQuery, SampleQueryResult>();
 
 app.Run();

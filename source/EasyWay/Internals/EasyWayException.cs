@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Internals
 {
-    internal abstract class EasyWayException : Exception
+    public abstract class EasyWayException : Exception
     {
         protected EasyWayException() { }
 
