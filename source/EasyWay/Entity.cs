@@ -6,6 +6,12 @@ namespace EasyWay
     {
         public Guid Id { get; protected set; }
 
+        private List<DomainEvent> _domainEvents = new List<DomainEvent>();
+
+        public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+        public void ClearDomainEvents() => _domainEvents.Clear();
+
         protected Entity() { }
 
         protected void CheckRule(BusinessRule businessRule)
@@ -14,6 +20,17 @@ namespace EasyWay
             {
                 throw new BusinessRuleException(businessRule);
             }
+        }
+
+        protected void Add<TDomainEvent>(TDomainEvent domainEvent)
+            where TDomainEvent : DomainEvent
+        {
+            if (domainEvent is null)
+            {
+                throw new DomainEventCannotBeNullException<TDomainEvent>();
+            }
+
+            _domainEvents.Add(domainEvent);
         }
 
         public override bool Equals(object? obj)
@@ -31,25 +48,5 @@ namespace EasyWay
         public static bool operator !=(Entity x, Entity y) => x.Id != y.Id;
 
         public override int GetHashCode() => Id.GetHashCode();
-    }
-
-    public abstract class Entity<TDomainEvent> : Entity
-        where TDomainEvent : DomainEvent
-    {
-        private List<TDomainEvent> _domainEvents = new List<TDomainEvent>();
-
-        public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
-
-        public void ClearDomainEvents() => _domainEvents.Clear();
-
-        protected void Add(TDomainEvent domainEvent)
-        {
-            if (domainEvent is null)
-            {
-                throw new DomainEventCannotBeNullException<TDomainEvent>();
-            }
-
-            _domainEvents.Add(domainEvent);
-        }
     }
 }
