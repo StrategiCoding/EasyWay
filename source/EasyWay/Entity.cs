@@ -2,10 +2,9 @@
 
 namespace EasyWay
 {
-    public abstract class Entity<TEntityId>
-        where TEntityId : EntityId
+    public abstract class Entity
     {
-        public TEntityId Id { get; protected set; }
+        public Guid Id { get; protected set; }
 
         protected Entity() { }
 
@@ -17,25 +16,24 @@ namespace EasyWay
             }
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
+            if (obj is not null && obj is Entity entity) 
+            { 
+                return Id == entity.Id;
             }
 
-            return Id == obj as TEntityId;
+            return false;
         }
 
-        public static bool operator ==(Entity<TEntityId> x, Entity<TEntityId> y) => x.Equals(y);
+        public static bool operator ==(Entity x, Entity y) => x.Id == y.Id;
 
-        public static bool operator !=(Entity<TEntityId> x, Entity<TEntityId> y) => !x.Equals(y);
+        public static bool operator !=(Entity x, Entity y) => x.Id != y.Id;
 
         public override int GetHashCode() => Id.GetHashCode();
     }
 
-    public abstract class Entity<TEntityId, TDomainEvent> : Entity<TEntityId>
-        where TEntityId : EntityId
+    public abstract class Entity<TDomainEvent> : Entity
         where TDomainEvent : DomainEvent
     {
         private List<TDomainEvent> _domainEvents = new List<TDomainEvent>();

@@ -1,7 +1,7 @@
 ﻿namespace EasyWay
 {
-    public abstract class AggregateRoot<TAggregateRootId> : Entity<TAggregateRootId>
-        where TAggregateRootId : AggregateRootId
+    public abstract class AggregateRoot : Entity
+
     {
         private long _concurrencyToken;
 
@@ -10,8 +10,7 @@
         protected void Up() => _concurrencyToken++;
     }
 
-    public abstract class AggregateRoot<TAggregateRootId, TDomainEvent> : Entity<TAggregateRootId, TDomainEvent>
-        where TAggregateRootId : AggregateRootId
+    public abstract class AggregateRoot<TDomainEvent> : Entity<TDomainEvent>
         where TDomainEvent : DomainEvent
     {
         private long _concurrencyToken;
