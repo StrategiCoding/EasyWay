@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.CancellationTokens;
+using EasyWay.Internals.Commands;
 using EasyWay.Internals.DomainEvents;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -15,6 +16,8 @@ namespace EasyWay
                 .AddCommandHandlers(assemblies)
                 .AddQueryHandlers(assemblies)
                 .AddEventHandlers(assemblies);
+
+            services.AddUnitOfWorkCommandHandlerDecorator();  
         }
 
         private static IServiceCollection AddCommandHandlers(this IServiceCollection services, params Assembly[] assemblies)

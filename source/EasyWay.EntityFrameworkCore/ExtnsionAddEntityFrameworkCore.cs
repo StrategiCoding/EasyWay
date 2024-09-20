@@ -1,6 +1,8 @@
 ﻿using EasyWay.EntityFrameworkCore.Internals.DomainEvents;
 using EasyWay.EntityFrameworkCore.Internals.Repositories;
+using EasyWay.EntityFrameworkCore.Internals.UnitOfWorks;
 using EasyWay.Internals.DomainEvents;
+using EasyWay.Internals.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +22,8 @@ namespace EasyWay.EntityFrameworkCore
             services.AddTransient<IDomainEventsAccessor, DomainEventsAccessor>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork>();
         }
     }
 }
