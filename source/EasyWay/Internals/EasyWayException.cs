@@ -6,5 +6,8 @@
 
         protected EasyWayException(string message)
             : base (message) { }
+
+        protected EasyWayException(string message, Exception innerException)
+            : base (message, innerException) { }
     }
 }

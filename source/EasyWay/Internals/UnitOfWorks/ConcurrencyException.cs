@@ -1,8 +1,8 @@
 ﻿namespace EasyWay.Internals.UnitOfWorks
 {
-    internal sealed class ConcurrencyException : Exception
+    internal sealed class ConcurrencyException : EasyWayException
     {
-        public ConcurrencyException(string message, Exception innerException)
+        internal ConcurrencyException(string message, Exception innerException)
             : base(message, innerException) { }
     }
 }
