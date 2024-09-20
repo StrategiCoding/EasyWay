@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B403
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyWay.Samples", "samples\EasyWay.Samples\EasyWay.Samples.csproj", "{4E5ED4D8-79A7-486D-B571-43D2C46A216E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyWay.EntityFrameworkCore", "source\EasyWay.EntityFrameworkCore\EasyWay.EntityFrameworkCore.csproj", "{DA7AFE7E-F191-4B3C-8A07-7789244F306C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{4E5ED4D8-79A7-486D-B571-43D2C46A216E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E5ED4D8-79A7-486D-B571-43D2C46A216E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E5ED4D8-79A7-486D-B571-43D2C46A216E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7AFE7E-F191-4B3C-8A07-7789244F306C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7AFE7E-F191-4B3C-8A07-7789244F306C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7AFE7E-F191-4B3C-8A07-7789244F306C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7AFE7E-F191-4B3C-8A07-7789244F306C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{69B00A38-F354-4B8E-BB84-D983F14D19B2} = {92D4A304-6772-4482-83CC-68FDF54087C4}
 		{4E5ED4D8-79A7-486D-B571-43D2C46A216E} = {B403E9EE-655A-481E-889B-F292845AE5BF}
+		{DA7AFE7E-F191-4B3C-8A07-7789244F306C} = {92D4A304-6772-4482-83CC-68FDF54087C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45C12B7C-F737-4C98-B967-CCB84BFB9080}

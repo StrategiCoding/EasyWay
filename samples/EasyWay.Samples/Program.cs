@@ -1,4 +1,5 @@
 using EasyWay;
+using EasyWay.EntityFrameworkCore;
 using EasyWay.Samples;
 
 var builder = WebApplication.CreateBuilder(args);

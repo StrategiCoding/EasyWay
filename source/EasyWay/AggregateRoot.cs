@@ -2,11 +2,11 @@
 {
     public abstract class AggregateRoot : Entity
     {
-        private long _concurrencyToken;
+        internal long ConcurrencyToken { get; private set; }
 
         protected AggregateRoot() : base() { }
 
-        protected void Up() => _concurrencyToken++;
+        protected void Up() => ConcurrencyToken++;
 
         protected new void Add<TDomainEvent>(TDomainEvent domainEvent)
             where TDomainEvent : DomainEvent

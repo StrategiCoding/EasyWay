@@ -8,9 +8,9 @@ namespace EasyWay
 
         private List<DomainEvent> _domainEvents = new List<DomainEvent>();
 
-        public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+        internal IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-        public void ClearDomainEvents() => _domainEvents.Clear();
+        internal void ClearDomainEvents() => _domainEvents.Clear();
 
         protected Entity() { }
 

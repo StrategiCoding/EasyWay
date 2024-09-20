@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\source\EasyWay.EntityFrameworkCore\EasyWay.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\source\EasyWay\EasyWay.csproj" />
   </ItemGroup>
 
