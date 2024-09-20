@@ -1,6 +1,14 @@
 using EasyWay;
 using EasyWay.EntityFrameworkCore;
 using EasyWay.Samples;
+using Microsoft.EntityFrameworkCore;
+using Testcontainers.PostgreSql;
+
+var postgreSqlContainer = new PostgreSqlBuilder()
+  .WithImage("postgres:15.1")
+  .Build();
+
+await postgreSqlContainer.StartAsync();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +18,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddEasyWay(typeof(SampleCommand).Assembly);
+builder.Services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(postgreSqlContainer.GetConnectionString()));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+
+    scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
