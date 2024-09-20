@@ -10,7 +10,7 @@ namespace EasyWay.Internals.DomainEvents
             services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
-            .AddClasses(c => c.AssignableTo(typeof(IEventHandler<>)))
+            .AddClasses(c => c.AssignableTo(typeof(IDomainEventHandler<>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 

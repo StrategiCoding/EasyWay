@@ -1,6 +1,6 @@
-﻿namespace EasyWay
+﻿namespace EasyWay.Internals.DomainEvents
 {
-    public interface IDomainEventPublisher
+    internal interface IDomainEventPublisher
     {
         Task Publish<TEvent>(TEvent @event)
             where TEvent : DomainEvent;

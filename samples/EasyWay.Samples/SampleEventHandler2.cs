@@ -1,7 +1,7 @@
 ﻿
 namespace EasyWay.Samples
 {
-    public class SampleEventHandler2 : IEventHandler<SampleEvent>
+    public class SampleEventHandler2 : IDomainEventHandler<SampleEvent>
     {
         public Task Handle(SampleEvent @event)
         {
