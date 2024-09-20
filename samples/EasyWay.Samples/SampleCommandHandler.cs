@@ -4,11 +4,11 @@ namespace EasyWay.Samples
     internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
     {
         private readonly ICancellationTokenProvider _tokenProvider;
-        private readonly IEventPublisher _eventPublisher;
+        private readonly IDomainEventPublisher _eventPublisher;
 
         public SampleCommandHandler(
             ICancellationTokenProvider tokenProvider,
-            IEventPublisher eventPublisher)
+            IDomainEventPublisher eventPublisher)
         {
             _tokenProvider = tokenProvider;
             _eventPublisher = eventPublisher;

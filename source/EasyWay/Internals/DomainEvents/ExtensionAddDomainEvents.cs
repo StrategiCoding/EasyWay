@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace EasyWay.Internals.DomainEvents
 {
-    public static class ExtensionAddEvents
+    internal static class ExtensionAddDomainEvents
     {
-        public static IServiceCollection AddEventHandlers(this IServiceCollection services, params Assembly[] assemblies)
+        internal static IServiceCollection AddDomainEventHandlers(this IServiceCollection services, params Assembly[] assemblies)
         {
-            services.AddScoped<IEventPublisher, EventPublisher>();
+            services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(IEventHandler<>)))

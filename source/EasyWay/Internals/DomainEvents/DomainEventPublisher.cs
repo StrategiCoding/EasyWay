@@ -2,11 +2,11 @@
 
 namespace EasyWay.Internals.DomainEvents
 {
-    internal sealed class EventPublisher : IEventPublisher
+    internal sealed class DomainEventPublisher : IDomainEventPublisher
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public EventPublisher(IServiceProvider serviceProvider)
+        public DomainEventPublisher(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
