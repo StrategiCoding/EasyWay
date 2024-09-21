@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EasyWay.EntityFrameworkCore.Internals.DomainEvents
 {
-    internal sealed class DomainEventsAccessor : IDomainEventsAccessor
+    internal sealed class DomainEventsAccessor : IDomainEventsContext
     {
         private readonly DbContext _dbContext;
 

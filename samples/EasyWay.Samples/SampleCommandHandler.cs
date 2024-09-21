@@ -1,21 +1,30 @@
 ﻿
+using EasyWay.EntityFrameworkCore;
+using EasyWay.Samples.Domain;
+
 namespace EasyWay.Samples
 {
     internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
     {
         private readonly ICancellationTokenProvider _tokenProvider;
 
+        private readonly IGenericRepository<SampleAggragete> _repository;
+
         public SampleCommandHandler(
-            ICancellationTokenProvider tokenProvider)
+            ICancellationTokenProvider tokenProvider,
+            IGenericRepository<SampleAggragete> repository)
         {
             _tokenProvider = tokenProvider;
+            _repository = repository;
         }
 
-        public Task Handle(SampleCommand command)
+        public async Task Handle(SampleCommand command)
         {
             var token = _tokenProvider.Token;
 
-            return Task.CompletedTask;
+            var x = new SampleAggragete();
+
+            await _repository.Add(x);
         }
     }
 }

@@ -2,7 +2,10 @@
 {
     public sealed class SampleAggragete : AggregateRoot
     {
-        public SampleAggragete() { }
+        public SampleAggragete() 
+        { 
+            Add(new CreatedSampleAggragete());
+        }
 
         public void SampleMethod()
         {

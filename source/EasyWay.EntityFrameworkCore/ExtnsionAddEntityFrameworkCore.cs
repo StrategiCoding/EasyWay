@@ -19,7 +19,7 @@ namespace EasyWay.EntityFrameworkCore
 
             services.AddScoped((Func<IServiceProvider, DbContext>)(sp => sp.GetRequiredService<TContext>()));
 
-            services.AddTransient<IDomainEventsAccessor, DomainEventsAccessor>();
+            services.AddTransient<IDomainEventsContext, DomainEventsAccessor>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

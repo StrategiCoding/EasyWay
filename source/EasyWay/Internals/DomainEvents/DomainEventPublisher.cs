@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 
 namespace EasyWay.Internals.DomainEvents
 {
@@ -14,11 +15,15 @@ namespace EasyWay.Internals.DomainEvents
         public async Task Publish<TEvent>(TEvent @event)
             where TEvent : DomainEvent
         {
-            var eventHandlers = _serviceProvider.GetServices<IDomainEventHandler<TEvent>>();
+            var handlerType = typeof(IDomainEventHandler<>).MakeGenericType(@event.GetType());
+
+            var eventHandlers = _serviceProvider.GetServices(handlerType);
 
             foreach (var eventHandler in eventHandlers)
             {
-                await eventHandler.Handle(@event).ConfigureAwait(false);
+                await (Task)handlerType
+                    .GetMethod(nameof(IDomainEventHandler<TEvent>.Handle))?
+                    .Invoke(eventHandler, new object[] { @event });
             }
         }
     }
