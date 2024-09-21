@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseEasyWay();
 
 app.MapCommand<SampleCommand>();
 app.MapCommand<ErrorCommand>();
