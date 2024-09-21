@@ -1,8 +1,7 @@
-﻿
-using EasyWay.EntityFrameworkCore;
+﻿using EasyWay.EntityFrameworkCore;
 using EasyWay.Samples.Domain;
 
-namespace EasyWay.Samples
+namespace EasyWay.Samples.Commands
 {
     internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
     {

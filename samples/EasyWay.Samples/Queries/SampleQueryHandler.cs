@@ -1,5 +1,4 @@
-﻿
-namespace EasyWay.Samples
+﻿namespace EasyWay.Samples.Queries
 {
     public class SampleQueryHandler : IQueryHandler<SampleQuery, SampleQueryResult>
     {

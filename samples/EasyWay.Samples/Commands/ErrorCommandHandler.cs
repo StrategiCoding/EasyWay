@@ -1,7 +1,6 @@
-﻿
-using EasyWay.Samples.Domain;
+﻿using EasyWay.Samples.Domain;
 
-namespace EasyWay.Samples
+namespace EasyWay.Samples.Commands
 {
     public class ErrorCommandHandler : ICommandHandler<ErrorCommand>
     {

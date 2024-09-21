@@ -1,7 +1,6 @@
-﻿
-using EasyWay.Samples.Domain;
+﻿using EasyWay.Samples.Domain;
 
-namespace EasyWay.Samples
+namespace EasyWay.Samples.Events
 {
     public class SampleEventHandler1 : IDomainEventHandler<CreatedSampleAggragete>
     {

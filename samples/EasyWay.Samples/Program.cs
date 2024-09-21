@@ -1,6 +1,8 @@
 using EasyWay;
 using EasyWay.EntityFrameworkCore;
 using EasyWay.Samples;
+using EasyWay.Samples.Commands;
+using EasyWay.Samples.Queries;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.PostgreSql;
 

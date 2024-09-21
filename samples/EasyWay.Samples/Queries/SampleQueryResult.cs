@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Samples
+﻿namespace EasyWay.Samples.Queries
 {
     public class SampleQueryResult
     {

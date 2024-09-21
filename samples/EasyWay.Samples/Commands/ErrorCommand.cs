@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Samples
+﻿namespace EasyWay.Samples.Commands
 {
     public class ErrorCommand : Command
     {
