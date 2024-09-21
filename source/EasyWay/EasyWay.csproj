@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Scrutor" Version="4.2.2" />
+	  <PackageReference Include="Scrutor" />
 	</ItemGroup>
 	
 	<ItemGroup>
