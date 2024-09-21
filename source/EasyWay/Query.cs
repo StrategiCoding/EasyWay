@@ -3,6 +3,7 @@
     /// <summary>
     /// Represents a query
     /// </summary>
-    /// <typeparam name="TResult">Result type</typeparam>
-    public abstract class Query<TResult>;
+    /// <typeparam name="TReadModel">Read model type</typeparam>
+    public abstract class Query<TReadModel>
+        where TReadModel : ReadModel;
 }
