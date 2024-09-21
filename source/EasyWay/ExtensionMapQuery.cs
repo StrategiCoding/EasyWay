@@ -8,8 +8,9 @@ namespace EasyWay
 {
     public static class ExtensionMapQuery
     {
-        public static RouteHandlerBuilder MapQuery<TQuery, TResult>(this IEndpointRouteBuilder endpoints)
-            where TQuery : Query<TResult>
+        public static RouteHandlerBuilder MapQuery<TQuery, TReadModel>(this IEndpointRouteBuilder endpoints)
+            where TQuery : Query<TReadModel>
+            where TReadModel : ReadModel
         {
             return endpoints.MapPost(typeof(TQuery).Name, async ([FromBody] TQuery query, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
             {
@@ -22,7 +23,7 @@ namespace EasyWay
                     .Set(cancellationToken);
 
                     return await sp
-                    .GetRequiredService<IQueryHandler<TQuery, TResult>>()
+                    .GetRequiredService<IQueryHandler<TQuery, TReadModel>>()
                     .Handle(query)
                     .ConfigureAwait(false);
                 }
