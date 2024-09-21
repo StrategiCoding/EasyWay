@@ -1,0 +1,16 @@
+<Project>
+
+	<PropertyGroup>
+		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>$(AssemblyName)</PackageTags>
+		<Title>$(AssemblyName)</Title>
+	</PropertyGroup>
+
+</Project>
