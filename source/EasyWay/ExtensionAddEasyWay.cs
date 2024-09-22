@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.CancellationTokens;
+﻿using EasyWay.Internals.BusinessRules;
+using EasyWay.Internals.CancellationTokens;
 using EasyWay.Internals.Commands;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.Queries;
@@ -15,7 +16,8 @@ namespace EasyWay
                 .AddCancellationToken()
                 .AddCommandHandlers(assemblies)
                 .AddQueryHandlers(assemblies)
-                .AddDomainEventHandlers(assemblies);
+                .AddDomainEventHandlers(assemblies)
+                .AddBrokenBusinessRuleHandlers(assemblies);
 
             services.AddUnitOfWorkCommandHandlerDecorator();  
         }

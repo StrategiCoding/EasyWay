@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.DomainEvents;
+﻿using EasyWay.Internals.BusinessRules;
+using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.UnitOfWorks;
 
 namespace EasyWay.Internals.Commands
@@ -14,32 +15,56 @@ namespace EasyWay.Internals.Commands
 
         private readonly IUnitOfWork _unitOfWork;
 
+        private readonly IBrokenBusinessRuleDispacher _brokenBusinessRuleDispacher;
+
         public UnitOfWorkCommandHandlerDecorator(
             ICommandHandler<TCommand> decoratedHandler,
             IDomainEventsContext context,
             IDomainEventPublisher publisher,
-            IUnitOfWork unitOfWork) 
+            IUnitOfWork unitOfWork,
+            IBrokenBusinessRuleDispacher brokenBusinessRuleDispacher) 
         {
             _decoratedHandler = decoratedHandler;
             _context = context;
             _publisher = publisher;
+            _brokenBusinessRuleDispacher = brokenBusinessRuleDispacher;
             _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(TCommand command)
         {
-            await _decoratedHandler.Handle(command);
-
-            var domainEvents = _context.GetAllDomainEvents();
-
-            _context.ClearAllDomainEvents();
-
-            foreach( var domainEvent in domainEvents ) 
+            try
             {
-                await _publisher.Publish(domainEvent).ConfigureAwait(false);
-            }
+                await _decoratedHandler.Handle(command);
 
-            await _unitOfWork.Commit();
+                var domainEvents = _context.GetAllDomainEvents();
+
+                _context.ClearAllDomainEvents();
+
+                foreach (var domainEvent in domainEvents)
+                {
+                    await _publisher.Publish(domainEvent).ConfigureAwait(false);
+                }
+
+                await _unitOfWork.Commit();
+            }
+            catch (BusinessRuleException businessRuleException)
+            {
+                await _brokenBusinessRuleDispacher.Dispach(businessRuleException.BrokenBusinessRule);
+
+                var domainEvents = _context.GetAllDomainEvents();
+
+                _context.ClearAllDomainEvents();
+
+                foreach (var domainEvent in domainEvents)
+                {
+                    await _publisher.Publish(domainEvent).ConfigureAwait(false);
+                }
+
+                await _unitOfWork.Commit();
+
+                throw;
+            }
         }
     }
 }
