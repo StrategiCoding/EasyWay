@@ -14,7 +14,7 @@ namespace EasyWay
         {
             services
                 .AddContexts()
-                .AddCommandHandlers(assemblies)
+                .AddCommands(assemblies)
                 .AddQueryHandlers(assemblies)
                 .AddDomainEventHandlers(assemblies)
                 .AddBrokenBusinessRuleHandlers(assemblies);
