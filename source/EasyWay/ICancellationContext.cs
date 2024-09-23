@@ -1,6 +1,6 @@
 ﻿namespace EasyWay
 {
-    public interface ICancellationTokenProvider
+    public interface ICancellationContext
     {
         CancellationToken Token { get; }
     }

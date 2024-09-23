@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.CancellationTokens;
+﻿using EasyWay.Internals.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -18,7 +18,7 @@ namespace EasyWay
                     var sp = scope.ServiceProvider;
 
                     sp
-                    .GetRequiredService<CancellationTokenProvider>()
+                    .GetRequiredService<CancellationContext>()
                     .Set(cancellationToken);
 
                     await sp

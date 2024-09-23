@@ -1,6 +1,6 @@
 ﻿using EasyWay.Internals.BusinessRules;
-using EasyWay.Internals.CancellationTokens;
 using EasyWay.Internals.Commands;
+using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.Queries;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,7 @@ namespace EasyWay
         public static void AddEasyWay(this IServiceCollection services, params Assembly[] assemblies)
         {
             services
-                .AddCancellationToken()
+                .AddContexts()
                 .AddCommandHandlers(assemblies)
                 .AddQueryHandlers(assemblies)
                 .AddDomainEventHandlers(assemblies)

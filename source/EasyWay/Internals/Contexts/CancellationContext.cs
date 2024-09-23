@@ -1,6 +1,6 @@
-﻿namespace EasyWay.Internals.CancellationTokens
+﻿namespace EasyWay.Internals.Contexts
 {
-    internal sealed class CancellationTokenProvider : ICancellationTokenProvider
+    internal sealed class CancellationContext : ICancellationContext
     {
         public CancellationToken Token { get; private set; }
 

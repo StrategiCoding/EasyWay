@@ -5,21 +5,21 @@ namespace EasyWay.Samples.Commands
 {
     internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
     {
-        private readonly ICancellationTokenProvider _tokenProvider;
+        private readonly ICancellationContext _cancellationContext;
 
         private readonly IGenericRepository<SampleAggragete> _repository;
 
         public SampleCommandHandler(
-            ICancellationTokenProvider tokenProvider,
+            ICancellationContext cancellationContext,
             IGenericRepository<SampleAggragete> repository)
         {
-            _tokenProvider = tokenProvider;
+            _cancellationContext = cancellationContext;
             _repository = repository;
         }
 
         public async Task Handle(SampleCommand command)
         {
-            var token = _tokenProvider.Token;
+            var token = _cancellationContext.Token;
 
             var x = new SampleAggragete();
 
