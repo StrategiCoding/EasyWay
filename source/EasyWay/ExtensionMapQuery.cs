@@ -1,8 +1,7 @@
-﻿using EasyWay.Internals.Contexts;
+﻿using EasyWay.Internals.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay
 {
@@ -12,21 +11,9 @@ namespace EasyWay
             where TQuery : Query<TReadModel>
             where TReadModel : ReadModel
         {
-            return endpoints.MapPost(typeof(TQuery).Name, async ([FromBody] TQuery query, IServiceProvider serviceProvider, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TQuery).Name, async ([FromBody] TQuery query, IQueryExecutor executor, CancellationToken cancellationToken) =>
             {
-                using (var scope = serviceProvider.CreateScope())
-                {
-                    var sp = scope.ServiceProvider;
-
-                    sp
-                    .GetRequiredService<CancellationContext>()
-                    .Set(cancellationToken);
-
-                    return await sp
-                    .GetRequiredService<IQueryHandler<TQuery, TReadModel>>()
-                    .Handle(query)
-                    .ConfigureAwait(false);
-                }
+                await executor.Execute<TQuery, TReadModel>(query, cancellationToken).ConfigureAwait(false);
             });
         }
     }
