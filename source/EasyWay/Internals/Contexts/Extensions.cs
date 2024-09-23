@@ -2,7 +2,7 @@
 
 namespace EasyWay.Internals.Contexts
 {
-    internal static class ExtensionAddCancellationToken
+    internal static class Extensions
     {
         internal static IServiceCollection AddContexts(this IServiceCollection services)
         {

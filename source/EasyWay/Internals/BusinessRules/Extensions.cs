@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace EasyWay.Internals.BusinessRules
 {
-    internal static class ExtensionAddBrokenBusinessRuleHandlers
+    internal static class Extensions
     {
-        internal static IServiceCollection AddBrokenBusinessRuleHandlers(this IServiceCollection services, params Assembly[] assemblies)
+        internal static IServiceCollection AddBrokenBusinessRules(this IServiceCollection services, params Assembly[] assemblies)
         {
             services.AddScoped<IBrokenBusinessRuleDispacher, BrokenBusinessRuleDispacher>();
 

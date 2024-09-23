@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace EasyWay.Internals.DomainEvents
 {
-    internal static class ExtensionAddDomainEvents
+    internal static class Extensions
     {
-        internal static IServiceCollection AddDomainEventHandlers(this IServiceCollection services, params Assembly[] assemblies)
+        internal static IServiceCollection AddDomainEvents(this IServiceCollection services, params Assembly[] assemblies)
         {
             services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 

@@ -16,8 +16,8 @@ namespace EasyWay
                 .AddContexts()
                 .AddCommands(assemblies)
                 .AddQueries(assemblies)
-                .AddDomainEventHandlers(assemblies)
-                .AddBrokenBusinessRuleHandlers(assemblies);
+                .AddDomainEvents(assemblies)
+                .AddBrokenBusinessRules(assemblies);
 
             services.AddUnitOfWorkCommandHandlerDecorator();  
         }

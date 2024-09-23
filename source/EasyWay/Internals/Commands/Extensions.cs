@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands
 {
-    internal static class ExtensionAddCommandHandlers
+    internal static class Extensions
     {
         internal static IServiceCollection AddCommands(this IServiceCollection services, params Assembly[] assemblies)
         {

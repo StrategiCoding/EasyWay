@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Queries
 {
-    internal static class ExtensionAddQueryHandlers
+    internal static class Extensions
     {
         internal static IServiceCollection AddQueries(this IServiceCollection services, params Assembly[] assemblies)
         {
