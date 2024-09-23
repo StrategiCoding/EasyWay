@@ -12,7 +12,7 @@
         protected DomainEvent()
         {
             EventId = Guid.NewGuid();
-            OccurrenceOn = SystemClock.UtcNow;
+            OccurrenceOn = Clock.UtcNow;
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using EasyWay.Internals.SystemCloks;
+﻿using EasyWay.Internals.Clocks;
 
 namespace EasyWay
 {
-    public static class SystemClock
+    public static class Clock
     {
         [ThreadStatic]
         private static TimeSpan? _differenceBetweenMoments;
@@ -20,7 +20,7 @@ namespace EasyWay
             }
         }
 
-        public static void Set(DateTime customDateTime)
+        internal static void Set(DateTime customDateTime)
         {
             if (customDateTime.Kind != DateTimeKind.Utc)
             {
@@ -30,6 +30,6 @@ namespace EasyWay
             _differenceBetweenMoments = customDateTime - DateTime.UtcNow;
         }
 
-        public static void Reset() => _differenceBetweenMoments = null;
+        internal static void Reset() => _differenceBetweenMoments = null;
     }
 }

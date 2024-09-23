@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.SystemCloks
+﻿namespace EasyWay.Internals.Clocks
 {
     internal sealed class CustomDateTimeMustBeUtcException : EasyWayException
     {
