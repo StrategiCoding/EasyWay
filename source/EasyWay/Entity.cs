@@ -1,10 +1,11 @@
 ﻿using EasyWay.Internals.DomainEvents;
+using EasyWay.Internals.IdGenerators;
 
 namespace EasyWay
 {
     public abstract class Entity
     {
-        public Guid Id { get; protected set; }
+        public Guid Id { get; } = IdGenerator.New;
 
         private List<DomainEvent> _domainEvents = new List<DomainEvent>();
 
