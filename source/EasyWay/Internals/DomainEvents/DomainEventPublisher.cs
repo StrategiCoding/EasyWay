@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
 
 namespace EasyWay.Internals.DomainEvents
 {

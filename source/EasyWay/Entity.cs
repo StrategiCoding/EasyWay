@@ -5,7 +5,7 @@ namespace EasyWay
 {
     public abstract class Entity
     {
-        public Guid Id { get; } = IdGenerator.New;
+        public Guid Id { get; private set; } = IdGenerator.New;
 
         private List<DomainEvent> _domainEvents = new List<DomainEvent>();
 
@@ -15,7 +15,7 @@ namespace EasyWay
 
         protected Entity() { }
 
-        protected void CheckRule(BusinessRule businessRule)
+        protected static void CheckRule(BusinessRule businessRule)
         {
             if (!businessRule.IsFulfilled())
             {
@@ -34,7 +34,7 @@ namespace EasyWay
             _domainEvents.Add(domainEvent);
         }
 
-        public override bool Equals(object? obj)
+        public sealed override bool Equals(object? obj)
         {
             if (obj is not null && obj is Entity entity) 
             { 
@@ -48,6 +48,6 @@ namespace EasyWay
 
         public static bool operator !=(Entity x, Entity y) => x.Id != y.Id;
 
-        public override int GetHashCode() => Id.GetHashCode();
+        public sealed override int GetHashCode() => Id.GetHashCode();
     }
 }

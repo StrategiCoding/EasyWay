@@ -1,7 +1,6 @@
 ﻿using EasyWay.Internals.UnitOfWorks;
 using EasyWay.Internals.WebApi.Exceptions;
 using Microsoft.AspNetCore.Http;
-using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

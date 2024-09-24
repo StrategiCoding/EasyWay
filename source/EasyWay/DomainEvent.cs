@@ -7,9 +7,9 @@ namespace EasyWay
     /// </summary>
     public abstract class DomainEvent
     {
-        public Guid EventId { get; }
+        internal Guid EventId { get; }
 
-        public DateTime OccurrenceOn { get; }
+        internal DateTime OccurrenceOn { get; }
 
         protected DomainEvent()
         {

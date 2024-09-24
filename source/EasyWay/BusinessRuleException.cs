@@ -1,10 +1,8 @@
-﻿using EasyWay.Internals;
-
-namespace EasyWay
+﻿namespace EasyWay
 {
     public sealed class BusinessRuleException : EasyWayException
     {
-        public BusinessRule BrokenBusinessRule { get; }
+        internal BusinessRule BrokenBusinessRule { get; }
 
         internal BusinessRuleException(BusinessRule brokenBusinessRule) 
             : base(brokenBusinessRule.Message)
@@ -12,7 +10,7 @@ namespace EasyWay
             BrokenBusinessRule = brokenBusinessRule;
         }
 
-        public override string ToString()
+        public sealed override string ToString()
         {
             return $"{BrokenBusinessRule.GetType().FullName}: {BrokenBusinessRule.Message}";
         }

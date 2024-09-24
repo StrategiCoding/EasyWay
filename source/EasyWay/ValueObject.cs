@@ -28,12 +28,9 @@ namespace EasyWay
             return obj1 != obj2;
         }
 
-        public bool Equals(ValueObject obj)
-        {
-            return Equals(obj as object);
-        }
+        bool IEquatable<ValueObject>.Equals(ValueObject? obj) => Equals(obj);
 
-        public override bool Equals(object obj)
+        public sealed override bool Equals(object? obj)
         {
             if (obj == null || GetType() != obj.GetType())
             {
@@ -44,7 +41,7 @@ namespace EasyWay
                    GetFields().All(f => FieldsAreEqual(obj, f));
         }
 
-        public override int GetHashCode()
+        public sealed override int GetHashCode()
         {
             unchecked
             {
