@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.DomainEvents;
+﻿using EasyWay.Internals.AggregateRoots;
+using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.UnitOfWorks;
 
 namespace EasyWay.Internals.Commands
@@ -8,7 +9,9 @@ namespace EasyWay.Internals.Commands
     {
         private readonly ICommandHandler<TCommand> _decoratedHandler;
 
-        private readonly IDomainEventsContext _context;
+        private readonly IDomainEventsContext _domainEventsContext;
+
+        private readonly IAggregateRootsContext _aggragateRootsContext;
 
         private readonly IDomainEventPublisher _publisher;
 
@@ -16,12 +19,14 @@ namespace EasyWay.Internals.Commands
 
         public UnitOfWorkCommandHandlerDecorator(
             ICommandHandler<TCommand> decoratedHandler,
-            IDomainEventsContext context,
+            IDomainEventsContext domainEventsContext,
+            IAggregateRootsContext aggragateRootsContext,
             IDomainEventPublisher publisher,
             IUnitOfWork unitOfWork)
         {
             _decoratedHandler = decoratedHandler;
-            _context = context;
+            _domainEventsContext = domainEventsContext;
+            _aggragateRootsContext = aggragateRootsContext;
             _publisher = publisher;
             _unitOfWork = unitOfWork;
         }
@@ -30,13 +35,20 @@ namespace EasyWay.Internals.Commands
         {
             await _decoratedHandler.Handle(command);
 
-            var domainEvents = _context.GetAllDomainEvents();
+            var domainEvents = _domainEventsContext.GetAllDomainEvents();
 
-            _context.ClearAllDomainEvents();
+            _domainEventsContext.ClearAllDomainEvents();
 
             foreach (var domainEvent in domainEvents)
             {
                 await _publisher.Publish(domainEvent).ConfigureAwait(false);
+            }
+
+            var aggragateRoots = _aggragateRootsContext.GetAggregateRoots();
+
+            foreach (var aggragateRoot in aggragateRoots)
+            {
+                aggragateRoot.ConcurrencyToken++;
             }
 
             await _unitOfWork.Commit();

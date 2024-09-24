@@ -1,6 +1,8 @@
-﻿using EasyWay.EntityFrameworkCore.Internals.DomainEvents;
+﻿using EasyWay.EntityFrameworkCore.Internals.AggregateRoots;
+using EasyWay.EntityFrameworkCore.Internals.DomainEvents;
 using EasyWay.EntityFrameworkCore.Internals.Repositories;
 using EasyWay.EntityFrameworkCore.Internals.UnitOfWorks;
+using EasyWay.Internals.AggregateRoots;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,7 @@ namespace EasyWay.EntityFrameworkCore
 
             services.AddScoped((Func<IServiceProvider, DbContext>)(sp => sp.GetRequiredService<TContext>()));
 
+            services.AddScoped<IAggregateRootsContext, EntityFrameworkAggregateRootsContext>();
             services.AddTransient<IDomainEventsContext, DomainEventsAccessor>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

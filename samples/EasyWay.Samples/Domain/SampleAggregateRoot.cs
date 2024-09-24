@@ -1,8 +1,8 @@
 ﻿namespace EasyWay.Samples.Domain
 {
-    public sealed class SampleAggragete : AggregateRoot
+    public sealed class SampleAggregateRoot : AggregateRoot
     {
-        public SampleAggragete() 
+        public SampleAggregateRoot() 
         { 
             Add(new CreatedSampleAggragete());
         }
