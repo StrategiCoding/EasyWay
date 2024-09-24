@@ -1,5 +1,4 @@
-﻿using EasyWay.Internals.BusinessRules;
-using EasyWay.Internals.Commands;
+﻿using EasyWay.Internals.Commands;
 using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.Queries;
@@ -16,8 +15,7 @@ namespace EasyWay
                 .AddContexts()
                 .AddCommands(assemblies)
                 .AddQueries(assemblies)
-                .AddDomainEvents(assemblies)
-                .AddBrokenBusinessRules(assemblies);
+                .AddDomainEvents(assemblies);
 
             services.AddUnitOfWorkCommandHandlerDecorator();  
         }
