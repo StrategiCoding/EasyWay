@@ -40,6 +40,9 @@ namespace EasyWay.Internals.WebApi
                 case ConcurrencyException e when exceptionType == typeof(ConcurrencyException):
                     exceptionResponse = new ConcurrencyExceptionResponse(e);
                     break;
+                case OperationCanceledException e when exceptionType == typeof(OperationCanceledException):
+                    exceptionResponse = new OperationCanceledExceptionResponse(e);
+                    break;
             }
 
             httpContext.Response.ContentType = "application/json";
