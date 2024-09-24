@@ -1,7 +1,7 @@
 using EasyWay;
 using EasyWay.EntityFrameworkCore;
-using EasyWay.Samples;
 using EasyWay.Samples.Commands;
+using EasyWay.Samples.Databases;
 using EasyWay.Samples.Queries;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.PostgreSql;
@@ -12,6 +12,8 @@ var postgreSqlContainer = new PostgreSqlBuilder()
 
 await postgreSqlContainer.StartAsync();
 
+var connectionString = postgreSqlContainer.GetConnectionString();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddEasyWay(typeof(SampleCommand).Assembly);
-builder.Services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(postgreSqlContainer.GetConnectionString()));
+builder.Services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

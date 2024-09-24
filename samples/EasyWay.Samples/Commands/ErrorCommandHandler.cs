@@ -6,7 +6,7 @@ namespace EasyWay.Samples.Commands
     {
         public Task Handle(ErrorCommand command)
         {
-            var x = new SampleAggragete();
+            var x = new SampleAggregateRoot();
 
             x.SampleMethod();
 

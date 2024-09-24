@@ -7,11 +7,11 @@ namespace EasyWay.Samples.Commands
     {
         private readonly ICancellationContext _cancellationContext;
 
-        private readonly IGenericRepository<SampleAggragete> _repository;
+        private readonly IGenericRepository<SampleAggregateRoot> _repository;
 
         public SampleCommandHandler(
             ICancellationContext cancellationContext,
-            IGenericRepository<SampleAggragete> repository)
+            IGenericRepository<SampleAggregateRoot> repository)
         {
             _cancellationContext = cancellationContext;
             _repository = repository;
@@ -21,7 +21,7 @@ namespace EasyWay.Samples.Commands
         {
             var token = _cancellationContext.Token;
 
-            var x = new SampleAggragete();
+            var x = new SampleAggregateRoot();
 
             await _repository.Add(x);
         }

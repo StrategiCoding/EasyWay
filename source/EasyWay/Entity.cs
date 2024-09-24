@@ -5,7 +5,7 @@ namespace EasyWay
 {
     public abstract class Entity
     {
-        public Guid Id { get; private set; } = IdGenerator.New;
+        internal Guid Id { get; private set; } = IdGenerator.New;
 
         private List<DomainEvent> _domainEvents = new List<DomainEvent>();
 
