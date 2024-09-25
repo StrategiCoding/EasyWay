@@ -9,7 +9,7 @@
 
         public void SampleMethod()
         {
-            CheckRule(new SampleBusinessRule());
+            Check(new SampleBusinessRule());
         }
     }
 }

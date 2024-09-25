@@ -15,7 +15,7 @@ namespace EasyWay
 
         protected Entity() { }
 
-        protected static void CheckRule(BusinessRule businessRule)
+        protected static void Check(BusinessRule businessRule)
         {
             if (!businessRule.IsFulfilled())
             {
