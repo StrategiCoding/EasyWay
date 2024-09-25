@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks:
+
+  easyway-network:
+    driver: bridge
+
+services:
+
+  easyway.samples:
+    image: ${DOCKER_REGISTRY-}easywaysamples
+    networks:
+      - easyway-network
+    build:
+      context: .
+      dockerfile: ./EasyWay.Samples/Dockerfile
+    depends_on:
+      - database
+
+  database:
+    image: postgres:14.1-alpine
+    networks:
+      - easyway-network
+    hostname: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'

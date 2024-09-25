@@ -4,18 +4,10 @@ using EasyWay.Samples.Commands;
 using EasyWay.Samples.Databases;
 using EasyWay.Samples.Queries;
 using Microsoft.EntityFrameworkCore;
-using Testcontainers.PostgreSql;
-
-var postgreSqlContainer = new PostgreSqlBuilder()
-  .WithImage("postgres:15.1")
-  .Build();
-
-await postgreSqlContainer.StartAsync();
-
-var connectionString = postgreSqlContainer.GetConnectionString();
 
 var builder = WebApplication.CreateBuilder(args);
 
+string connectionString = builder.Configuration.GetConnectionString("Database");
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
