@@ -37,7 +37,7 @@ namespace EasyWay.Internals.Commands
 
             foreach (var aggragateRoot in aggragateRoots)
             {
-                aggragateRoot.ConcurrencyToken++;
+                aggragateRoot.UpdateConcurrencyToken();
             }
 
             await _unitOfWork.Commit().ConfigureAwait(false);
