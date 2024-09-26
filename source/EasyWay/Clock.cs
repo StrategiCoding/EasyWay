@@ -4,8 +4,7 @@ namespace EasyWay
 {
     public static class Clock
     {
-        [ThreadStatic]
-        private static TimeSpan? _differenceBetweenMoments;
+        [ThreadStatic] private static TimeSpan? _differenceBetweenMoments;
 
         public static DateTime UtcNow
         {
