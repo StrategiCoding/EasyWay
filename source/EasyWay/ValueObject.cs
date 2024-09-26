@@ -25,10 +25,13 @@ namespace EasyWay
 
         public static bool operator !=(ValueObject obj1, ValueObject obj2)
         {
-            return obj1 != obj2;
+            return !(obj1 == obj2);
         }
 
-        bool IEquatable<ValueObject>.Equals(ValueObject? obj) => Equals(obj);
+        public bool Equals(ValueObject? obj)
+        {
+            return Equals(obj as object);
+        }
 
         public sealed override bool Equals(object? obj)
         {
