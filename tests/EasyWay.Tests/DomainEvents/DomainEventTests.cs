@@ -4,7 +4,7 @@
     {
         internal sealed class TestDomainEvent : DomainEvent;
 
-        [Fact(DisplayName = $"Domain event should create with correct '{nameof(DomainEvent.EventId)}' and '{nameof(DomainEvent.OccurrenceOn)}'")]
+        [Fact(DisplayName = $"{nameof(DomainEvent)} should create with correct {nameof(DomainEvent.EventId)} and {nameof(DomainEvent.OccurrenceOn)}")]
         public void Test()
         {
             // Arrange
