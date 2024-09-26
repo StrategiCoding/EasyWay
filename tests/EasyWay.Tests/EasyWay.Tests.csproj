@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\source\EasyWay\EasyWay.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Using Include="Xunit" />
+	</ItemGroup>
+
 </Project>
