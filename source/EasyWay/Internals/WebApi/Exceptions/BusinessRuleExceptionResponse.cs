@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EasyWay.Internals.BusinessRules;
+using Microsoft.AspNetCore.Http;
 
 namespace EasyWay.Internals.WebApi.Exceptions
 {

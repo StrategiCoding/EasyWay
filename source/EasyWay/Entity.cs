@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.DomainEvents;
+﻿using EasyWay.Internals.BusinessRules;
+using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.IdGenerators;
 
 namespace EasyWay
