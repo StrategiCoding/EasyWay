@@ -20,7 +20,7 @@ namespace EasyWay
         {
             if (!businessRule.IsFulfilled())
             {
-                throw new BusinessRuleException(businessRule);
+                throw new BrokenBusinessRuleException(businessRule);
             }
         }
 

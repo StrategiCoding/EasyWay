@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace EasyWay.Internals.WebApi.Exceptions
 {
-    internal sealed class BusinessRuleExceptionResponse : ExceptionResponse
+    internal sealed class BrokenBusinessRuleExceptionResponse : ExceptionResponse
     {
-        internal BusinessRuleExceptionResponse(BusinessRuleException ex)
+        internal BrokenBusinessRuleExceptionResponse(BrokenBusinessRuleException ex)
         {
             Type = "BrokenBusinessRule";
             Detail = ex.Message;

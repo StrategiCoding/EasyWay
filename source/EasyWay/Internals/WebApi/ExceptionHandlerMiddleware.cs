@@ -35,8 +35,8 @@ namespace EasyWay.Internals.WebApi
 
             switch (exception)
             {
-                case BusinessRuleException e when exceptionType == typeof(BusinessRuleException):
-                    exceptionResponse = new BusinessRuleExceptionResponse(e);
+                case BrokenBusinessRuleException e when exceptionType == typeof(BrokenBusinessRuleException):
+                    exceptionResponse = new BrokenBusinessRuleExceptionResponse(e);
                     break;
                 case ConcurrencyException e when exceptionType == typeof(ConcurrencyException):
                     exceptionResponse = new ConcurrencyExceptionResponse(e);

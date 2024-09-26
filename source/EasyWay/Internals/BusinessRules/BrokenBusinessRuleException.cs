@@ -1,10 +1,10 @@
 ﻿namespace EasyWay.Internals.BusinessRules
 {
-    internal sealed class BusinessRuleException : EasyWayException
+    internal sealed class BrokenBusinessRuleException : EasyWayException
     {
         internal BusinessRule BrokenBusinessRule { get; }
 
-        internal BusinessRuleException(BusinessRule brokenBusinessRule)
+        internal BrokenBusinessRuleException(BusinessRule brokenBusinessRule)
             : base(brokenBusinessRule.Message)
         {
             BrokenBusinessRule = brokenBusinessRule;
