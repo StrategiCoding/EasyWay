@@ -8,7 +8,7 @@
         public void Test()
         {
             // Arrange
-            var expectedDateTime = DateTime.UtcNow;
+            var expectedDateTime = DateTime.UtcNow.AddMonths(-6);
             var precision = TimeSpan.FromMilliseconds(50);
 
             Clock.Set(expectedDateTime);
