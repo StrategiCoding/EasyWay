@@ -22,6 +22,7 @@ namespace EasyWay.Tests.ValueObjects
             var x1 = TestValueObject.Create(VALUE, INT_VALUE);
 
             Assert.True(x1 != null);
+            Assert.True(null != x1);
         }
 
         [Fact]
