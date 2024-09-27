@@ -2,12 +2,12 @@
 {
     public abstract class EasyWayException : Exception
     {
-        protected EasyWayException() { }
+        internal EasyWayException() { }
 
-        protected EasyWayException(string message)
+        internal EasyWayException(string message)
             : base(message) { }
 
-        protected EasyWayException(string message, Exception innerException)
+        internal EasyWayException(string message, Exception innerException)
             : base(message, innerException) { }
     }
 }
