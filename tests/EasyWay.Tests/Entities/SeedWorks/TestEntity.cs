@@ -6,5 +6,11 @@
         {
             Check(businessRule);
         }
+
+        public void AddDomainEvent<TDomainEvent>(TDomainEvent domainEvent)
+            where TDomainEvent : DomainEvent
+        {
+            Add(domainEvent);
+        }
     }
 }
