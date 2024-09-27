@@ -1,8 +1,9 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace EasyWay
 {
-    public abstract class ValueObject : IEquatable<ValueObject>
+    public abstract class ValueObject : IEquatable<ValueObject>, IEqualityComparer<ValueObject>
     {
         private static readonly BindingFlags _bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
 
@@ -20,7 +21,11 @@ namespace EasyWay
 
         public bool Equals(ValueObject? obj) => ValueObjectEquals(this, obj);
 
+        public bool Equals(ValueObject? x, ValueObject? y) => ValueObjectEquals(x, y);
+
         public sealed override bool Equals(object? obj) => obj is ValueObject valueObject ? ValueObjectEquals(this, valueObject) : false;
+
+        public int GetHashCode([DisallowNull] ValueObject obj) => obj.GetHashCode();
 
         public sealed override int GetHashCode()
         {
@@ -89,7 +94,7 @@ namespace EasyWay
             if (x is null || y is null) return false;
             if (x.GetType() == y.GetType())
             {
-                return x.Properties.All(propertyInfo => PropertiesAreEqual(x, y, propertyInfo)) 
+                return x.Properties.All(propertyInfo => PropertiesAreEqual(x, y, propertyInfo))
                        &&
                        x.Fields.All(fieldInfo => FieldsAreEqual(x, y, fieldInfo));
             }
