@@ -33,6 +33,8 @@ namespace EasyWay
             {
                 int hash = 17;
 
+                hash = HashValue(hash, GetType());
+
                 foreach (var prop in GetProperties())
                 {
                     var value = prop.GetValue(this, null);
