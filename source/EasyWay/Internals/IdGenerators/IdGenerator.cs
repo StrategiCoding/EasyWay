@@ -9,7 +9,13 @@ namespace EasyWay.Internals.IdGenerators
 
         private static IdGeneratorMode _mode = IdGeneratorMode.SequentialAsString;
 
-        internal static Guid New => Create();
+        [ThreadStatic] private static Guid? _customId;
+
+        internal static Guid New => _customId.HasValue ? _customId.Value : Create();
+
+        internal static void Set(Guid id) => _customId = id;
+
+        internal static void Reset() => _customId = null;
 
         internal static void ChangeMode(IdGeneratorMode mode) => _mode = mode;
 

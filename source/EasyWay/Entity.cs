@@ -55,8 +55,8 @@ namespace EasyWay
             return false;
         }
 
-        public sealed override int GetHashCode() => Id.GetHashCode();
+        public sealed override int GetHashCode() => GetHashCode(this);
 
-        public int GetHashCode([DisallowNull] Entity obj) => obj.Id.GetHashCode();
+        public int GetHashCode([DisallowNull] Entity obj) => HashCode.Combine(obj.Id, obj.GetType());
     }
 }
