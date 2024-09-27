@@ -36,24 +36,26 @@ namespace EasyWay
             _domainEvents.Add(domainEvent);
         }
 
-        public bool Equals(Entity? other) => other is not null ? Id == other.Id : false;
+        public static bool operator ==(Entity x, Entity y) => EntityEquals(x, y);
 
-        public sealed override bool Equals(object? obj) => obj is Entity entity ? Equals(entity) : false;
+        public static bool operator !=(Entity x, Entity y) => !EntityEquals(x, y);
 
-        public static bool operator ==(Entity x, Entity y) => x.Id == y.Id;
+        public bool Equals(Entity? x, Entity? y) => EntityEquals(x, y);
 
-        public static bool operator !=(Entity x, Entity y) => x.Id != y.Id;
+        public bool Equals(Entity? other) => EntityEquals(this, other);
 
-        public sealed override int GetHashCode() => Id.GetHashCode();
+        public sealed override bool Equals(object? obj) => obj is Entity entity ? EntityEquals(this, entity) : false;
 
-        public bool Equals(Entity? x, Entity? y)
+        private static bool EntityEquals(Entity? x, Entity? y)
         {
             if (x is null && y is null) return true;
             if (x is null || y is null) return false;
-            if (x.Id == y.Id) return true;
+            if (x.Id == y.Id && x.GetType() == y.GetType()) return true;
 
             return false;
         }
+
+        public sealed override int GetHashCode() => Id.GetHashCode();
 
         public int GetHashCode([DisallowNull] Entity obj) => obj.Id.GetHashCode();
     }
