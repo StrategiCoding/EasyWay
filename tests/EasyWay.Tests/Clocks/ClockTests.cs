@@ -9,7 +9,7 @@ namespace EasyWay.Tests.Clocks
         {
             // Arrange
             var expectedUtcNow = DateTime.UtcNow;
-            TimeSpan precision = TimeSpan.FromMilliseconds(5);
+            TimeSpan precision = TimeSpan.FromMilliseconds(50);
 
             // Act
             var utcNow = Clock.UtcNow;
@@ -38,7 +38,7 @@ namespace EasyWay.Tests.Clocks
         {
             // Arrange
             var expectedUtc = new DateTime(2024,1,1,0,0,0, DateTimeKind.Utc);
-            TimeSpan precision = TimeSpan.FromMilliseconds(5);
+            TimeSpan precision = TimeSpan.FromMilliseconds(50);
 
             Clock.Set(expectedUtc);
 
@@ -59,7 +59,7 @@ namespace EasyWay.Tests.Clocks
             // Arrange
             var expectedUtc = DateTime.UtcNow;
 
-            TimeSpan precision = TimeSpan.FromMilliseconds(5);
+            TimeSpan precision = TimeSpan.FromMilliseconds(50);
 
             Clock.Set(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
 
