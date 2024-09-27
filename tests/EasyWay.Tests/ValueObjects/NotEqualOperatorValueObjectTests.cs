@@ -14,6 +14,7 @@ namespace EasyWay.Tests.ValueObjects
             var x2 = TestValueObject.Create(VALUE, INT_VALUE + 1);
 
             Assert.True(x1 != x2);
+            Assert.True(x2 != x1);
         }
 
         [Fact]
@@ -32,6 +33,7 @@ namespace EasyWay.Tests.ValueObjects
             var y1 = TestValueObject2.Create(VALUE, INT_VALUE);
 
             Assert.True(x1 != y1);
+            Assert.True(y1 != x1);
         }
     }
 }
