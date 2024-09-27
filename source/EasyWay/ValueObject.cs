@@ -4,45 +4,23 @@ namespace EasyWay
 {
     public abstract class ValueObject : IEquatable<ValueObject>
     {
+        private static readonly BindingFlags _bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+
+        internal IEnumerable<PropertyInfo> Properties => GetProperties();
+
+        internal IEnumerable<FieldInfo> Fields => GetFields();
+
         private List<PropertyInfo> _properties;
 
         private List<FieldInfo> _fields;
 
-        public static bool operator ==(ValueObject obj1, ValueObject obj2)
-        {
-            if (Equals(obj1, null))
-            {
-                if (Equals(obj2, null))
-                {
-                    return true;
-                }
+        public static bool operator ==(ValueObject obj1, ValueObject obj2) => ValueObjectEquals(obj1, obj2);
 
-                return false;
-            }
+        public static bool operator !=(ValueObject obj1, ValueObject obj2) => !ValueObjectEquals(obj1, obj2);
 
-            return obj1.Equals(obj2);
-        }
+        public bool Equals(ValueObject? obj) => ValueObjectEquals(this, obj);
 
-        public static bool operator !=(ValueObject obj1, ValueObject obj2)
-        {
-            return !(obj1 == obj2);
-        }
-
-        public bool Equals(ValueObject? obj)
-        {
-            return Equals(obj as object);
-        }
-
-        public sealed override bool Equals(object? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            return GetProperties().All(p => PropertiesAreEqual(obj, p)) &&
-                   GetFields().All(f => FieldsAreEqual(obj, f));
-        }
+        public sealed override bool Equals(object? obj) => obj is ValueObject valueObject ? ValueObjectEquals(this, valueObject) : false;
 
         public sealed override int GetHashCode()
         {
@@ -66,23 +44,21 @@ namespace EasyWay
             }
         }
 
-        private bool PropertiesAreEqual(object obj, PropertyInfo p)
-        {
-            return Equals(p.GetValue(this, null), p.GetValue(obj, null));
-        }
-
-        private bool FieldsAreEqual(object obj, FieldInfo f)
-        {
-            return Equals(f.GetValue(this), f.GetValue(obj));
-        }
-
         private IEnumerable<PropertyInfo> GetProperties()
         {
             if (_properties == null)
             {
-                _properties = GetType()
-                    .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                var properties = GetType()
+                    .GetProperties(_bindingFlags)
                     .ToList();
+
+                var p = properties.Single(x => x.Name == nameof(Properties));
+                var f = properties.Single(x => x.Name == nameof(Fields));
+
+                properties.Remove(p);
+                properties.Remove(f);
+
+                _properties = properties;
             }
 
             return _properties;
@@ -93,7 +69,7 @@ namespace EasyWay
             if (_fields == null)
             {
                 _fields = GetType()
-                    .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    .GetFields(_bindingFlags)
                     .ToList();
             }
 
@@ -106,5 +82,23 @@ namespace EasyWay
 
             return (seed * 23) + currentHash;
         }
+
+        private static bool ValueObjectEquals(ValueObject? x, ValueObject? y)
+        {
+            if (x is null && y is null) return true;
+            if (x is null || y is null) return false;
+            if (x.GetType() == y.GetType())
+            {
+                return x.Properties.All(propertyInfo => PropertiesAreEqual(x, y, propertyInfo)) 
+                       &&
+                       x.Fields.All(fieldInfo => FieldsAreEqual(x, y, fieldInfo));
+            }
+
+            return false;
+        }
+
+        private static bool PropertiesAreEqual(ValueObject x, ValueObject y, PropertyInfo p) => Equals(p.GetValue(x), p.GetValue(y));
+
+        private static bool FieldsAreEqual(ValueObject x, ValueObject y, FieldInfo f) => Equals(f.GetValue(x), f.GetValue(y));
     }
 }
