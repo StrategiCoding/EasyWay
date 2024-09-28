@@ -1,5 +1,3 @@
-using EasyWay;
-using EasyWay.EntityFrameworkCore;
 using EasyWay.Samples.Commands;
 using EasyWay.Samples.Databases;
 using EasyWay.Samples.Queries;

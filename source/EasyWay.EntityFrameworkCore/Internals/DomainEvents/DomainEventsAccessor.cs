@@ -1,7 +1,6 @@
-﻿using EasyWay.Internals.DomainEvents;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.EntityFrameworkCore.Internals.DomainEvents
+namespace EasyWay.Internals.DomainEvents
 {
     internal sealed class DomainEventsAccessor : IDomainEventsContext
     {

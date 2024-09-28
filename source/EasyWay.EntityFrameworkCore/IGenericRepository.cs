@@ -1,4 +1,4 @@
-﻿namespace EasyWay.EntityFrameworkCore
+﻿namespace EasyWay
 {
     public interface IGenericRepository<TAggregateRoot>
         where TAggregateRoot : AggregateRoot

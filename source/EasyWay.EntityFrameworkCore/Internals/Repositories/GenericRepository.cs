@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.EntityFrameworkCore.Internals.Repositories
+namespace EasyWay.Internals.Repositories
 {
     internal sealed class GenericRepository<TAggregateRoot> : IGenericRepository<TAggregateRoot>
         where TAggregateRoot : AggregateRoot

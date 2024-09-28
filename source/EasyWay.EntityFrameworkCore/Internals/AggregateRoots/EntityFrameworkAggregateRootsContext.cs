@@ -1,7 +1,6 @@
-﻿using EasyWay.Internals.AggregateRoots;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.EntityFrameworkCore.Internals.AggregateRoots
+namespace EasyWay.Internals.AggregateRoots
 {
     internal sealed class EntityFrameworkAggregateRootsContext : IAggregateRootsContext
     {

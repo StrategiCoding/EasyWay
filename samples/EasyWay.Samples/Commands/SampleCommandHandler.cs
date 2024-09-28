@@ -1,5 +1,4 @@
-﻿using EasyWay.EntityFrameworkCore;
-using EasyWay.Samples.Domain;
+﻿using EasyWay.Samples.Domain;
 
 namespace EasyWay.Samples.Commands
 {

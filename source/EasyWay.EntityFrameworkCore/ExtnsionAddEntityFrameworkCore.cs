@@ -1,14 +1,11 @@
-﻿using EasyWay.EntityFrameworkCore.Internals.AggregateRoots;
-using EasyWay.EntityFrameworkCore.Internals.DomainEvents;
-using EasyWay.EntityFrameworkCore.Internals.Repositories;
-using EasyWay.EntityFrameworkCore.Internals.UnitOfWorks;
-using EasyWay.Internals.AggregateRoots;
+﻿using EasyWay.Internals.AggregateRoots;
 using EasyWay.Internals.DomainEvents;
+using EasyWay.Internals.Repositories;
 using EasyWay.Internals.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyWay.EntityFrameworkCore
+namespace EasyWay
 {
     public static class ExtnsionAddEntityFrameworkCore
     {

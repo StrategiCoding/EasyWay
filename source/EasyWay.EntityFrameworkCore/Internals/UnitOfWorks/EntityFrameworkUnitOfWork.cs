@@ -1,7 +1,6 @@
-﻿using EasyWay.Internals.UnitOfWorks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.EntityFrameworkCore.Internals.UnitOfWorks
+namespace EasyWay.Internals.UnitOfWorks
 {
     internal sealed class EntityFrameworkUnitOfWork : IUnitOfWork
     {
