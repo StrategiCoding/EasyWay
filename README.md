@@ -29,3 +29,6 @@
 #### :globe_with_meridians: WebApi
 - Automatic translation of an exception into a response
 - Creating endpoints based on CQRS handlers (RPC Style)
+
+### :radioactive: Disclaimer
+The project is under development and not ready for production use.
