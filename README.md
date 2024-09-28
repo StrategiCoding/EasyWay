@@ -1,5 +1,7 @@
 # EasyWay
 
+[![Build & Tests](https://github.com/StrategiCoding/EasyWay/actions/workflows/build-and-tests.yaml/badge.svg)](https://github.com/StrategiCoding/EasyWay/actions/workflows/build-and-tests.yaml)
+
 ## ✨ Features
 
 ### :gear: Main
