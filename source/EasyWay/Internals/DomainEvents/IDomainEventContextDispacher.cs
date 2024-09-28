@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Internals.DomainEvents
 {
-    internal interface IDomainEventDispacher
+    internal interface IDomainEventContextDispacher
     {
         Task Dispach();
     }

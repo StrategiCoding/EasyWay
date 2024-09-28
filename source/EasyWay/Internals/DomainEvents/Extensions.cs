@@ -9,7 +9,7 @@ namespace EasyWay.Internals.DomainEvents
         {
             services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
             services.AddScoped<IDomainEventBulkPublisher, DomainEventBulkPublisher>();
-            services.AddScoped<IDomainEventDispacher, DomainEventDispacher>();
+            services.AddScoped<IDomainEventContextDispacher, DomainEventContextDispacher>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(IDomainEventHandler<>)))

@@ -9,7 +9,7 @@ namespace EasyWay.Internals.Commands
     {
         private readonly ICommandHandler<TCommand> _decoratedHandler;
 
-        private readonly IDomainEventDispacher _domainEventDispacher;
+        private readonly IDomainEventContextDispacher _domainEventDispacher;
 
         private readonly IAggregateRootsContext _aggragateRootsContext;
 
@@ -17,7 +17,7 @@ namespace EasyWay.Internals.Commands
 
         public UnitOfWorkCommandHandlerDecorator(
             ICommandHandler<TCommand> decoratedHandler,
-            IDomainEventDispacher domainEventDispacher,
+            IDomainEventContextDispacher domainEventDispacher,
             IAggregateRootsContext aggragateRootsContext,
             IUnitOfWork unitOfWork)
         {

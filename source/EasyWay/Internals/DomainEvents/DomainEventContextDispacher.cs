@@ -1,12 +1,12 @@
 ﻿namespace EasyWay.Internals.DomainEvents
 {
-    internal sealed class DomainEventDispacher : IDomainEventDispacher
+    internal sealed class DomainEventContextDispacher : IDomainEventContextDispacher
     {
         private readonly IDomainEventBulkPublisher _publisher;
 
         private readonly IDomainEventsContext _context;
 
-        public DomainEventDispacher(
+        public DomainEventContextDispacher(
             IDomainEventBulkPublisher publisher,
             IDomainEventsContext context) 
         {
@@ -17,6 +17,11 @@
         public async Task Dispach()
         {
             var domainEvents = _context.GetAllDomainEvents();
+
+            if (!domainEvents.Any()) 
+            {
+                return;
+            }
 
             _context.ClearAllDomainEvents();
 
