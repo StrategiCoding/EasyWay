@@ -1,7 +1,10 @@
-<h3 align="center">EasyWay</h3>
+<div align="center">
+    <img src="assets/ReadmeEasyWayLogo.png">
+</div>
 
   <p align="center">
-    <i>Create modern applications with the best practices using predefined building blocks.</i>
+  <br />
+    <b>Create modern applications with the best practices using predefined building blocks.</b>
     <br />
   </p>
   
