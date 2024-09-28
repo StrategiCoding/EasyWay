@@ -1,0 +1,53 @@
+name: Build & Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/build-and-tests.yaml'
+      - 'samples/**'
+      - 'source/**'
+      - 'tests/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/build-and-tests.yaml'
+      - 'samples/**'
+      - 'source/**'
+      - 'tests/**'
+
+jobs:
+
+  build:
+
+    name: Build & Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x.x'
+        
+    - name: Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test --no-restore --configuration Release
