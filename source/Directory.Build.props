@@ -9,6 +9,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RepositoryType>git</RepositoryType>
+		<RootNamespace>EasyWay</RootNamespace>
 		<PackageTags>$(AssemblyName)</PackageTags>
 		<Title>$(AssemblyName)</Title>
 	</PropertyGroup>
