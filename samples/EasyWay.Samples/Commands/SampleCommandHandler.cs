@@ -6,11 +6,11 @@ namespace EasyWay.Samples.Commands
     {
         private readonly ICancellationContext _cancellationContext;
 
-        private readonly IGenericRepository<SampleAggregateRoot> _repository;
+        private readonly ISampleAggragateRootRepository _repository;
 
         public SampleCommandHandler(
             ICancellationContext cancellationContext,
-            IGenericRepository<SampleAggregateRoot> repository)
+            ISampleAggragateRootRepository repository)
         {
             _cancellationContext = cancellationContext;
             _repository = repository;

@@ -2,6 +2,7 @@
 using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.Queries;
+using EasyWay.Internals.Repositories;
 using EasyWay.Internals.WebApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,8 @@ namespace EasyWay
                 .AddContexts()
                 .AddCommands(assemblies)
                 .AddQueries(assemblies)
-                .AddDomainEvents(assemblies);
+                .AddDomainEvents(assemblies)
+                .AddRepositories(assemblies);
 
             services.AddUnitOfWorkCommandHandlerDecorator();  
         }
