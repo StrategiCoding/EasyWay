@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace EasyWay.Internals.WebApi.Exceptions
+namespace EasyWay.Internals.Exceptions
 {
     internal sealed class InternalServerExceptionResponse : ExceptionResponse
     {
-        internal InternalServerExceptionResponse() 
+        internal InternalServerExceptionResponse()
         {
             Type = "InternalServerError";
             Detail = "Something went wrong";

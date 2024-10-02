@@ -1,7 +1,7 @@
 ﻿using EasyWay.Internals.BusinessRules;
 using Microsoft.AspNetCore.Http;
 
-namespace EasyWay.Internals.WebApi.Exceptions
+namespace EasyWay.Internals.Exceptions
 {
     internal sealed class BrokenBusinessRuleExceptionResponse : ExceptionResponse
     {

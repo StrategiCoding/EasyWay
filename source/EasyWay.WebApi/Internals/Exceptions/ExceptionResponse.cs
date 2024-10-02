@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.WebApi.Exceptions
+﻿namespace EasyWay.Internals.Exceptions
 {
     internal abstract class ExceptionResponse
     {

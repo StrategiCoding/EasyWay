@@ -1,11 +1,10 @@
 ﻿using EasyWay.Internals.BusinessRules;
 using EasyWay.Internals.UnitOfWorks;
-using EasyWay.Internals.WebApi.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EasyWay.Internals.WebApi
+namespace EasyWay.Internals.Exceptions
 {
     internal sealed class ExceptionHandlerMiddleware
     {
