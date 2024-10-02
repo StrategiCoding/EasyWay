@@ -5,7 +5,7 @@ namespace EasyWay.Internals.Queries
 {
     internal static class Extensions
     {
-        internal static IServiceCollection AddQueries(this IServiceCollection services, params Assembly[] assemblies)
+        internal static IServiceCollection AddQueries(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             services.AddScoped<IQueryExecutor, QueryExecutor>();
 

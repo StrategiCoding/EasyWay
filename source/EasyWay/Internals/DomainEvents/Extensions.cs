@@ -5,7 +5,7 @@ namespace EasyWay.Internals.DomainEvents
 {
     internal static class Extensions
     {
-        internal static IServiceCollection AddDomainEvents(this IServiceCollection services, params Assembly[] assemblies)
+        internal static IServiceCollection AddDomainEvents(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
             services.AddScoped<IDomainEventBulkPublisher, DomainEventBulkPublisher>();

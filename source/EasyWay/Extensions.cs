@@ -10,7 +10,7 @@ namespace EasyWay
 {
     public static class Extensions
     {
-        public static void AddEasyWay(this IServiceCollection services, params Assembly[] assemblies)
+        public static void AddEasyWay(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             services
                 .AddContexts()

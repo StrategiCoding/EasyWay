@@ -5,7 +5,7 @@ namespace EasyWay.Internals.Commands
 {
     internal static class Extensions
     {
-        internal static IServiceCollection AddCommands(this IServiceCollection services, params Assembly[] assemblies)
+        internal static IServiceCollection AddCommands(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             services.AddScoped<ICommandExecutor, CommandExecutor>();
 

@@ -1,7 +1,9 @@
+using EasyWay.Samples;
 using EasyWay.Samples.Commands;
 using EasyWay.Samples.Databases;
 using EasyWay.Samples.Queries;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,11 @@ string connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddEasyWay(typeof(SampleCommand).Assembly);
+var moduleExecutor = ModuleFactory.Create<SampleModule>();
+
+builder.Services.AddSingleton(moduleExecutor);
+
+builder.Services.AddEasyWay(new List<Assembly> { typeof(SampleCommand).Assembly });
 builder.Services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(connectionString));
 
 var app = builder.Build();
