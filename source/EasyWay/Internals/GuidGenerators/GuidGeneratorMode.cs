@@ -1,6 +1,6 @@
-﻿namespace EasyWay.Internals.IdGenerators
+﻿namespace EasyWay.Internals.GuidGenerators
 {
-    internal enum IdGeneratorMode
+    internal enum GuidGeneratorMode
     {
         SequentialAsString,
         SequentialAsBinary,

@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.IdGenerators;
+﻿using EasyWay.Internals.GuidGenerators;
 
 namespace EasyWay.Tests.Entities
 {
@@ -45,7 +45,7 @@ namespace EasyWay.Tests.Entities
         {
             var guid = new Guid("0fe4961d-85f4-4340-8e49-5438800919ef");
 
-            IdGenerator.Set(guid);
+            GuidGenerator.Set(guid);
 
             var x1 = new X();
             var x2 = new X();
@@ -71,7 +71,7 @@ namespace EasyWay.Tests.Entities
             Assert.True(x1.GetHashCode() != guid.GetHashCode());
             Assert.True(x2.GetHashCode() != guid.GetHashCode());
 
-            IdGenerator.Reset();
+            GuidGenerator.Reset();
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace EasyWay.Tests.Entities
         {
             var guid = new Guid("0fe4961d-85f4-4340-8e49-5438800919ef");
 
-            IdGenerator.Set(guid);
+            GuidGenerator.Set(guid);
 
             var x = new X();
             var y = new Y();
@@ -105,17 +105,17 @@ namespace EasyWay.Tests.Entities
             Assert.True(x.GetHashCode() != guid.GetHashCode());
             Assert.True(y.GetHashCode() != guid.GetHashCode());
 
-            IdGenerator.Reset();
+            GuidGenerator.Reset();
         }
 
         [Fact]
         public void EntitiesWithDiffIdAndTheSameTypeAreNotEqual()
         {
-            IdGenerator.Set(new Guid("0fe4961d-85f4-4340-8e49-5438800919ef"));
+            GuidGenerator.Set(new Guid("0fe4961d-85f4-4340-8e49-5438800919ef"));
 
             var x1 = new X();
 
-            IdGenerator.Set(new Guid("0ae4961d-85f4-0000-8e49-5438800919ef"));
+            GuidGenerator.Set(new Guid("0ae4961d-85f4-0000-8e49-5438800919ef"));
 
             var x2 = new X();
 
@@ -136,17 +136,17 @@ namespace EasyWay.Tests.Entities
 
             Assert.True(x1.GetHashCode() != x2.GetHashCode());
 
-            IdGenerator.Reset();
+            GuidGenerator.Reset();
         }
 
         [Fact]
         public void EntitiesWithDiffIdAndDiffTypeAreNotEqual()
         {
-            IdGenerator.Set(new Guid("0fe4961d-85f4-4340-8e49-5438800919ef"));
+            GuidGenerator.Set(new Guid("0fe4961d-85f4-4340-8e49-5438800919ef"));
 
             var x = new X();
 
-            IdGenerator.Set(new Guid("0ae4961d-85f4-0000-8e49-5438800919ef"));
+            GuidGenerator.Set(new Guid("0ae4961d-85f4-0000-8e49-5438800919ef"));
 
             var y = new Y();
 
@@ -167,7 +167,7 @@ namespace EasyWay.Tests.Entities
 
             Assert.True(x.GetHashCode() != y.GetHashCode());
 
-            IdGenerator.Reset();
+            GuidGenerator.Reset();
         }
     }
 }

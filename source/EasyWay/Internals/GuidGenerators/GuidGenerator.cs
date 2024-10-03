@@ -1,13 +1,13 @@
 ﻿using System.Security.Cryptography;
 
-namespace EasyWay.Internals.IdGenerators
+namespace EasyWay.Internals.GuidGenerators
 {
     // Based on code from https://github.com/jhtodd/SequentialGuid/tree/master
-    internal static class IdGenerator
+    internal static class GuidGenerator
     {
         private static readonly RandomNumberGenerator _random = RandomNumberGenerator.Create();
 
-        private static IdGeneratorMode _mode = IdGeneratorMode.SequentialAsString;
+        private static GuidGeneratorMode _mode = GuidGeneratorMode.SequentialAsString;
 
         [ThreadStatic] private static Guid? _customId;
 
@@ -17,7 +17,7 @@ namespace EasyWay.Internals.IdGenerators
 
         internal static void Reset() => _customId = null;
 
-        internal static void ChangeMode(IdGeneratorMode mode) => _mode = mode;
+        internal static void ChangeMode(GuidGeneratorMode mode) => _mode = mode;
 
         private static Guid Create()
         {
@@ -37,13 +37,13 @@ namespace EasyWay.Internals.IdGenerators
 
             switch (_mode)
             {
-                case IdGeneratorMode.SequentialAsString:
-                case IdGeneratorMode.SequentialAsBinary:
+                case GuidGeneratorMode.SequentialAsString:
+                case GuidGeneratorMode.SequentialAsBinary:
 
                     Buffer.BlockCopy(timestampBytes, 2, guidBytes, 0, 6);
                     Buffer.BlockCopy(randomBytes, 0, guidBytes, 6, 10);
 
-                    if (_mode == IdGeneratorMode.SequentialAsString && BitConverter.IsLittleEndian)
+                    if (_mode == GuidGeneratorMode.SequentialAsString && BitConverter.IsLittleEndian)
                     {
                         Array.Reverse(guidBytes, 0, 4);
                         Array.Reverse(guidBytes, 4, 2);
@@ -51,7 +51,7 @@ namespace EasyWay.Internals.IdGenerators
 
                     break;
 
-                case IdGeneratorMode.SequentialAtEnd:
+                case GuidGeneratorMode.SequentialAtEnd:
 
                     Buffer.BlockCopy(randomBytes, 0, guidBytes, 0, 10);
                     Buffer.BlockCopy(timestampBytes, 2, guidBytes, 10, 6);

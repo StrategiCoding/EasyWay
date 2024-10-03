@@ -1,13 +1,13 @@
 ﻿using EasyWay.Internals.BusinessRules;
 using EasyWay.Internals.DomainEvents;
-using EasyWay.Internals.IdGenerators;
+using EasyWay.Internals.GuidGenerators;
 using System.Diagnostics.CodeAnalysis;
 
 namespace EasyWay
 {
     public abstract class Entity : IEquatable<Entity>, IEqualityComparer<Entity>
     {
-        internal Guid Id { get; private set; } = IdGenerator.New;
+        internal Guid Id { get; private set; } = GuidGenerator.New;
 
         private List<DomainEvent> _domainEvents = new List<DomainEvent>();
 

@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.IdGenerators;
+﻿using EasyWay.Internals.GuidGenerators;
 
 namespace EasyWay
 {
@@ -13,7 +13,7 @@ namespace EasyWay
 
         protected DomainEvent()
         {
-            EventId = IdGenerator.New;
+            EventId = GuidGenerator.New;
             OccurrenceOn = Clock.UtcNow;
         }
     }
