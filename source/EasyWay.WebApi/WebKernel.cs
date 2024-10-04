@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EasyWay.Internals;
+using Microsoft.AspNetCore.Builder;
 
 namespace EasyWay
 {

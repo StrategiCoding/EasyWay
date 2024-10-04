@@ -9,12 +9,6 @@ namespace EasyWay
 {
     public static class Extensions
     {
-        public static void UseEasyWay(this IApplicationBuilder app)
-        {
-            app.UseHttpsRedirection();
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
-        }
-
         public static RouteHandlerBuilder MapQuery<TQuery, TReadModel>(this IEndpointRouteBuilder endpoints)
             where TQuery : Query<TReadModel>
             where TReadModel : ReadModel

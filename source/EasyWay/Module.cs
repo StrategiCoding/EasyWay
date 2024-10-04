@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.Modules;
+﻿using EasyWay.Internals;
+using EasyWay.Internals.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

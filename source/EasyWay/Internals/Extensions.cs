@@ -6,11 +6,11 @@ using EasyWay.Internals.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace EasyWay
+namespace EasyWay.Internals
 {
-    public static class Extensions
+    internal static class Extensions
     {
-        public static void AddEasyWay(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+        internal static void AddEasyWay(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             services
                 .AddContexts()
@@ -19,7 +19,7 @@ namespace EasyWay
                 .AddDomainEvents(assemblies)
                 .AddRepositories(assemblies);
 
-            services.AddUnitOfWorkCommandHandlerDecorator();  
+            services.AddUnitOfWorkCommandHandlerDecorator();
         }
     }
 }
