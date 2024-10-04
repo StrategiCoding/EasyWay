@@ -33,7 +33,7 @@ namespace EasyWay.Internals.Commands
 
             await _domainEventDispacher.Dispach().ConfigureAwait(false);
 
-            var aggragateRoots = _aggragateRootsContext.GetAggregateRoots();
+            var aggragateRoots = _aggragateRootsContext.GetChangedAggregateRoots();
 
             foreach (var aggragateRoot in aggragateRoots)
             {

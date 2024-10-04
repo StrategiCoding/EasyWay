@@ -11,11 +11,12 @@ namespace EasyWay.Internals.AggregateRoots
             _dbContext = dbContext;
         }
 
-        public IReadOnlyCollection<AggregateRoot> GetAggregateRoots()
+        public IReadOnlyCollection<AggregateRoot> GetChangedAggregateRoots()
         {
             var aggregateRoots = _dbContext
                 .ChangeTracker
                 .Entries<AggregateRoot>()
+                .Where(x => x.State != EntityState.Unchanged)
                 .Select(x => x.Entity)
                 .ToList();
 

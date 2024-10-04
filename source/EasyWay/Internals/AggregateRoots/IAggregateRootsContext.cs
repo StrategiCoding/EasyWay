@@ -2,6 +2,6 @@
 {
     internal interface IAggregateRootsContext
     {
-        IReadOnlyCollection<AggregateRoot> GetAggregateRoots();
+        IReadOnlyCollection<AggregateRoot> GetChangedAggregateRoots();
     }
 }
