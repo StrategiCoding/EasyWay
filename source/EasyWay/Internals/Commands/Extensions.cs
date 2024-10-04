@@ -7,7 +7,7 @@ namespace EasyWay.Internals.Commands
     {
         internal static IServiceCollection AddCommands(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
-            services.AddScoped<ICommandExecutor, CommandExecutor>();
+            services.AddSingleton<ICommandExecutor, CommandExecutor>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))

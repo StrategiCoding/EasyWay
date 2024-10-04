@@ -7,7 +7,7 @@ namespace EasyWay.Internals.Queries
     {
         internal static IServiceCollection AddQueries(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
-            services.AddScoped<IQueryExecutor, QueryExecutor>();
+            services.AddSingleton<IQueryExecutor, QueryExecutor>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))

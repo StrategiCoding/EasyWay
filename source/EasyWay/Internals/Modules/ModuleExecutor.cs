@@ -1,34 +1,30 @@
 ﻿using EasyWay.Internals.Commands;
 using EasyWay.Internals.Queries;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Modules
 {
     internal sealed class ModuleExecutor<TModule> : IModuleExecutor<TModule>
         where TModule : Module
     {
-        private readonly ICommandExecutor _commandExecutor;
+        private readonly IServiceProvider _serviceProvider;
 
-        private readonly IQueryExecutor _queryExecutor;
-
-        public ModuleExecutor(
-            ICommandExecutor commandExecutor,
-            IQueryExecutor queryExecutor)
+        public ModuleExecutor(IServiceProvider serviceProvider)
         {
-            _commandExecutor = commandExecutor;
-            _queryExecutor = queryExecutor;
+            _serviceProvider = serviceProvider;
         }
 
         public Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
             where TCommand : Command
         {
-            return _commandExecutor.Execute(command, cancellationToken);
+            return _serviceProvider.GetRequiredService<ICommandExecutor>().Execute(command, cancellationToken);
         }
 
         public Task<TResult> Execute<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : Query<TResult>
             where TResult : ReadModel
         {
-            return _queryExecutor.Execute<TQuery, TResult>(query, cancellationToken);
+            return _serviceProvider.GetRequiredService<IQueryExecutor>().Execute<TQuery, TResult>(query, cancellationToken);
         }
     }
 }

@@ -6,18 +6,15 @@ namespace EasyWay
 {
     public abstract class Module
     {
-        internal IServiceProvider Initialize<TModule>()
+        internal void Initialize<TModule>(IServiceCollection services)
             where TModule : Module, new()
         {
-            var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddEasyWay(Assemblies);
+            services.AddEasyWay(Assemblies);
 
-            ConfigureDependencies(serviceCollection);
+            ConfigureDependencies(services);
 
-            serviceCollection.AddSingleton<IModuleExecutor<TModule>, ModuleExecutor<TModule>>();
-
-            return serviceCollection.BuildServiceProvider();
+            services.AddSingleton<IModuleExecutor<TModule>, ModuleExecutor<TModule>>();
         }
 
         protected abstract IEnumerable<Assembly> Assemblies { get; }

@@ -5,7 +5,9 @@ using EasyWay.Samples.Queries;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(args);
+var webKernelBuilder = WebKernel.CreateBuilder(args);
+
+var builder = webKernelBuilder.AppBuilder;
 
 string connectionString = builder.Configuration.GetConnectionString("Database");
 // Add services to the container.
@@ -13,14 +15,13 @@ string connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var moduleExecutor = ModuleFactory.Create<SampleModule>();
-
-builder.Services.AddSingleton(moduleExecutor);
 
 builder.Services.AddEasyWay(new List<Assembly> { typeof(SampleCommand).Assembly });
 builder.Services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(connectionString));
 
-var app = builder.Build();
+var webKernel = webKernelBuilder.Build();
+
+var app = webKernel.App;
 
 using (var scope = app.Services.CreateScope())
 {
@@ -41,4 +42,4 @@ app.MapCommand<SampleCommand>();
 app.MapCommand<ErrorCommand>();
 app.MapQuery<SampleQuery, SampleQueryResult>();
 
-app.Run();
+await webKernel.RunAsync();
