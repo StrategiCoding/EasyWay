@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using EasyWay.Samples.Databases;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace EasyWay.Samples
 {
@@ -9,9 +11,11 @@ namespace EasyWay.Samples
             typeof(SampleModule).Assembly 
         };
 
-        protected override void ConfigureDependencies(IServiceCollection services)
+        protected override void ConfigureDependencies(IServiceCollection services, IConfiguration configuration)
         {
-            //throw new NotImplementedException();
+            string connectionString = configuration.GetConnectionString("Database");
+
+            services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(connectionString));
         }
     }
 }

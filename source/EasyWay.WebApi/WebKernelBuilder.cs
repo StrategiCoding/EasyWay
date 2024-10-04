@@ -11,10 +11,15 @@ namespace EasyWay
             AppBuilder = webApplicationBuilder;
         }
 
-        public void AddModue<TModule>()
+        public void AddModule<TModule>()
             where TModule : Module, new()
         {
+            var services = AppBuilder.Services;
+            var configuration = AppBuilder.Configuration.GetSection(typeof(TModule).Name);
 
+            var module = new TModule();
+
+            module.Initialize<TModule>(services, configuration);
         }
 
         public WebKernel Build()

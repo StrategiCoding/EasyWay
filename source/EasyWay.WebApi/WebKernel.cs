@@ -16,6 +16,8 @@ namespace EasyWay
         internal WebKernel(WebApplication webApplication) 
         {
             App = webApplication;
+
+            App.UseEasyWay();
         }
 
         public async Task RunAsync()
