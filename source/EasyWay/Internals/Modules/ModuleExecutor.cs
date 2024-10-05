@@ -4,8 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Modules
 {
-    internal sealed class ModuleExecutor<TModule> : IModuleExecutor<TModule>
-        where TModule : Module
+    internal sealed class ModuleExecutor : IModuleExecutor
     {
         private readonly IServiceProvider _serviceProvider;
 

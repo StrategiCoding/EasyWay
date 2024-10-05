@@ -19,12 +19,11 @@ namespace EasyWay
 
             var module = new TModule();
 
-            module.Initialize<TModule>(services, configuration);
+            module.Initialize(services, configuration);
         }
 
         public WebKernel Build()
         {
-
             return new WebKernel(AppBuilder.Build());
         }
     }

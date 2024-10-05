@@ -1,7 +1,6 @@
 ﻿namespace EasyWay
 {
-    public interface IModuleExecutor<TModule>
-        where TModule : Module
+    public interface IModuleExecutor
     {
         Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : Command;
