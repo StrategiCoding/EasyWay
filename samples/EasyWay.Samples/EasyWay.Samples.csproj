@@ -26,4 +26,8 @@
 		<Using Include="EasyWay" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Modules\" />
+	</ItemGroup>
+
 </Project>

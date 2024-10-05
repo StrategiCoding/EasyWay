@@ -4,18 +4,21 @@ namespace EasyWay.Internals.UnitOfWorks
 {
     internal sealed class EntityFrameworkUnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _context;
+        private readonly IEnumerable<DbContext> _contexts;
 
-        public EntityFrameworkUnitOfWork(DbContext context)
+        public EntityFrameworkUnitOfWork(IEnumerable<DbContext> contexts)
         {
-            _context = context;
+            _contexts = contexts;
         }
 
         public async Task Commit()
         {
             try
             {
-                await _context.SaveChangesAsync();
+                foreach (var context in _contexts) 
+                {
+                    await context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException ex)
             {
