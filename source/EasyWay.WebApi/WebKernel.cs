@@ -1,5 +1,6 @@
 ﻿using EasyWay.Internals;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EasyWay
 {
@@ -8,6 +9,8 @@ namespace EasyWay
         public static WebKernelBuilder CreateBuilder(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.WebHost.UseKestrel(option => option.AddServerHeader = false);
 
             return new WebKernelBuilder(builder);
         }
