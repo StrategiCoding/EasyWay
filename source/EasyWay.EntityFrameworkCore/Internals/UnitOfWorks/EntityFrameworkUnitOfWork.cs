@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EasyWay.Internals.UnitOfWorks.Policies;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyWay.Internals.UnitOfWorks
 {
@@ -6,19 +7,27 @@ namespace EasyWay.Internals.UnitOfWorks
     {
         private readonly IEnumerable<DbContext> _contexts;
 
-        public EntityFrameworkUnitOfWork(IEnumerable<DbContext> contexts)
+        private readonly IEnumerable<IEntityFrameworkUnitOfWorkPolicy> _policies;
+
+        public EntityFrameworkUnitOfWork(
+            IEnumerable<DbContext> contexts,
+            IEnumerable<IEntityFrameworkUnitOfWorkPolicy> policies)
         {
             _contexts = contexts;
+            _policies = policies;
         }
 
         public async Task Commit()
         {
+            var contextsWithChanges = _contexts.Where(x => x.ChangeTracker.HasChanges());
+
             try
             {
-                foreach (var context in _contexts) 
-                {
-                    await context.SaveChangesAsync();
-                }
+                await _policies
+                    .Where(x => x.IsApplicable(contextsWithChanges))
+                    .Single()
+                    .Apply(contextsWithChanges)
+                    .ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException ex)
             {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay
 {
-    public static class ExtnsionAddEntityFrameworkCore
+    public static class Extnsions
     {
         public static void AddEntityFrameworkCore<TContext>(
             this IServiceCollection services,
@@ -23,7 +23,7 @@ namespace EasyWay
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork>();
+            services.AddUnitOfWork();
         }
     }
 }
