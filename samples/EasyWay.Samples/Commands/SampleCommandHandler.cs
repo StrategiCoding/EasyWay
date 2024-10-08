@@ -10,14 +10,18 @@ namespace EasyWay.Samples.Commands
 
         private readonly SampleAggregateRootFactory _factory;
 
+        private readonly SampleDomainService _domainService;
+
         public SampleCommandHandler(
             ICancellationContext cancellationContext,
             ISampleAggragateRootRepository repository,
-            SampleAggregateRootFactory factory)
+            SampleAggregateRootFactory factory,
+            SampleDomainService domainService)
         {
             _cancellationContext = cancellationContext;
             _repository = repository;
             _factory = factory;
+            _domainService = domainService;
         }
 
         public async Task Handle(SampleCommand command)

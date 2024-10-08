@@ -1,6 +1,7 @@
 ﻿using EasyWay.Internals.Commands;
 using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
+using EasyWay.Internals.DomainServices;
 using EasyWay.Internals.Factories;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Repositories;
@@ -19,6 +20,7 @@ namespace EasyWay.Internals
                 .AddQueries(assemblies)
                 .AddDomainEvents(assemblies)
                 .AddRepositories(assemblies)
+                .AddDomainServices(assemblies)
                 .AddFactories(assemblies);
 
             services.AddUnitOfWorkCommandHandlerDecorator();
