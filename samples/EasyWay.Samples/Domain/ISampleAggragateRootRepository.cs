@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Domain
 {
-    public interface ISampleAggragateRootRepository : IRepository
+    public interface ISampleAggragateRootRepository
     {
         public Task<SampleAggregateRoot?> Get(Guid id);
 

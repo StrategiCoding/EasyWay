@@ -1,18 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace EasyWay.Internals.Repositories
+namespace EasyWay.Internals.Factories
 {
     internal static class Extensions
     {
-        private static string _postfix = "Repository";
+        private static string _postfix = "Factory";
 
-        internal static IServiceCollection AddRepositories(this IServiceCollection services, IEnumerable<Assembly> assemblies) 
+        internal static IServiceCollection AddFactories(this IServiceCollection services, IEnumerable<Assembly> assemblies) 
         {
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.Where(x => x.Name.EndsWith(_postfix)))
-            .AsImplementedInterfaces()
-            .WithScopedLifetime());
+            .AsSelf()
+            .WithTransientLifetime());
 
             return services;
         }

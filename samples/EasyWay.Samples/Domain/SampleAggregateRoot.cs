@@ -2,7 +2,7 @@
 {
     public sealed class SampleAggregateRoot : AggregateRoot
     {
-        public SampleAggregateRoot() 
+        internal SampleAggregateRoot() 
         { 
             Add(new CreatedSampleAggragete());
         }

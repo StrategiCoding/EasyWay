@@ -8,19 +8,23 @@ namespace EasyWay.Samples.Commands
 
         private readonly ISampleAggragateRootRepository _repository;
 
+        private readonly SampleAggregateRootFactory _factory;
+
         public SampleCommandHandler(
             ICancellationContext cancellationContext,
-            ISampleAggragateRootRepository repository)
+            ISampleAggragateRootRepository repository,
+            SampleAggregateRootFactory factory)
         {
             _cancellationContext = cancellationContext;
             _repository = repository;
+            _factory = factory;
         }
 
         public async Task Handle(SampleCommand command)
         {
             var token = _cancellationContext.Token;
 
-            var x = new SampleAggregateRoot();
+            var x = _factory.Create();
 
             await _repository.Add(x);
         }
