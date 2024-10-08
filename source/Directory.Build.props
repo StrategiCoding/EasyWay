@@ -5,13 +5,23 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
+
+		<RootNamespace>EasyWay</RootNamespace>
+
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+
 		<RepositoryType>git</RepositoryType>
-		<RootNamespace>EasyWay</RootNamespace>
-		<PackageTags>$(AssemblyName)</PackageTags>
+		<RepositoryUrl>https://github.com/StrategiCoding/EasyWay</RepositoryUrl>
+
 		<Title>$(AssemblyName)</Title>
+		<PackageTags>$(AssemblyName)</PackageTags>
+		<Description>Create modern applications with the best practices using predefined building blocks in .NET</Description>
+		
+    	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		
 	</PropertyGroup>
 
 </Project>
