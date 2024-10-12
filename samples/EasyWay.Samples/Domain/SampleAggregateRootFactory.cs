@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Domain
 {
-    public sealed class SampleAggregateRootFactory
+    public sealed class SampleAggregateRootFactory : Factory
     {
         public SampleAggregateRoot Create()
         {
