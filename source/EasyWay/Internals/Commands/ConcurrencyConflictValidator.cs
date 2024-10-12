@@ -1,6 +1,6 @@
 ﻿using EasyWay.Internals.UnitOfWorks;
 
-namespace EasyWay.Internals.Commands.ConcurrencyConflicts
+namespace EasyWay.Internals.Commands
 {
     internal sealed class ConcurrencyConflictValidator : IConcurrencyConflictValidator
     {
@@ -14,7 +14,7 @@ namespace EasyWay.Internals.Commands.ConcurrencyConflicts
                 return;
             }
 
-            var message = $"{aggregateRoot.GetType().Name} with id {aggregateRoot.Id} has difference concurrency token ({aggregateRoot.ConcurrencyToken}) that command ({command.ConcurrencyToken})";
+            var message = $"{aggregateRoot.GetType().Name} with id {aggregateRoot.Id} has different concurrency token ({aggregateRoot.ConcurrencyToken}) that command ({command.ConcurrencyToken})";
 
             throw new ConcurrencyException(message);
         }
