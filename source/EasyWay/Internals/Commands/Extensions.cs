@@ -19,6 +19,8 @@ namespace EasyWay.Internals.Commands
 
             services.TryDecorate(typeof(ICommandHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
 
+            services.AddSingleton<IConcurrencyConflictValidator, ConcurrencyConflictValidator>();
+
             return services;
         }
     }

@@ -8,7 +8,7 @@ namespace EasyWay.Internals.Exceptions
         internal ConcurrencyExceptionResponse(ConcurrencyException ex)
         {
             Type = "ConcurrencyConflict";
-            Detail = "The resource has been modified (try again)";
+            Detail = "The resource has been modified by another process (try again)";
             Status = StatusCodes.Status409Conflict;
         }
     }
