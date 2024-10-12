@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Domain
 {
-    public sealed class SampleDomainService
+    public sealed class SampleDomainService : DomainService
     {
         // Sample
     }
