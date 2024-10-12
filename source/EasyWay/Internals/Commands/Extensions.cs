@@ -17,6 +17,8 @@ namespace EasyWay.Internals.Commands
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 
+            services.TryDecorate(typeof(ICommandHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
+
             return services;
         }
     }

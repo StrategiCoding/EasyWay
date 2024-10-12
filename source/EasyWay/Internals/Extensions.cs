@@ -23,8 +23,6 @@ namespace EasyWay.Internals
                 .AddRepositories(assemblies)
                 .AddDomainServices(assemblies)
                 .AddFactories(assemblies);
-
-            services.AddUnitOfWorkCommandHandlerDecorator();
         }
     }
 }
