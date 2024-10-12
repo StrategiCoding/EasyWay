@@ -12,14 +12,14 @@ namespace EasyWay
         }
 
         public void AddModule<TModule>()
-            where TModule : BasicModule, new()
+            where TModule : EasyWayModule, new()
         {
             var services = AppBuilder.Services;
             var configuration = AppBuilder.Configuration.GetSection(typeof(TModule).Name);
 
             var module = new TModule();
 
-            module.Initialize(services, configuration);
+            module.Initialize<TModule>(services, configuration);
         }
 
         public WebKernel Build()

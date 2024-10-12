@@ -12,12 +12,13 @@ namespace EasyWay.Internals
 {
     internal static class Extensions
     {
-        internal static void AddEasyWay(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+        internal static void AddEasyWay<TModule>(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+            where TModule : EasyWayModule
         {
             services
                 .AddContexts()
                 .AddCommands(assemblies)
-                .AddQueries(assemblies)
+                .AddQueries<TModule>(assemblies)
                 .AddDomainEvents(assemblies)
                 .AddRepositories(assemblies)
                 .AddDomainServices(assemblies)

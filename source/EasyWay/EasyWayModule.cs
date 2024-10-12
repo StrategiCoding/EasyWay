@@ -6,15 +6,16 @@ using System.Reflection;
 
 namespace EasyWay
 {
-    public abstract class BasicModule
+    public abstract class EasyWayModule
     {
-        internal void Initialize(IServiceCollection services, IConfiguration configuration)
+        internal void Initialize<TModule>(IServiceCollection services, IConfiguration configuration)
+            where TModule : EasyWayModule
         {
-            services.AddEasyWay(Assemblies);
+            services.AddEasyWay<TModule>(Assemblies);
 
             ConfigureDependencies(services, configuration);
 
-            services.AddSingleton<IModuleExecutor, ModuleExecutor>();
+            services.AddSingleton<IModuleExecutor<TModule>, ModuleExecutor<TModule>>();
         }
 
         protected abstract IEnumerable<Assembly> Assemblies { get; }

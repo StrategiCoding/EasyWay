@@ -31,6 +31,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapCommand<SampleCommand>();
 app.MapCommand<ErrorCommand>();
-app.MapQuery<SampleQuery, SampleQueryResult>();
+app.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
 
 await webKernel.RunAsync();
