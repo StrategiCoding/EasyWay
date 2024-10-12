@@ -13,7 +13,7 @@ namespace EasyWay
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
-            return endpoints.MapPost(typeof(TModule).Name + '/' + typeof(TQuery).Name, async ([FromBody] TQuery query, IQueryExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TModule).Name + "/_queries/" + typeof(TQuery).Name, async ([FromBody] TQuery query, IQueryExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 await executor.Execute<TQuery, TReadModel>(query, cancellationToken).ConfigureAwait(false);
             });
@@ -23,7 +23,7 @@ namespace EasyWay
             where TModule : EasyWayModule
             where TCommand : Command<TModule>
         {
-            return endpoints.MapPost(typeof(TModule).Name + '/' + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 await executor.Execute(command, cancellationToken).ConfigureAwait(false);
             });
