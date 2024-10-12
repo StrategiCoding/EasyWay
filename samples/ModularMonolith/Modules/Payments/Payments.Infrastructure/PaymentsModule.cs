@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Payments.Infrastructure
 {
-    public sealed class PaymentsModule : EasyWayModule
+    public sealed class PaymentsModule : BasicModule
     {
         //TODO Module
         protected override IEnumerable<Assembly> Assemblies => new List<Assembly>

@@ -12,7 +12,7 @@ namespace EasyWay
         }
 
         public void AddModule<TModule>()
-            where TModule : EasyWayModule, new()
+            where TModule : BasicModule, new()
         {
             var services = AppBuilder.Services;
             var configuration = AppBuilder.Configuration.GetSection(typeof(TModule).Name);

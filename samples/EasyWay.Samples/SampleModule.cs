@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace EasyWay.Samples
 {
-    public sealed class SampleModule : EasyWayModule
+    public sealed class SampleModule : BasicModule
     {
         protected override IEnumerable<Assembly> Assemblies => new List<Assembly> 
         { 

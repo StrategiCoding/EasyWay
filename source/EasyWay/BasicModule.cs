@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace EasyWay
 {
-    public abstract class EasyWayModule
+    public abstract class BasicModule
     {
         internal void Initialize(IServiceCollection services, IConfiguration configuration)
         {
