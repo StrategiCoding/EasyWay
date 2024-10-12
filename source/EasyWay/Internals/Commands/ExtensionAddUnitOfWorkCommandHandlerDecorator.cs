@@ -6,7 +6,7 @@ namespace EasyWay.Internals.Commands
     {
         internal static IServiceCollection AddUnitOfWorkCommandHandlerDecorator(this IServiceCollection services) 
         {
-            services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
+            services.TryDecorate(typeof(ICommandHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
 
             return services;
         }

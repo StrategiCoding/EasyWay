@@ -3,7 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands
 {
-    internal sealed class CommandExecutor : ICommandExecutor
+    internal sealed class CommandExecutor<TModule> : ICommandExecutor<TModule>
+        where TModule : EasyWayModule
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -13,7 +14,7 @@ namespace EasyWay.Internals.Commands
         }
 
         public async Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
-            where TCommand : Command
+            where TCommand : Command<TModule>
         {
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -24,7 +25,7 @@ namespace EasyWay.Internals.Commands
                 .Set(cancellationToken);
 
                 await sp
-                .GetRequiredService<ICommandHandler<TCommand>>()
+                .GetRequiredService<ICommandHandler<TModule, TCommand>>()
                 .Handle(command)
                 .ConfigureAwait(false);
             }

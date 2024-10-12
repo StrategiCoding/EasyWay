@@ -1,5 +1,4 @@
 using EasyWay;
-using Payments.Application.Payments;
 using Payments.Infrastructure;
 
 var webKernelBuilder = WebKernel.CreateBuilder(args);
@@ -28,6 +27,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapCommand<CreatePaymentCommand>();
+//app.MapCommand<CreatePaymentCommand>();
 
 await webKernel.RunAsync();

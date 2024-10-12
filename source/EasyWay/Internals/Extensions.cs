@@ -17,7 +17,7 @@ namespace EasyWay.Internals
         {
             services
                 .AddContexts()
-                .AddCommands(assemblies)
+                .AddCommands<TModule>(assemblies)
                 .AddQueries<TModule>(assemblies)
                 .AddDomainEvents(assemblies)
                 .AddRepositories(assemblies)

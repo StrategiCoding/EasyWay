@@ -6,7 +6,7 @@ namespace EasyWay
         where TModule : EasyWayModule
     {
         Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default)
-            where TCommand : Command;
+            where TCommand : Command<TModule>;
 
         Task<TResult> Execute<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : Query<TModule, TResult>

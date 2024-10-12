@@ -16,9 +16,9 @@ namespace EasyWay.Internals.Modules
         }
 
         public Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
-            where TCommand : Command
+            where TCommand : Command<TModule>
         {
-            return _serviceProvider.GetRequiredService<ICommandExecutor>().Execute(command, cancellationToken);
+            return _serviceProvider.GetRequiredService<ICommandExecutor<TModule>>().Execute(command, cancellationToken);
         }
 
         public Task<TResult> Execute<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)

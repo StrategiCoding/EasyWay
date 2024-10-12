@@ -2,7 +2,7 @@
 
 namespace EasyWay.Samples.Commands
 {
-    internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
+    internal sealed class SampleCommandHandler : ICommandHandler<SampleModule, SampleCommand>
     {
         private readonly ICancellationContext _cancellationContext;
 

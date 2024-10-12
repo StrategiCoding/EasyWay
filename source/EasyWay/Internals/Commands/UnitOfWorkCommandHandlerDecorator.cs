@@ -4,10 +4,11 @@ using EasyWay.Internals.UnitOfWorks;
 
 namespace EasyWay.Internals.Commands
 {
-    internal sealed class UnitOfWorkCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
-        where TCommand : Command
+    internal sealed class UnitOfWorkCommandHandlerDecorator<TModule, TCommand> : ICommandHandler<TModule, TCommand>
+        where TModule : EasyWayModule
+        where TCommand : Command<TModule>
     {
-        private readonly ICommandHandler<TCommand> _decoratedHandler;
+        private readonly ICommandHandler<TModule, TCommand> _decoratedHandler;
 
         private readonly IDomainEventContextDispacher _domainEventDispacher;
 
@@ -16,7 +17,7 @@ namespace EasyWay.Internals.Commands
         private readonly IUnitOfWork _unitOfWork;
 
         public UnitOfWorkCommandHandlerDecorator(
-            ICommandHandler<TCommand> decoratedHandler,
+            ICommandHandler<TModule, TCommand> decoratedHandler,
             IDomainEventContextDispacher domainEventDispacher,
             IAggregateRootsContext aggragateRootsContext,
             IUnitOfWork unitOfWork)

@@ -1,7 +1,6 @@
 ﻿using EasyWay;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Payments.Application.Payments;
 using Payments.Domain.Payments;
 using System.Reflection;
 
@@ -13,7 +12,7 @@ namespace Payments.Infrastructure
         protected override IEnumerable<Assembly> Assemblies => new List<Assembly>
         {
             typeof(Payment).Assembly,
-            typeof(CreatePaymentCommand).Assembly,
+            //typeof(CreatePaymentCommand).Assembly,
             typeof(PaymentsDbContext).Assembly,
         };
 
