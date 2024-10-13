@@ -17,13 +17,16 @@ namespace EasyWay.Samples.Commands
 
         private readonly IEnumerable<ISamplePolicy> _policies;
 
+        private readonly IUserContext _userContext;
+
         public SampleCommandHandler(
             ICancellationContext cancellationContext,
             ISampleAggragateRootRepository repository,
             SampleAggregateRootFactory factory,
             SampleDomainService domainService,
             IConcurrencyConflictValidator concurrencyTokenValidator,
-            IEnumerable<ISamplePolicy> policies)
+            IEnumerable<ISamplePolicy> policies,
+            IUserContext userContext)
         {
             _cancellationContext = cancellationContext;
             _repository = repository;
@@ -31,10 +34,13 @@ namespace EasyWay.Samples.Commands
             _domainService = domainService;
             _concurrencyTokenValidator = concurrencyTokenValidator;
             _policies = policies;
+            _userContext = userContext;
         }
 
         public async Task Handle(SampleCommand command)
         {
+            var userId = _userContext.UserId;
+
             var token = _cancellationContext.Token;
 
             var data = _policies

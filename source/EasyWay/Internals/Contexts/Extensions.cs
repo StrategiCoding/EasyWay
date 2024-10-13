@@ -9,6 +9,8 @@ namespace EasyWay.Internals.Contexts
             services.AddScoped<CancellationContext>();
             services.AddScoped<ICancellationContext, CancellationContext>();
 
+            services.AddScoped<IUserContext, DefaultUserContext>();
+
             return services;
         }
     }

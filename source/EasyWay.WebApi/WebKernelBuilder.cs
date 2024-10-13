@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EasyWay.Internals;
+using Microsoft.AspNetCore.Builder;
 
 namespace EasyWay
 {
@@ -25,6 +26,8 @@ namespace EasyWay
 
         public WebKernel Build()
         {
+            AppBuilder.Services.AddEasyWayWebApi();
+
             return new WebKernel(AppBuilder.Build());
         }
     }
