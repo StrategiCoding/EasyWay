@@ -3,6 +3,7 @@ using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.DomainServices;
 using EasyWay.Internals.Factories;
+using EasyWay.Internals.Policies;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ namespace EasyWay.Internals
                 .AddQueries<TModule>(assemblies)
                 .AddDomainEvents(assemblies)
                 .AddRepositories(assemblies)
+                .AddPolicies(assemblies)
                 .AddDomainServices(assemblies)
                 .AddFactories(assemblies);
         }
