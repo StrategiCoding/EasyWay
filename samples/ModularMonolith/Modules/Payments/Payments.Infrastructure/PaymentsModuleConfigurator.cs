@@ -1,14 +1,14 @@
 ﻿using EasyWay;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Payments.Application;
 using Payments.Domain.Payments;
 using System.Reflection;
 
 namespace Payments.Infrastructure
 {
-    public sealed class PaymentsModule : EasyWayModule
+    public sealed class PaymentsModuleConfigurator : ModuleConfigurator<PaymentsModule>
     {
-        //TODO Module
         protected override IEnumerable<Assembly> Assemblies => new List<Assembly>
         {
             typeof(Payment).Assembly,

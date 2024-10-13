@@ -7,7 +7,7 @@ var webKernelBuilder = WebKernel.CreateBuilder(args);
 
 var builder = webKernelBuilder.AppBuilder;
 
-webKernelBuilder.AddModule<SampleModule>();
+webKernelBuilder.AddModule<SampleModule, SampleModuleConfigurator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

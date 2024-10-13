@@ -1,11 +1,12 @@
 using EasyWay;
+using Payments.Application;
 using Payments.Infrastructure;
 
 var webKernelBuilder = WebKernel.CreateBuilder(args);
 
 var builder = webKernelBuilder.AppBuilder;
 
-webKernelBuilder.AddModule<PaymentsModule>();
+webKernelBuilder.AddModule<PaymentsModule, PaymentsModuleConfigurator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
