@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/ReadmeEasyWayLogo.png">
+    <img src="assets/easy-way-readme-logo.png">
 </div>
 
   <p align="center">

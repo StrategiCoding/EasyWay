@@ -16,6 +16,7 @@
 		<RepositoryUrl>https://github.com/StrategiCoding/EasyWay</RepositoryUrl>
 
 		<Title>$(AssemblyName)</Title>
+		<PackageIcon>easy-way-nuget-logo.png</PackageIcon>
 		<PackageTags>$(AssemblyName)</PackageTags>
 		<Description>Create modern applications with the best practices using predefined building blocks in .NET</Description>
 		
@@ -23,5 +24,12 @@
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\assets\easy-way-nuget-logo.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
