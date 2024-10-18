@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.Commands;
+﻿using EasyWay.Internals.AggregateRoots;
+using EasyWay.Internals.Commands;
 using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.DomainServices;
@@ -18,6 +19,7 @@ namespace EasyWay.Internals
         {
             services
                 .AddContexts()
+                .AddAggregateRoots()
                 .AddCommands<TModule>(assemblies)
                 .AddQueries<TModule>(assemblies)
                 .AddDomainEvents(assemblies)
@@ -25,6 +27,7 @@ namespace EasyWay.Internals
                 .AddPolicies(assemblies)
                 .AddDomainServices(assemblies)
                 .AddFactories(assemblies);
+                
         }
     }
 }

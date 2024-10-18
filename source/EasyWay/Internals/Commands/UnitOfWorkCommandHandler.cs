@@ -8,17 +8,17 @@ namespace EasyWay.Internals.Commands
     {
         private readonly IDomainEventContextDispacher _domainEventDispacher;
 
-        private readonly IAggregateRootsContext _aggragateRootsContext;
+        private readonly IConcurrencyTokenUpdater _concurrencyTokenUpdater;
 
         private readonly ITransaction _unitOfWork;
 
         public UnitOfWorkCommandHandler(
             IDomainEventContextDispacher domainEventDispacher,
-            IAggregateRootsContext aggragateRootsContext,
+            IConcurrencyTokenUpdater concurrencyTokenUpdater,
             ITransaction unitOfWork)
         {
             _domainEventDispacher = domainEventDispacher;
-            _aggragateRootsContext = aggragateRootsContext;
+            _concurrencyTokenUpdater = concurrencyTokenUpdater;
             _unitOfWork = unitOfWork;
         }
 
@@ -26,12 +26,7 @@ namespace EasyWay.Internals.Commands
         {
             await _domainEventDispacher.Dispach().ConfigureAwait(false);
 
-            var aggragateRoots = _aggragateRootsContext.GetAggregateRoots();
-
-            foreach (var aggragateRoot in aggragateRoots)
-            {
-                aggragateRoot.UpdateConcurrencyToken();
-            }
+            _concurrencyTokenUpdater.Update();
 
             await _unitOfWork.Commit().ConfigureAwait(false);
         }
