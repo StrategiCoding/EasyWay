@@ -1,6 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 
 namespace EasyWay.Internals.Queries
 {
@@ -9,28 +8,25 @@ namespace EasyWay.Internals.Queries
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public QueryExecutor(IServiceProvider serviceProvider) 
+        private readonly ICancellationContextConstructor _cancellationContextConstructor;
+
+        public QueryExecutor(
+            IServiceProvider serviceProvider,
+            ICancellationContextConstructor cancellationContextConstructor) 
         { 
             _serviceProvider = serviceProvider;
+            _cancellationContextConstructor = cancellationContextConstructor;
         }  
 
-        public async Task<TReadModel> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
+        public Task<TReadModel> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                var sp = scope.ServiceProvider;
+            _cancellationContextConstructor.Set(cancellationToken);
 
-                sp
-                .GetRequiredService<CancellationContext>()
-                .Set(cancellationToken);
-
-                return await sp
-                .GetRequiredService<IQueryHandler<TModule, TQuery, TReadModel>>()
-                .Handle(query)
-                .ConfigureAwait(false);
-            }
+            return _serviceProvider
+                    .GetRequiredService<IQueryHandler<TModule, TQuery, TReadModel>>()
+                    .Handle(query);
         }
     }
 }

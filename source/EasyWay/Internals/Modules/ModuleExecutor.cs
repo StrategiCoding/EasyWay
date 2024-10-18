@@ -27,11 +27,22 @@ namespace EasyWay.Internals.Modules
             }
         }
 
-        public Task<TResult> Execute<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
+        public async Task<TResult> Execute<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : Query<TModule, TResult>
             where TResult : ReadModel
         {
-            return _serviceProvider.GetRequiredService<IQueryExecutor<TModule>>().Execute<TQuery, TResult>(query, cancellationToken);
+            TResult result;
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var sp = scope.ServiceProvider;
+
+                result = await sp
+                    .GetRequiredService<IQueryExecutor<TModule>>()
+                    .Execute<TQuery, TResult>(query, cancellationToken);
+            }
+
+            return result;
         }
     }
 }

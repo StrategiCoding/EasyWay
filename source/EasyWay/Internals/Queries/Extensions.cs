@@ -10,7 +10,7 @@ namespace EasyWay.Internals.Queries
             IEnumerable<Assembly> assemblies)
             where TModule : EasyWayModule
         {
-            services.AddSingleton<IQueryExecutor<TModule>, QueryExecutor<TModule>>();
+            services.AddScoped<IQueryExecutor<TModule>, QueryExecutor<TModule>>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,,>)))
