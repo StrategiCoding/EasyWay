@@ -1,6 +1,6 @@
-﻿using EasyWay.Internals.Commands;
+﻿using EasyWay.Internals;
+using EasyWay.Internals.Commands;
 using EasyWay.Internals.GuidGenerators;
-using EasyWay.Internals.UnitOfWorks;
 
 namespace EasyWay.Tests.Internals.Commands
 {

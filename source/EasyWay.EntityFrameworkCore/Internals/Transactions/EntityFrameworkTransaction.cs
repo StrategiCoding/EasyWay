@@ -1,17 +1,17 @@
-﻿using EasyWay.Internals.UnitOfWorks.Policies;
+﻿using EasyWay.Internals.Transactions.Policies;
 using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.Internals.UnitOfWorks
+namespace EasyWay.Internals.Transactions
 {
-    internal sealed class EntityFrameworkUnitOfWork : IUnitOfWork
+    internal sealed class EntityFrameworkTransaction : ITransaction
     {
         private readonly IEnumerable<DbContext> _contexts;
 
-        private readonly IEnumerable<IEntityFrameworkUnitOfWorkPolicy> _policies;
+        private readonly IEnumerable<IEntityFrameworkTransactionPolicy> _policies;
 
-        public EntityFrameworkUnitOfWork(
+        public EntityFrameworkTransaction(
             IEnumerable<DbContext> contexts,
-            IEnumerable<IEntityFrameworkUnitOfWorkPolicy> policies)
+            IEnumerable<IEntityFrameworkTransactionPolicy> policies)
         {
             _contexts = contexts;
             _policies = policies;

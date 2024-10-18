@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace EasyWay.Internals.UnitOfWorks.Policies
+namespace EasyWay.Internals.Transactions.Policies
 {
-    internal sealed class MultipleDbContextWithChangesUnitOfWorkPolicy : IEntityFrameworkUnitOfWorkPolicy
+    internal sealed class MultipleDbContextWithChangesTransactionPolicy : IEntityFrameworkTransactionPolicy
     {
         public async Task Apply(IEnumerable<DbContext> dbContextsWithChanges)
         {

@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.UnitOfWorks
+﻿namespace EasyWay.Internals
 {
     internal sealed class ConcurrencyException : EasyWayException
     {

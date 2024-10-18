@@ -1,5 +1,4 @@
-﻿using EasyWay.Internals.UnitOfWorks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace EasyWay.Internals.Exceptions
 {

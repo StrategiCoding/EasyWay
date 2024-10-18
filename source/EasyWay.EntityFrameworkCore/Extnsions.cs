@@ -1,7 +1,7 @@
 ﻿using EasyWay.Internals.AggregateRoots;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.Repositories;
-using EasyWay.Internals.UnitOfWorks;
+using EasyWay.Internals.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +23,7 @@ namespace EasyWay
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            services.AddUnitOfWork();
+            services.AddTransactions();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using EasyWay.Internals.UnitOfWorks;
-
-namespace EasyWay.Internals.Commands
+﻿namespace EasyWay.Internals.Commands
 {
     internal sealed class ConcurrencyConflictValidator : IConcurrencyConflictValidator
     {

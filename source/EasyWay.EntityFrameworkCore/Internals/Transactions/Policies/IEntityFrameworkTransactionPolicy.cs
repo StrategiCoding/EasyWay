@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.Internals.UnitOfWorks.Policies
+namespace EasyWay.Internals.Transactions.Policies
 {
-    internal interface IEntityFrameworkUnitOfWorkPolicy
+    internal interface IEntityFrameworkTransactionPolicy
     {
         bool IsApplicable(IEnumerable<DbContext> dbContextsWithChanges);
 

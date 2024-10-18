@@ -1,6 +1,6 @@
 ﻿using EasyWay.Internals.AggregateRoots;
 using EasyWay.Internals.DomainEvents;
-using EasyWay.Internals.UnitOfWorks;
+using EasyWay.Internals.Transactions;
 
 namespace EasyWay.Internals.Commands
 {
@@ -10,12 +10,12 @@ namespace EasyWay.Internals.Commands
 
         private readonly IAggregateRootsContext _aggragateRootsContext;
 
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ITransaction _unitOfWork;
 
         public UnitOfWorkCommandHandler(
             IDomainEventContextDispacher domainEventDispacher,
             IAggregateRootsContext aggragateRootsContext,
-            IUnitOfWork unitOfWork)
+            ITransaction unitOfWork)
         {
             _domainEventDispacher = domainEventDispacher;
             _aggragateRootsContext = aggragateRootsContext;

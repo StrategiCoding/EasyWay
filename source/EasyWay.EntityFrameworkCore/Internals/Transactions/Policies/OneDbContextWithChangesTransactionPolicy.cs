@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EasyWay.Internals.UnitOfWorks.Policies
+namespace EasyWay.Internals.Transactions.Policies
 {
-    internal sealed class OneDbContextWithChangesUnitOfWorkPolicy : IEntityFrameworkUnitOfWorkPolicy
+    internal sealed class OneDbContextWithChangesTransactionPolicy : IEntityFrameworkTransactionPolicy
     {
         public async Task Apply(IEnumerable<DbContext> dbContextsWithChanges)
         {

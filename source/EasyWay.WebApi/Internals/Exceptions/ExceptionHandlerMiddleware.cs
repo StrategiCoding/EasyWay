@@ -1,5 +1,4 @@
 ﻿using EasyWay.Internals.BusinessRules;
-using EasyWay.Internals.UnitOfWorks;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
