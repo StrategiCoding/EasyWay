@@ -4,34 +4,26 @@ using EasyWay.Internals.UnitOfWorks;
 
 namespace EasyWay.Internals.Commands
 {
-    internal sealed class UnitOfWorkCommandHandlerDecorator<TModule, TCommand> : ICommandHandler<TModule, TCommand>
-        where TModule : EasyWayModule
-        where TCommand : Command<TModule>
+    internal sealed class UnitOfWorkCommandHandler
     {
-        private readonly ICommandHandler<TModule, TCommand> _decoratedHandler;
-
         private readonly IDomainEventContextDispacher _domainEventDispacher;
 
         private readonly IAggregateRootsContext _aggragateRootsContext;
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public UnitOfWorkCommandHandlerDecorator(
-            ICommandHandler<TModule, TCommand> decoratedHandler,
+        public UnitOfWorkCommandHandler(
             IDomainEventContextDispacher domainEventDispacher,
             IAggregateRootsContext aggragateRootsContext,
             IUnitOfWork unitOfWork)
         {
-            _decoratedHandler = decoratedHandler;
             _domainEventDispacher = domainEventDispacher;
             _aggragateRootsContext = aggragateRootsContext;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(TCommand command)
+        public async Task Handle()
         {
-            await _decoratedHandler.Handle(command).ConfigureAwait(false);
-
             await _domainEventDispacher.Dispach().ConfigureAwait(false);
 
             var aggragateRoots = _aggragateRootsContext.GetAggregateRoots();

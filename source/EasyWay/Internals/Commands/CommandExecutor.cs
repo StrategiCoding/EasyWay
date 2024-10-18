@@ -8,27 +8,30 @@ namespace EasyWay.Internals.Commands
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public CommandExecutor(IServiceProvider serviceProvider) 
+        private readonly CancellationContext _cancellationContext;
+
+        private readonly UnitOfWorkCommandHandler _unitOfWorkCommandHandler;
+
+        public CommandExecutor(
+            IServiceProvider serviceProvider,
+            CancellationContext cancellationContext,
+            UnitOfWorkCommandHandler unitOfWorkCommandHandler) 
         {
             _serviceProvider = serviceProvider;
+            _cancellationContext = cancellationContext;
+            _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
         public async Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command<TModule>
         {
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                var sp = scope.ServiceProvider;
+            _cancellationContext.Set(cancellationToken);
 
-                sp
-                .GetRequiredService<CancellationContext>()
-                .Set(cancellationToken);
-
-                await sp
+             await _serviceProvider
                 .GetRequiredService<ICommandHandler<TModule, TCommand>>()
-                .Handle(command)
-                .ConfigureAwait(false);
-            }
+                .Handle(command);
+
+            await _unitOfWorkCommandHandler.Handle();
         }
     }
 }

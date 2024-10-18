@@ -10,14 +10,14 @@ namespace EasyWay.Internals.Commands
             IEnumerable<Assembly> assemblies)
             where TModule : EasyWayModule
         {
-            services.AddSingleton<ICommandExecutor<TModule>, CommandExecutor<TModule>>();
+            services.AddScoped<ICommandExecutor<TModule>, CommandExecutor<TModule>>();
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 
-            services.TryDecorate(typeof(ICommandHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
+            services.AddScoped<UnitOfWorkCommandHandler>();
 
             services.AddSingleton<IConcurrencyConflictValidator, ConcurrencyConflictValidator>();
 

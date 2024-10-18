@@ -1,7 +1,6 @@
 ﻿using EasyWay.Internals.Commands;
 using EasyWay.Internals.Queries;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 
 namespace EasyWay.Internals.Modules
 {
@@ -15,10 +14,17 @@ namespace EasyWay.Internals.Modules
             _serviceProvider = serviceProvider;
         }
 
-        public Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
+        public async Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
             where TCommand : Command<TModule>
         {
-            return _serviceProvider.GetRequiredService<ICommandExecutor<TModule>>().Execute(command, cancellationToken);
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var sp = scope.ServiceProvider;
+
+                await sp
+                    .GetRequiredService<ICommandExecutor<TModule>>()
+                    .Execute(command, cancellationToken);
+            }
         }
 
         public Task<TResult> Execute<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
