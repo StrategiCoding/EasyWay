@@ -4,7 +4,7 @@ using EasyWay.Internals.UnitOfWorks;
 
 namespace EasyWay.Internals.Commands
 {
-    internal sealed class UnitOfWorkCommandHandler
+    internal sealed class UnitOfWorkCommandHandler : IUnitOfWorkCommandHandler
     {
         private readonly IDomainEventContextDispacher _domainEventDispacher;
 

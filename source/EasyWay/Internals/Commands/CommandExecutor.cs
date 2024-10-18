@@ -10,12 +10,12 @@ namespace EasyWay.Internals.Commands
 
         private readonly ICancellationContextConstructor _cancellationContextConstructor;
 
-        private readonly UnitOfWorkCommandHandler _unitOfWorkCommandHandler;
+        private readonly IUnitOfWorkCommandHandler _unitOfWorkCommandHandler;
 
         public CommandExecutor(
             IServiceProvider serviceProvider,
             ICancellationContextConstructor cancellationContextConstructor,
-            UnitOfWorkCommandHandler unitOfWorkCommandHandler) 
+            IUnitOfWorkCommandHandler unitOfWorkCommandHandler) 
         {
             _serviceProvider = serviceProvider;
             _cancellationContextConstructor = cancellationContextConstructor;

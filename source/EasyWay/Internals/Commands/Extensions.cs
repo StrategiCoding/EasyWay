@@ -17,7 +17,7 @@ namespace EasyWay.Internals.Commands
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 
-            services.AddScoped<UnitOfWorkCommandHandler>();
+            services.AddScoped<IUnitOfWorkCommandHandler, UnitOfWorkCommandHandler>();
 
             services.AddSingleton<IConcurrencyConflictValidator, ConcurrencyConflictValidator>();
 
