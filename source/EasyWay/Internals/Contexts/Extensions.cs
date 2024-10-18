@@ -6,7 +6,7 @@ namespace EasyWay.Internals.Contexts
     {
         internal static IServiceCollection AddContexts(this IServiceCollection services)
         {
-            services.AddScoped<CancellationContext>();
+            services.AddScoped<ICancellationContextConstructor, CancellationContext>();
             services.AddScoped<ICancellationContext, CancellationContext>();
 
             services.AddScoped<IUserContext, DefaultUserContext>();
