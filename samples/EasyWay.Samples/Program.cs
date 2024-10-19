@@ -11,6 +11,7 @@ webKernelBuilder.AddModule<SampleModule, SampleModuleConfigurator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddJwtAuthentication();
 
 var webKernel = webKernelBuilder.Build();
 
@@ -32,5 +33,6 @@ if (app.Environment.IsDevelopment())
 app.MapCommand<SampleModule, SampleCommand>();
 app.MapCommand<SampleModule, ErrorCommand>();
 app.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
+app.MapQuery<SampleModule, GetJwtQuery, JwtReadModel>().AllowAnonymous();
 
 await webKernel.RunAsync();

@@ -4,6 +4,11 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	  <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\EasyWay\EasyWay.csproj" />
   </ItemGroup>
