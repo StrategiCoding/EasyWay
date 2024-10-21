@@ -1,6 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using EasyWay.Internals.RefreshTokens;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace EasyWay.Internals
@@ -11,7 +13,14 @@ namespace EasyWay.Internals
 
         private TimeSpan TokenLifeTime = TimeSpan.FromMinutes(10);
 
-        public string Create(Guid userId, string role)
+        private readonly IRefreshToken _refreshToken;
+
+        public JwtFactory(IRefreshToken refreshToken) 
+        { 
+            _refreshToken = refreshToken;
+        }
+
+        public Tokens Create(Guid userId, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -37,7 +46,11 @@ namespace EasyWay.Internals
 
             var jwtToken = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(jwtToken);
+            var accessToken = tokenHandler.WriteToken(jwtToken);
+
+            var refreshToken = _refreshToken.CreateRefreshToken();
+
+            return new Tokens(accessToken, refreshToken);
         }
     }
 }

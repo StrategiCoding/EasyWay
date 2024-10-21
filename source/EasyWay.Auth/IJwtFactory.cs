@@ -2,6 +2,6 @@
 {
     public interface IJwtFactory
     {
-        string Create(Guid userId, string role);
+        Tokens Create(Guid userId, string role);
     }
 }

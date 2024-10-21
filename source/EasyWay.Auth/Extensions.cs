@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals;
+using EasyWay.Internals.RefreshTokens;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay
@@ -9,6 +10,8 @@ namespace EasyWay
             this IServiceCollection services)
         {
             services.AddSingleton<IJwtFactory, JwtFactory>();
+
+            services.AddSingleton<IRefreshToken, RefreshToken>();
 
             return services;
         }

@@ -15,7 +15,7 @@
 
             return Task.FromResult(new Jwt()
             {
-                Token = token,
+                Token = token.AccessToken,
             });
         }
     }
