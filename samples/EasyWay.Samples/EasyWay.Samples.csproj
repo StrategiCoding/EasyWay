@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\EasyWay.Authentication\EasyWay.Authentication.csproj" />
+    <ProjectReference Include="..\..\source\EasyWay.Auth\EasyWay.Auth.csproj" />
     <ProjectReference Include="..\..\source\EasyWay.EntityFrameworkCore\EasyWay.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\source\EasyWay.WebApi\EasyWay.WebApi.csproj" />
     <ProjectReference Include="..\..\source\EasyWay\EasyWay.csproj" />
