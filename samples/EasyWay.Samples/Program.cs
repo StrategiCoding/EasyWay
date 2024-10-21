@@ -32,9 +32,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapCommand<SampleModule, SampleCommand>();
-app.MapCommand<SampleModule, SampleCommandWithResult, SampleCommandResult>();
+app.MapCommand<SampleModule, CreateJwtCommand, Jwt>().AllowAnonymous();
 app.MapCommand<SampleModule, ErrorCommand>();
 app.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
-app.MapQuery<SampleModule, GetJwtQuery, JwtReadModel>().AllowAnonymous();
+
 
 await webKernel.RunAsync();
