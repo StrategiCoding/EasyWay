@@ -1,5 +1,6 @@
 using EasyWay.Samples;
 using EasyWay.Samples.Commands;
+using EasyWay.Samples.Commands.WithResult;
 using EasyWay.Samples.Databases;
 using EasyWay.Samples.Queries;
 
@@ -31,6 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapCommand<SampleModule, SampleCommand>();
+app.MapCommand<SampleModule, SampleCommandWithResult, SampleCommandResult>();
 app.MapCommand<SampleModule, ErrorCommand>();
 app.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
 app.MapQuery<SampleModule, GetJwtQuery, JwtReadModel>().AllowAnonymous();

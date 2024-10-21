@@ -28,5 +28,16 @@ namespace EasyWay
                 await executor.Execute(command, cancellationToken);
             });
         }
+
+        public static RouteHandlerBuilder MapCommand<TModule, TCommand, TCommandResult>(this IEndpointRouteBuilder endpoints)
+            where TModule : EasyWayModule
+            where TCommand : Command<TModule, TCommandResult>
+            where TCommandResult : CommandResult
+        {
+            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            {
+                return await executor.Execute<TCommand, TCommandResult>(command, cancellationToken);
+            });
+        }
     }
 }
