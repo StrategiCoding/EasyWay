@@ -33,5 +33,20 @@ namespace EasyWay.Internals.Commands
 
             await _unitOfWorkCommandHandler.Handle();
         }
+
+        public async Task<TCommandResult> Execute<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken)
+            where TCommand : Command<TModule, TCommandResult>
+            where TCommandResult : CommandResult
+        {
+            _cancellationContextConstructor.Set(cancellationToken);
+
+            var result = await _serviceProvider
+               .GetRequiredService<ICommandHandler<TModule, TCommand, TCommandResult>>()
+               .Handle(command);
+
+            await _unitOfWorkCommandHandler.Handle();
+
+            return result;
+        }
     }
 }
