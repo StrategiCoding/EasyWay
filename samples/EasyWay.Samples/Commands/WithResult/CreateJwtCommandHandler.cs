@@ -2,9 +2,9 @@
 {
     public sealed class CreateJwtCommandHandler : ICommandHandler<SampleModule, CreateJwtCommand, Jwt>
     {
-        private readonly IJwtFactory _jwtFactory;
+        private readonly ITokensCreator _jwtFactory;
 
-        public CreateJwtCommandHandler(IJwtFactory jwtFactory)
+        public CreateJwtCommandHandler(ITokensCreator jwtFactory)
         {
             _jwtFactory = jwtFactory;
         }

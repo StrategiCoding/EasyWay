@@ -1,6 +1,6 @@
 ﻿namespace EasyWay
 {
-    public interface IJwtFactory
+    public interface ITokensCreator
     {
         Tokens Create(Guid userId, string role);
     }

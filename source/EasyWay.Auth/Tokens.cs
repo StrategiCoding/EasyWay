@@ -13,6 +13,5 @@
             AccessToken = accessToken;
             RefreshToken = refreshToken;
         }
-
     }
 }

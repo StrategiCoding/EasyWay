@@ -1,13 +1,13 @@
 ﻿using EasyWay.Internals.RefreshTokens;
+using EasyWay.Internals.Storage;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace EasyWay.Internals
 {
-    internal sealed class JwtFactory : IJwtFactory
+    internal sealed class TokensCreator : ITokensCreator
     {
         private readonly string SecretKey = "XN32ifS0ZumZ0QZTAFyY86GdQRPnTHjwzh42KpflDemEZ+Ewlzpgb3N5l8u9/jWV";
 
@@ -15,9 +15,14 @@ namespace EasyWay.Internals
 
         private readonly IRefreshToken _refreshToken;
 
-        public JwtFactory(IRefreshToken refreshToken) 
+        private readonly ITokenStorage _tokenStorage;
+
+        public TokensCreator(
+            IRefreshToken refreshToken,
+            ITokenStorage tokenStorage) 
         { 
             _refreshToken = refreshToken;
+            _tokenStorage = tokenStorage;
         }
 
         public Tokens Create(Guid userId, string role)
@@ -34,14 +39,10 @@ namespace EasyWay.Internals
     {
                     new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
                     new Claim(JwtRegisteredClaimNames.UniqueName, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.Role, role),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = expires,
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
-                // TODO JWE
-                // TODO RefreshToken
-                // TODO AsymetricKeys (verify JWT based on signature)
             };
 
             var jwtToken = tokenHandler.CreateToken(tokenDescriptor);
@@ -50,7 +51,9 @@ namespace EasyWay.Internals
 
             var refreshToken = _refreshToken.CreateRefreshToken();
 
-            return new Tokens(accessToken, refreshToken);
+            var token = new Tokens(accessToken, refreshToken);
+
+            return token;
         }
     }
 }

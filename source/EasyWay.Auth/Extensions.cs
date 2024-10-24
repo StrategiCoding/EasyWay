@@ -9,7 +9,7 @@ namespace EasyWay
         public static IServiceCollection AddJwtAuthentication(
             this IServiceCollection services)
         {
-            services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddSingleton<ITokensCreator, TokensCreator>();
 
             services.AddSingleton<IRefreshToken, RefreshToken>();
 

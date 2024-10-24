@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payments.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWay.Auth", "source\EasyWay.Auth\EasyWay.Auth.csproj", "{020B99BF-9EF4-43EC-8166-30E4E77C8278}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWay.Auth.WebApi", "source\EasyWay.Auth.WebApi\EasyWay.Auth.WebApi.csproj", "{8B8DBB9D-5E21-486C-8817-4F0B34E2263B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{020B99BF-9EF4-43EC-8166-30E4E77C8278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{020B99BF-9EF4-43EC-8166-30E4E77C8278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{020B99BF-9EF4-43EC-8166-30E4E77C8278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B8DBB9D-5E21-486C-8817-4F0B34E2263B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B8DBB9D-5E21-486C-8817-4F0B34E2263B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B8DBB9D-5E21-486C-8817-4F0B34E2263B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B8DBB9D-5E21-486C-8817-4F0B34E2263B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +112,7 @@ Global
 		{BF13D306-1824-4281-990F-C656C4B571ED} = {E1A8B028-DA55-4342-BD7C-718C68220E83}
 		{372D7437-AF4E-430E-9D4E-07F55CC41F82} = {E1A8B028-DA55-4342-BD7C-718C68220E83}
 		{020B99BF-9EF4-43EC-8166-30E4E77C8278} = {92D4A304-6772-4482-83CC-68FDF54087C4}
+		{8B8DBB9D-5E21-486C-8817-4F0B34E2263B} = {92D4A304-6772-4482-83CC-68FDF54087C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45C12B7C-F737-4C98-B967-CCB84BFB9080}
