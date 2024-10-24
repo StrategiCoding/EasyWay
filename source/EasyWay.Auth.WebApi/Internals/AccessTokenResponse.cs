@@ -1,10 +1,10 @@
 ﻿namespace EasyWay.Internals
 {
-    internal class Token
+    internal sealed class AccessTokenResponse
     {
         public string AccessToken { get; }
 
-        internal Token(string accessToken)
+        internal AccessTokenResponse(string accessToken)
         {
             AccessToken = accessToken;
         }

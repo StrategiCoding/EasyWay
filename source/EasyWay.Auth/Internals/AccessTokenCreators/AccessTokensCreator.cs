@@ -18,7 +18,7 @@ namespace EasyWay.Internals.AccessTokenCreators
 
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
-            var expires = Clock.UtcNow.Add(TokenLifeTime);
+            var expires = DateTime.UtcNow.Add(TokenLifeTime);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

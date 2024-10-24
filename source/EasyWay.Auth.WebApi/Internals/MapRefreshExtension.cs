@@ -6,21 +6,20 @@ using Microsoft.AspNetCore.Routing;
 
 namespace EasyWay.Internals
 {
-    internal static class MapIssueExtension
+    internal static class MapRefreshExtension
     {
-        internal static IEndpointRouteBuilder MapIssueEndpoint(this IEndpointRouteBuilder endpoints)
+        internal static IEndpointRouteBuilder MapRefreshEndpoint(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapPost(EasyWayAuthApiRoutes.ISSUE_TOKENS, async (IIssueTokens issueTokens, HttpContext context) =>
+            endpoints.MapPost(EasyWayAuthApiRoutes.REFRESH_TOKENS, async (IRefreshTokens refreshTokens, HttpContext context) =>
             {
-                var userId = Guid.NewGuid();
+                var oldRefreshToken = context.GetRefreshToken();
 
-                var tokens = await issueTokens.Issue(userId);
+                var tokens = await refreshTokens.Refresh(oldRefreshToken);
 
                 context.AddRefreshToken(tokens.RefreshToken, tokens.RefreshTokenExpires);
 
                 return new AccessTokenResponse(tokens.AccessToken);
             });
-            
 
             return endpoints;
         }

@@ -17,6 +17,7 @@ namespace EasyWay
             var app = builder.Build();
 
             app.MapIssueEndpoint();
+            app.MapRefreshEndpoint();
 
             await app.RunAsync();
         }
