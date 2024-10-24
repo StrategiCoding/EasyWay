@@ -1,3 +1,3 @@
 using EasyWay;
 
-await AuthWebKernel.CreateBuilder(args).Build().RunAsync();
+await AuthServer.RunAsync(args);
