@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasyWay.Auth\EasyWay.Auth.csproj" />
+    <ProjectReference Include="..\EasyWay.WebApi\EasyWay.WebApi.csproj" />
+  </ItemGroup>
+
+</Project>
