@@ -2,6 +2,6 @@
 {
     internal interface IAccessTokensCreator
     {
-        string Create(Guid userId);
+        AccessToken Create(Guid userId);
     }
 }

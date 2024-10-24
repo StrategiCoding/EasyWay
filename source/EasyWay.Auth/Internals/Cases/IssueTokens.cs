@@ -32,11 +32,11 @@ namespace EasyWay.Internals.Cases
 
             //TODO expiration
             //TODO hash after check rules
-            var storageToken = StorageTokens.Issue(userId, refreshToken, DateTime.UtcNow.AddDays(7), DateTime.UtcNow.AddMinutes(1));
+            var storageToken = StorageTokens.Issue(userId, refreshToken, DateTime.UtcNow.AddDays(7), accessToken.Expires);
 
             await _storage.Add(storageToken);
 
-            return new Tokens(refreshToken, storageToken.RefreshTokenExpires, accessToken);
+            return new Tokens(refreshToken, storageToken.RefreshTokenExpires, accessToken.Token);
         }
     }
 }

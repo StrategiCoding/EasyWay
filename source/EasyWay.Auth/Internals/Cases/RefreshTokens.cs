@@ -29,16 +29,15 @@ namespace EasyWay.Internals.Cases
             //TODO check refresh token does not expire
             //TODO check access token expired
 
-            var newAccessToken = _accessTokensCreator.Create(storageTokens.UserId);
+            var accessToken = _accessTokensCreator.Create(storageTokens.UserId);
 
             var newRefreshToken = _refreshTokenCreator.Create();
 
-            //TODO Expires
-            storageTokens.Refresh(newRefreshToken, DateTime.UtcNow.AddMinutes(10));
+            storageTokens.Refresh(newRefreshToken, accessToken.Expires);
 
             //TODO check expiration date refresh and access token ?
 
-            return new Tokens(newRefreshToken, storageTokens.RefreshTokenExpires ,newAccessToken);
+            return new Tokens(newRefreshToken, storageTokens.RefreshTokenExpires ,accessToken.Token);
         }
     }
 }

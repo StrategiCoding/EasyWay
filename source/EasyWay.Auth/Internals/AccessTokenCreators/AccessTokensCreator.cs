@@ -12,7 +12,7 @@ namespace EasyWay.Internals.AccessTokenCreators
 
         private TimeSpan TokenLifeTime = TimeSpan.FromMinutes(10);
 
-        public string Create(Guid userId)
+        public AccessToken Create(Guid userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -34,7 +34,9 @@ namespace EasyWay.Internals.AccessTokenCreators
 
             var accessToken = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(accessToken);
+            var stringToken = tokenHandler.WriteToken(accessToken);
+
+            return new AccessToken(stringToken, expires);
         }
     }
 }
