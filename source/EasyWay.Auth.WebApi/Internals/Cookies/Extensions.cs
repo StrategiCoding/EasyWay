@@ -14,8 +14,9 @@ namespace EasyWay.Internals.Cookies
                 SameSite = SameSiteMode.Strict,
                 Path = EasyWayAuthApiRoutes.REFRESH_TOKENS,
                 Expires = expires,
+                IsEssential = true,
                 //TODO Secure = true,
-                //TODO Domain
+                //TODO Domain appsettings
             };
 
             httpContext.Response.Cookies.Append(_refreshTokenCookieName, refreshToken, _cookieOptions);
