@@ -24,6 +24,8 @@ namespace EasyWay.Internals.Cases
 
         public async Task<Tokens> Refresh(string oldRefreshToken)
         {
+            //TODO null or empty
+
             var storageTokens = await _storage.Get(oldRefreshToken);
 
             //TODO check refresh token does not expire
