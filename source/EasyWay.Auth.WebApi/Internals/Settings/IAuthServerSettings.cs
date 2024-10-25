@@ -3,7 +3,5 @@
     internal interface IAuthServerSettings
     {
         string Domain { get; }
-
-        bool Secure { get; }
     }
 }

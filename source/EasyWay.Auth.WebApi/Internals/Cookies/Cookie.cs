@@ -19,12 +19,12 @@ namespace EasyWay.Internals.Cookies
             var cookieOptions = new CookieOptions()
             {
                 HttpOnly = true,
-                SameSite = SameSiteMode.Strict,
-                Path = EasyWayAuthApiRoutes.REFRESH_TOKENS,
-                Expires = expires,
+                Secure = true,
                 IsEssential = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = expires,
+                Path = EasyWayAuthApiRoutes.REFRESH_TOKENS,
                 Domain = _authServerSettings.Domain,
-                Secure = _authServerSettings.Secure,
             };
 
             httpContext.Response.Cookies.Append(_refreshTokenCookieName, refreshToken, cookieOptions);
