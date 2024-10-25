@@ -8,7 +8,7 @@ namespace EasyWay.Internals
     {
         internal static IServiceCollection AddAuthWebApi(this IServiceCollection services)
         {
-            services.AddSingleton<ICookie, Cookie>();
+            services.AddSingleton<IRefreshTokenCookie, RefreshTokenCookie>();
 
             services.AddSingleton<IAuthServerSettings>(new AuthServerSettings());
 
