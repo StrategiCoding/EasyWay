@@ -22,7 +22,7 @@ namespace EasyWay.Internals.Cases
             _storage = storage;
         }
 
-        public async Task<Tokens> Refresh(string oldRefreshToken)
+        public async Task<Tokens> Refresh(string? oldRefreshToken)
         {
             //TODO null or empty
 

@@ -10,13 +10,13 @@ namespace EasyWay.Internals
     {
         internal static IEndpointRouteBuilder MapIssueEndpoint(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapPost(EasyWayAuthApiRoutes.ISSUE_TOKENS, async (IIssueTokens issueTokens, HttpContext context) =>
+            endpoints.MapPost(EasyWayAuthApiRoutes.ISSUE_TOKENS, async (IIssueTokens issueTokens, ICookie cookie, HttpContext httpContext) =>
             {
                 var userId = Guid.NewGuid();
 
                 var tokens = await issueTokens.Issue(userId);
 
-                context.AddRefreshToken(tokens.RefreshToken, tokens.RefreshTokenExpires);
+                cookie.AddRefreshToken(httpContext, tokens.RefreshToken, tokens.RefreshTokenExpires);
 
                 return new AccessTokenResponse(tokens.AccessToken);
             });

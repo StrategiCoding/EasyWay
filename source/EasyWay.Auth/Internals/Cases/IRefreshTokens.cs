@@ -2,6 +2,6 @@
 {
     internal interface IRefreshTokens
     {
-        Task<Tokens> Refresh(string oldRefreshToken);
+        Task<Tokens> Refresh(string? oldRefreshToken);
     }
 }

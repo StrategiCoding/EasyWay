@@ -2,13 +2,13 @@
 
 namespace EasyWay.Internals.Cookies
 {
-    internal static class Extensions
+    internal sealed class Cookie : ICookie
     {
         private const string _refreshTokenCookieName = "RefreshToken";
 
-        internal static void AddRefreshToken(this HttpContext httpContext, string refreshToken, DateTime expires)
+        public void AddRefreshToken(HttpContext httpContext, string refreshToken, DateTime expires)
         {
-            CookieOptions _cookieOptions = new CookieOptions()
+            var cookieOptions = new CookieOptions()
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
@@ -19,10 +19,10 @@ namespace EasyWay.Internals.Cookies
                 //TODO Domain appsettings
             };
 
-            httpContext.Response.Cookies.Append(_refreshTokenCookieName, refreshToken, _cookieOptions);
+            httpContext.Response.Cookies.Append(_refreshTokenCookieName, refreshToken, cookieOptions);
         }
 
-        internal static string GetRefreshToken(this HttpContext httpContext)
+        public string? GetRefreshToken(HttpContext httpContext)
         {
             return httpContext.Request.Cookies.SingleOrDefault(x => x.Key == _refreshTokenCookieName).Value;
         }

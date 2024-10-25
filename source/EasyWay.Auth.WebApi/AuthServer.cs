@@ -13,6 +13,7 @@ namespace EasyWay
             builder.WebHost.UseKestrel(option => option.AddServerHeader = false);
 
             builder.Services.AddAuth();
+            builder.Services.AddAuthWebApi();
 
             var app = builder.Build();
 

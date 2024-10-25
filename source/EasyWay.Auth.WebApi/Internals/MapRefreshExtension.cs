@@ -10,13 +10,13 @@ namespace EasyWay.Internals
     {
         internal static IEndpointRouteBuilder MapRefreshEndpoint(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapPost(EasyWayAuthApiRoutes.REFRESH_TOKENS, async (IRefreshTokens refreshTokens, HttpContext context) =>
+            endpoints.MapPost(EasyWayAuthApiRoutes.REFRESH_TOKENS, async (IRefreshTokens refreshTokens, ICookie cookie, HttpContext httpContext) =>
             {
-                var oldRefreshToken = context.GetRefreshToken();
+                var oldRefreshToken = cookie.GetRefreshToken(httpContext);
 
                 var tokens = await refreshTokens.Refresh(oldRefreshToken);
 
-                context.AddRefreshToken(tokens.RefreshToken, tokens.RefreshTokenExpires);
+                cookie.AddRefreshToken(httpContext, tokens.RefreshToken, tokens.RefreshTokenExpires);
 
                 return new AccessTokenResponse(tokens.AccessToken);
             });
