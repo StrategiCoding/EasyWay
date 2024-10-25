@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using EasyWay.Internals;
+using EasyWay.Internals.Middlewares;
 
 namespace EasyWay
 {
@@ -16,6 +17,8 @@ namespace EasyWay
             builder.Services.AddAuthWebApi();
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.MapIssueEndpoint();
             app.MapRefreshEndpoint();

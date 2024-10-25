@@ -43,7 +43,7 @@ namespace EasyWay.Internals.Cookies
                 Secure = true,
                 IsEssential = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddMonths(-1),
+                Expires = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Path = EasyWayAuthApiRoutes.REFRESH_TOKENS,
                 Domain = _authServerSettings.Domain,
             };

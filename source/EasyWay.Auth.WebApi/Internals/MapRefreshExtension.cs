@@ -18,9 +18,6 @@ namespace EasyWay.Internals
 
                 cookie.Add(httpContext, tokens.RefreshToken, tokens.RefreshTokenExpires);
 
-                // TODO remove refresh token when forbidden
-                // cookie.Remove(httpContext);
-
                 return new AccessTokenResponse(tokens.AccessToken);
             });
 
