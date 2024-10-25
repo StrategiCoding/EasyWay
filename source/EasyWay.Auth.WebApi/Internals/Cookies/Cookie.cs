@@ -4,7 +4,7 @@ namespace EasyWay.Internals.Cookies
 {
     internal sealed class Cookie : ICookie
     {
-        private const string _refreshTokenCookieName = "RefreshToken";
+        private const string _refreshTokenCookieName = "X-Refresh-Token";
 
         public void AddRefreshToken(HttpContext httpContext, string refreshToken, DateTime expires)
         {
