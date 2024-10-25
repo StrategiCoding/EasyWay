@@ -1,8 +1,8 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
+using EasyWay.Internals.Domain;
 using EasyWay.Internals.RefreshTokenCreators;
-using EasyWay.Internals.Storage;
 
-namespace EasyWay.Internals.Cases
+namespace EasyWay.Internals.Application.Refresh
 {
     internal sealed class RefreshTokens : IRefreshTokens
     {
@@ -10,22 +10,22 @@ namespace EasyWay.Internals.Cases
 
         private readonly IRefreshTokenCreator _refreshTokenCreator;
 
-        private readonly ITokensStorage _storage;
+        private readonly ISecurityTokensRepository _storage;
 
         public RefreshTokens(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
-            ITokensStorage storage)
+            ISecurityTokensRepository storage)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
         }
 
-        public async Task<Tokens> Refresh(string? oldRefreshToken)
+        public async Task<TokensDto> Refresh(string? oldRefreshToken)
         {
             //TODO null or empty
-            if(string.IsNullOrEmpty(oldRefreshToken))
+            if (string.IsNullOrEmpty(oldRefreshToken))
             {
                 //TODO Forbidden
                 throw new ArgumentNullException(nameof(oldRefreshToken));
@@ -44,7 +44,7 @@ namespace EasyWay.Internals.Cases
 
             //TODO check expiration date refresh and access token ?
 
-            return new Tokens(newRefreshToken, storageTokens.RefreshTokenExpires ,accessToken.Token);
+            return new TokensDto(newRefreshToken, storageTokens.RefreshTokenExpires, accessToken.Token);
         }
     }
 }

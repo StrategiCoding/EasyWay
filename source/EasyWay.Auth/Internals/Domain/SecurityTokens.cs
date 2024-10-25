@@ -1,6 +1,8 @@
-﻿namespace EasyWay.Internals.Storage
+﻿using EasyWay.Internals.Domain.Exceptions;
+
+namespace EasyWay.Internals.Domain
 {
-    internal sealed class StorageTokens
+    internal sealed class SecurityTokens
     {
         public Guid UserId { get; private set; }
 
@@ -10,7 +12,7 @@
 
         public DateTime AccessTokenExpires { get; private set; }
 
-        private StorageTokens(Guid userId, string hashedRefreshToken, DateTime refreshTokenExpires, DateTime accessTokenExpires) 
+        private SecurityTokens(Guid userId, string hashedRefreshToken, DateTime refreshTokenExpires, DateTime accessTokenExpires)
         {
             UserId = userId;
             HashedRefreshToken = hashedRefreshToken;
@@ -18,23 +20,23 @@
             AccessTokenExpires = accessTokenExpires;
         }
 
-        internal static StorageTokens Issue(Guid userId, string hashedRefreshToken, TimeSpan refreshTokenLifetime, DateTime accessTokenExpires)
+        internal static SecurityTokens Issue(Guid userId, string hashedRefreshToken, TimeSpan refreshTokenLifetime, DateTime accessTokenExpires)
         {
             var refreshTokenExpires = DateTime.UtcNow.Add(refreshTokenLifetime);
 
-            return new StorageTokens(userId, hashedRefreshToken, refreshTokenExpires, accessTokenExpires);
+            return new SecurityTokens(userId, hashedRefreshToken, refreshTokenExpires, accessTokenExpires);
         }
 
         internal void Refresh(string refreshToken, DateTime accessTokenExpires)
         {
-            if(!IsAccessTokenExpired())
+            if (!IsAccessTokenExpired())
             {
-                throw new Exception("Access token is not expired");
+                throw new AccessTokenIsNotExpiredException();
             }
 
             if (IsRefreshTokenExpired())
             {
-                throw new Exception("Refresh token is expired");
+                throw new RefreshTokenIsExpiredException();
             }
 
             HashedRefreshToken = refreshToken;

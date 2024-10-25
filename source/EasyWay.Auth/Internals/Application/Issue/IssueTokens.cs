@@ -1,9 +1,9 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
+using EasyWay.Internals.Domain;
 using EasyWay.Internals.RefreshTokenCreators;
-using EasyWay.Internals.Storage;
 using EasyWay.Settings;
 
-namespace EasyWay.Internals.Cases
+namespace EasyWay.Internals.Application.Issue
 {
     internal sealed class IssueTokens : IIssueTokens
     {
@@ -11,14 +11,14 @@ namespace EasyWay.Internals.Cases
 
         private readonly IRefreshTokenCreator _refreshTokenCreator;
 
-        private readonly ITokensStorage _storage;
+        private readonly ISecurityTokensRepository _storage;
 
         private readonly IAuthSettings _authSettings;
 
         public IssueTokens(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
-            ITokensStorage storage,
+            ISecurityTokensRepository storage,
             IAuthSettings authSettings)
         {
             _accessTokensCreator = accessTokensCreator;
@@ -27,7 +27,7 @@ namespace EasyWay.Internals.Cases
             _authSettings = authSettings;
         }
 
-        public async Task<Tokens> Issue(Guid userId)
+        public async Task<TokensDto> Issue(Guid userId)
         {
             if (await _storage.Exists(userId))
             {
@@ -43,11 +43,11 @@ namespace EasyWay.Internals.Cases
 
             //TODO expiration
             //TODO hash after check rules
-            var storageToken = StorageTokens.Issue(userId, refreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
+            var storageToken = SecurityTokens.Issue(userId, refreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
 
             await _storage.Add(storageToken);
 
-            return new Tokens(refreshToken, storageToken.RefreshTokenExpires, accessToken.Token);
+            return new TokensDto(refreshToken, storageToken.RefreshTokenExpires, accessToken.Token);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.Cases;
+﻿using EasyWay.Internals.Application.Refresh;
 using EasyWay.Internals.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

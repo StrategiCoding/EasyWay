@@ -1,6 +1,6 @@
-﻿namespace EasyWay.Internals
+﻿namespace EasyWay.Internals.Application
 {
-    internal sealed class Tokens
+    internal sealed class TokensDto
     {
         public string RefreshToken { get; }
 
@@ -8,7 +8,7 @@
 
         public string AccessToken { get; }
 
-        internal Tokens(string refreshToken, DateTime refreshTokenExpires, string accessToken)
+        internal TokensDto(string refreshToken, DateTime refreshTokenExpires, string accessToken)
         {
             RefreshToken = refreshToken;
             RefreshTokenExpires = refreshTokenExpires;

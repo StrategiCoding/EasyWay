@@ -1,18 +1,19 @@
-﻿
-namespace EasyWay.Internals.Storage
-{
-    internal class TokensStorage : ITokensStorage
-    {
-        private static List<StorageTokens> tokens = new List<StorageTokens>();
+﻿using EasyWay.Internals.Domain;
 
-        public Task Add(StorageTokens storageTokens)
+namespace EasyWay.Internals.Infrastructure
+{
+    internal sealed class SecurityTokensRepository : ISecurityTokensRepository
+    {
+        private static List<SecurityTokens> tokens = new List<SecurityTokens>();
+
+        public Task Add(SecurityTokens storageTokens)
         {
             tokens.Add(storageTokens);
 
             return Task.CompletedTask;
         }
 
-        public Task<StorageTokens?> Get(string refreshToken)
+        public Task<SecurityTokens?> Get(string refreshToken)
         {
             var token = tokens.SingleOrDefault(x => x.HashedRefreshToken == refreshToken);
 
