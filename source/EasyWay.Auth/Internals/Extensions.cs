@@ -2,6 +2,7 @@
 using EasyWay.Internals.Cases;
 using EasyWay.Internals.RefreshTokenCreators;
 using EasyWay.Internals.Storage;
+using EasyWay.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals
@@ -17,6 +18,8 @@ namespace EasyWay.Internals
             services.AddScoped<IRefreshTokens, RefreshTokens>();
 
             services.AddScoped<ITokensStorage, TokensStorage>();
+
+            services.AddSingleton<IAuthSettings>(new AuthSettings());
 
             return services;
         }

@@ -13,7 +13,7 @@ namespace EasyWay.Internals
             endpoints.MapPost(EasyWayAuthApiRoutes.ISSUE_TOKENS, async (IIssueTokens issueTokens, ICookie cookie, HttpContext httpContext) =>
             {
                 //TODO Authentication (return userID)
-                var userId = Guid.NewGuid();
+                var userId = new Guid("ca1af613-987b-41df-b82e-ebb6d76a44b8");
 
                 var tokens = await issueTokens.Issue(userId);
 

@@ -10,7 +10,7 @@ namespace EasyWay.Internals.AccessTokenCreators
         //TODO appsettings
         private readonly string SecretKey = "XN32ifS0ZumZ0QZTAFyY86GdQRPnTHjwzh42KpflDemEZ+Ewlzpgb3N5l8u9/jWV";
 
-        private TimeSpan TokenLifetime = TimeSpan.FromMinutes(10);
+        private TimeSpan TokenLifetime = TimeSpan.FromSeconds(10);
 
         public AccessToken Create(Guid userId)
         {

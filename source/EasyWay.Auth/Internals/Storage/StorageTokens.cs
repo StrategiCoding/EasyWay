@@ -18,15 +18,31 @@
             AccessTokenExpires = accessTokenExpires;
         }
 
-        internal static StorageTokens Issue(Guid userId, string hashedRefreshToken, DateTime refreshTokenExpires, DateTime accessTokenExpires)
+        internal static StorageTokens Issue(Guid userId, string hashedRefreshToken, TimeSpan refreshTokenLifetime, DateTime accessTokenExpires)
         {
+            var refreshTokenExpires = DateTime.UtcNow.Add(refreshTokenLifetime);
+
             return new StorageTokens(userId, hashedRefreshToken, refreshTokenExpires, accessTokenExpires);
         }
 
         internal void Refresh(string refreshToken, DateTime accessTokenExpires)
         {
+            if(!IsAccessTokenExpired())
+            {
+                throw new Exception("Access token is not expired");
+            }
+
+            if (IsRefreshTokenExpired())
+            {
+                throw new Exception("Refresh token is expired");
+            }
+
             HashedRefreshToken = refreshToken;
             AccessTokenExpires = accessTokenExpires;
         }
+
+        private bool IsAccessTokenExpired() => DateTime.UtcNow >= AccessTokenExpires;
+
+        private bool IsRefreshTokenExpired() => DateTime.UtcNow >= RefreshTokenExpires;
     }
 }

@@ -25,6 +25,11 @@ namespace EasyWay.Internals.Cases
         public async Task<Tokens> Refresh(string? oldRefreshToken)
         {
             //TODO null or empty
+            if(string.IsNullOrEmpty(oldRefreshToken))
+            {
+                //TODO Forbidden
+                throw new ArgumentNullException(nameof(oldRefreshToken));
+            }
 
             var storageTokens = await _storage.Get(oldRefreshToken);
 

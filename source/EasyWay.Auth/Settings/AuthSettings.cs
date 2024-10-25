@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Settings
 {
-    public sealed class AuthSettings
+    public sealed class AuthSettings : IAuthSettings
     {
         public TimeSpan RefreshTokenLifetime { get; set; } = TimeSpan.FromDays(1);
 

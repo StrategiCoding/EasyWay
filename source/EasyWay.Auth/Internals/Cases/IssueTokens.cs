@@ -1,6 +1,7 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
 using EasyWay.Internals.RefreshTokenCreators;
 using EasyWay.Internals.Storage;
+using EasyWay.Settings;
 
 namespace EasyWay.Internals.Cases
 {
@@ -12,19 +13,29 @@ namespace EasyWay.Internals.Cases
 
         private readonly ITokensStorage _storage;
 
+        private readonly IAuthSettings _authSettings;
+
         public IssueTokens(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
-            ITokensStorage storage)
+            ITokensStorage storage,
+            IAuthSettings authSettings)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
+            _authSettings = authSettings;
         }
 
         public async Task<Tokens> Issue(Guid userId)
         {
-            //TODO how many tokens per user ? logout or overrite
+            if (await _storage.Exists(userId))
+            {
+                await _storage.Remove(userId);
+
+                throw new Exception("EXISTS");
+            }
+
             var accessToken = _accessTokensCreator.Create(userId);
 
             //TODO hash
@@ -32,7 +43,7 @@ namespace EasyWay.Internals.Cases
 
             //TODO expiration
             //TODO hash after check rules
-            var storageToken = StorageTokens.Issue(userId, refreshToken, DateTime.UtcNow.AddDays(7), accessToken.Expires);
+            var storageToken = StorageTokens.Issue(userId, refreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
 
             await _storage.Add(storageToken);
 

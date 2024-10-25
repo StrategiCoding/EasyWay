@@ -1,4 +1,5 @@
-﻿namespace EasyWay.Internals.Storage
+﻿
+namespace EasyWay.Internals.Storage
 {
     internal class TokensStorage : ITokensStorage
     {
@@ -16,6 +17,23 @@
             var token = tokens.SingleOrDefault(x => x.HashedRefreshToken == refreshToken);
 
             return Task.FromResult(token);
+        }
+
+        public Task<bool> Exists(Guid userId)
+        {
+            return Task.FromResult(tokens.Any(x => x.UserId == userId));
+        }
+
+        public Task Remove(Guid userId)
+        {
+            var token = tokens.SingleOrDefault(x => x.UserId == userId);
+
+            if (token != null)
+            {
+                tokens.Remove(token);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
