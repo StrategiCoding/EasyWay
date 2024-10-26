@@ -1,7 +1,9 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
 using EasyWay.Internals.Domain;
+using EasyWay.Internals.Domain.SeedWorks;
 using EasyWay.Internals.RefreshTokenCreators;
 using EasyWay.Settings;
+using Microsoft.Extensions.Logging;
 
 namespace EasyWay.Internals.Application.Issue
 {
@@ -13,41 +15,46 @@ namespace EasyWay.Internals.Application.Issue
 
         private readonly ISecurityTokensRepository _storage;
 
+        private readonly ILogger<IssueTokens> _logger;
+
         private readonly IAuthSettings _authSettings;
 
         public IssueTokens(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
             ISecurityTokensRepository storage,
+            ILogger<IssueTokens> logger,
             IAuthSettings authSettings)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
+            _logger = logger;
             _authSettings = authSettings;
         }
 
-        public async Task<TokensDto> Issue(Guid userId)
+        public async Task<SecurityResult<TokensDto>> Issue(Guid userId)
         {
-            if (await _storage.Exists(userId))
+            if (await _storage.IfExistsRemove(userId))
             {
-                await _storage.Remove(userId);
+                var error = new RefreshTokenIsValidSecurityError();
 
-                throw new RefreshTokenIsValidException();
+                //TODO Decorator
+                _logger.LogWarning("SECURITY ERROR {@error}", error.Message);
+
+                return SecurityResult<TokensDto>.Failure(error);
             }
-
-            var accessToken = _accessTokensCreator.Create(userId);
 
             //TODO hash
             var refreshToken = _refreshTokenCreator.Create();
+            var accessToken = _accessTokensCreator.Create(userId);
 
-            //TODO expiration
             //TODO hash after check rules
             var storageToken = SecurityTokens.Issue(userId, refreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
 
             await _storage.Add(storageToken);
 
-            return new TokensDto(refreshToken, storageToken.RefreshTokenExpires, accessToken.Token);
+            return SecurityResult<TokensDto>.Success(new TokensDto(refreshToken, storageToken.RefreshTokenExpires, accessToken.Token));
         }
     }
 }

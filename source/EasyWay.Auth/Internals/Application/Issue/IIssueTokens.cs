@@ -1,7 +1,9 @@
-﻿namespace EasyWay.Internals.Application.Issue
+﻿using EasyWay.Internals.Domain.SeedWorks;
+
+namespace EasyWay.Internals.Application.Issue
 {
     internal interface IIssueTokens
     {
-        Task<TokensDto> Issue(Guid userId);
+        Task<SecurityResult<TokensDto>> Issue(Guid userId);
     }
 }

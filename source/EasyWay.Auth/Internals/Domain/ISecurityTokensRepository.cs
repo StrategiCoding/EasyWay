@@ -4,9 +4,7 @@
     {
         Task<SecurityTokens?> Get(string refreshToken);
 
-        Task<bool> Exists(Guid userId);
-
-        Task Remove(Guid userId);
+        Task<bool> IfExistsRemove(Guid userId);
 
         Task Remove(string refreshToken);
 

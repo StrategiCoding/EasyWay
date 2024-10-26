@@ -20,21 +20,16 @@ namespace EasyWay.Internals.Infrastructure
             return Task.FromResult(token);
         }
 
-        public Task<bool> Exists(Guid userId)
-        {
-            return Task.FromResult(tokens.Any(x => x.UserId == userId));
-        }
-
-        public Task Remove(Guid userId)
+        public Task<bool> IfExistsRemove(Guid userId)
         {
             var token = tokens.SingleOrDefault(x => x.UserId == userId);
 
             if (token != null)
             {
-                tokens.Remove(token);
+                return Task.FromResult(tokens.Remove(token));
             }
 
-            return Task.CompletedTask;
+            return Task.FromResult(false);
         }
 
         public Task Remove(string refreshToken)
