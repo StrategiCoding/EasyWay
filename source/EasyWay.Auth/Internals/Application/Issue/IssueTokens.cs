@@ -37,12 +37,7 @@ namespace EasyWay.Internals.Application.Issue
         {
             if (await _storage.IfExistsRemove(userId))
             {
-                var error = new RefreshTokenIsValidSecurityError();
-
-                //TODO Decorator
-                _logger.LogWarning("SECURITY ERROR {@error}", error.Code);
-
-                return SecurityResult<TokensDto>.Failure(error);
+                _logger.LogInformation("Overwritten refresh token for user {@userId}", userId);
             }
 
             //TODO hash
