@@ -43,7 +43,7 @@ namespace EasyWay.Internals.Domain
             HashedRefreshToken = refreshToken;
             AccessTokenExpires = accessTokenExpires;
 
-            return SecurityResult.Success();
+            return SecurityResult.Success;
         }
 
         private bool IsAccessTokenExpired() => DateTime.UtcNow >= AccessTokenExpires;

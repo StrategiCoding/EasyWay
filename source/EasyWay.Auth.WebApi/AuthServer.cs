@@ -22,6 +22,7 @@ namespace EasyWay
 
             app.MapIssueEndpoint();
             app.MapRefreshEndpoint();
+            app.MapCancelEndpoint();
 
             await app.RunAsync();
         }

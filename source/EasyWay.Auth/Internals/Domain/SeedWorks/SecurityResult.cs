@@ -20,7 +20,7 @@
             Error = securityError;
         }
 
-        internal static SecurityResult Success() => new();
+        internal static SecurityResult Success => new();
 
         internal static SecurityResult Failure<TSecurityResult>(TSecurityResult error)
             where TSecurityResult : SecurityError => new (error);

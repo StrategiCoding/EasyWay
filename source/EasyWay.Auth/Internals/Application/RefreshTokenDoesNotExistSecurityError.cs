@@ -1,6 +1,6 @@
 ﻿using EasyWay.Internals.Domain.SeedWorks;
 
-namespace EasyWay.Internals.Application.Refresh
+namespace EasyWay.Internals.Application
 {
     internal sealed class RefreshTokenDoesNotExistSecurityError : SecurityError;
 }

@@ -7,6 +7,8 @@ namespace EasyWay.Internals.Cookies
     {
         private const string _refreshTokenCookieName = "X-Refresh-Token";
 
+        private const string _cookiePath = "/tokens/";
+
         private readonly IAuthServerSettings _authServerSettings;
 
         public RefreshTokenCookie(IAuthServerSettings authServerSettings) 
@@ -23,7 +25,7 @@ namespace EasyWay.Internals.Cookies
                 IsEssential = true,
                 SameSite = SameSiteMode.Strict,
                 Expires = expires,
-                Path = EasyWayAuthApiRoutes.REFRESH_TOKENS,
+                Path = _cookiePath,
                 Domain = _authServerSettings.Domain,
             };
 
@@ -44,7 +46,7 @@ namespace EasyWay.Internals.Cookies
                 IsEssential = true,
                 SameSite = SameSiteMode.Strict,
                 Expires = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-                Path = EasyWayAuthApiRoutes.REFRESH_TOKENS,
+                Path = _cookiePath,
                 Domain = _authServerSettings.Domain,
             };
 

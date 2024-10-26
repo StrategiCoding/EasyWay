@@ -6,6 +6,8 @@
 
         Task<bool> IfExistsRemove(Guid userId);
 
+        Task<bool> IfExistsRemove(string refreshToken);
+
         Task Remove(string refreshToken);
 
         Task Add(SecurityTokens storageTokens);

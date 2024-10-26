@@ -32,6 +32,18 @@ namespace EasyWay.Internals.Infrastructure
             return Task.FromResult(false);
         }
 
+        public Task<bool> IfExistsRemove(string refreshToken)
+        {
+            var token = tokens.SingleOrDefault(x => x.HashedRefreshToken == refreshToken);
+
+            if (token != null)
+            {
+                return Task.FromResult(tokens.Remove(token));
+            }
+
+            return Task.FromResult(false);
+        }
+
         public Task Remove(string refreshToken)
         {
             var token = tokens.SingleOrDefault(x => x.HashedRefreshToken == refreshToken);
