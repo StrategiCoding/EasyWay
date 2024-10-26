@@ -33,7 +33,7 @@ namespace EasyWay.Internals.Application.Issue
             {
                 await _storage.Remove(userId);
 
-                throw new Exception("EXISTS");
+                throw new RefreshTokenIsValidException();
             }
 
             var accessToken = _accessTokensCreator.Create(userId);

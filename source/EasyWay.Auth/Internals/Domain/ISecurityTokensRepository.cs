@@ -8,6 +8,8 @@
 
         Task Remove(Guid userId);
 
+        Task Remove(string refreshToken);
+
         Task Add(SecurityTokens storageTokens);
     }
 }

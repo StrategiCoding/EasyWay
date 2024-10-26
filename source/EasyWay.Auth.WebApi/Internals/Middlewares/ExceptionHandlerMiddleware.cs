@@ -25,7 +25,7 @@ namespace EasyWay.Internals.Middlewares
             {
                 await _next(httpContext);
             }
-            catch (ForbiddenException forbiddenException)
+            catch (AuthException authException)
             {
                 //TODO log WARNING SECURITY
                 //TODO remove refresh token from storage

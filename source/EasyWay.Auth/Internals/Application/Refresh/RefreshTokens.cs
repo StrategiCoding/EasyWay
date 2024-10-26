@@ -24,25 +24,18 @@ namespace EasyWay.Internals.Application.Refresh
 
         public async Task<TokensDto> Refresh(string? oldRefreshToken)
         {
-            //TODO null or empty
             if (string.IsNullOrEmpty(oldRefreshToken))
             {
-                //TODO Forbidden
-                throw new ArgumentNullException(nameof(oldRefreshToken));
+                throw new RefreshTokenCannotBeNullOrEmptyException();
             }
 
             var storageTokens = await _storage.Get(oldRefreshToken);
-
-            //TODO check refresh token does not expire
-            //TODO check access token expired
 
             var accessToken = _accessTokensCreator.Create(storageTokens.UserId);
 
             var newRefreshToken = _refreshTokenCreator.Create();
 
             storageTokens.Refresh(newRefreshToken, accessToken.Expires);
-
-            //TODO check expiration date refresh and access token ?
 
             return new TokensDto(newRefreshToken, storageTokens.RefreshTokenExpires, accessToken.Token);
         }

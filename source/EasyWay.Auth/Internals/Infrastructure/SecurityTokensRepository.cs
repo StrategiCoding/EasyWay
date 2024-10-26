@@ -36,5 +36,17 @@ namespace EasyWay.Internals.Infrastructure
 
             return Task.CompletedTask;
         }
+
+        public Task Remove(string refreshToken)
+        {
+            var token = tokens.SingleOrDefault(x => x.HashedRefreshToken == refreshToken);
+
+            if (token != null)
+            {
+                tokens.Remove(token);
+            }
+
+            return Task.CompletedTask;
+        }
     }
 }

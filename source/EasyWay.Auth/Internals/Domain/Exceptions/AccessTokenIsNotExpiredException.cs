@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Internals.Domain.Exceptions
 {
-    internal sealed class AccessTokenIsNotExpiredException : ForbiddenException
+    internal sealed class AccessTokenIsNotExpiredException : AuthException
     {
         internal AccessTokenIsNotExpiredException() { }
     }
