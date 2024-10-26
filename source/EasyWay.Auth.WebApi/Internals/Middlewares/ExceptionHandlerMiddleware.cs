@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using EasyWay.Internals.Domain.Exceptions;
 using System.Net;
 using EasyWay.Internals.Cookies;
 using Microsoft.Extensions.Logging;
@@ -29,15 +28,6 @@ namespace EasyWay.Internals.Middlewares
             try
             {
                 await _next(httpContext);
-            }
-            catch (AuthException authException)
-            {
-                //TODO log WARNING SECURITY
-                //TODO remove refresh token from storage
-                _logger.LogWarning("SECURITY ALERT {@name}", authException.GetType().Name);
-
-                _refreshTokenCookie.Remove(httpContext);
-                httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             catch (Exception exception)
             {

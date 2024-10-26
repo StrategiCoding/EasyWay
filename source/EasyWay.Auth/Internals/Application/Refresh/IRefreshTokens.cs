@@ -1,7 +1,9 @@
-﻿namespace EasyWay.Internals.Application.Refresh
+﻿using EasyWay.Internals.Domain.SeedWorks;
+
+namespace EasyWay.Internals.Application.Refresh
 {
     internal interface IRefreshTokens
     {
-        Task<TokensDto> Refresh(string? oldRefreshToken);
+        Task<SecurityResult<TokensDto>> Refresh(string? oldRefreshToken);
     }
 }

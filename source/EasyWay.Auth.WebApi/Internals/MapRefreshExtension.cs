@@ -14,11 +14,18 @@ namespace EasyWay.Internals
             {
                 var oldRefreshToken = cookie.Get(httpContext);
 
-                var tokens = await refreshTokens.Refresh(oldRefreshToken);
+                var tokensResult = await refreshTokens.Refresh(oldRefreshToken);
 
-                cookie.Add(httpContext, tokens.RefreshToken, tokens.RefreshTokenExpires);
+                if (tokensResult.IsFailure)
+                {
+                    cookie.Remove(httpContext);
 
-                return new AccessTokenResponse(tokens.AccessToken);
+                    return Results.StatusCode(401);
+                }
+
+                cookie.Add(httpContext, tokensResult.Value.RefreshToken, tokensResult.Value.RefreshTokenExpires);
+
+                return Results.Ok(new AccessTokenResponse(tokensResult.Value.AccessToken));
             });
 
             return endpoints;

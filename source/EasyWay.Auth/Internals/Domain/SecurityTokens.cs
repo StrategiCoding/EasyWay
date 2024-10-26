@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.Domain.Exceptions;
+﻿using EasyWay.Internals.Domain.Errors;
+using EasyWay.Internals.Domain.SeedWorks;
 
 namespace EasyWay.Internals.Domain
 {
@@ -27,20 +28,22 @@ namespace EasyWay.Internals.Domain
             return new SecurityTokens(userId, hashedRefreshToken, refreshTokenExpires, accessTokenExpires);
         }
 
-        internal void Refresh(string refreshToken, DateTime accessTokenExpires)
+        internal SecurityResult Refresh(string refreshToken, DateTime accessTokenExpires)
         {
             if (!IsAccessTokenExpired())
             {
-                throw new AccessTokenIsNotExpiredException();
+                return SecurityResult.Failure(new AccessTokenIsNotExpiredException());
             }
 
             if (IsRefreshTokenExpired())
             {
-                throw new RefreshTokenIsExpiredException();
+                return SecurityResult.Failure(new RefreshTokenIsExpiredException());
             }
 
             HashedRefreshToken = refreshToken;
             AccessTokenExpires = accessTokenExpires;
+
+            return SecurityResult.Success();
         }
 
         private bool IsAccessTokenExpired() => DateTime.UtcNow >= AccessTokenExpires;

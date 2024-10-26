@@ -4,8 +4,6 @@
     {
         internal string Code => GetType().Name;
 
-        internal abstract string Message { get; }
-
         internal SecurityError() { }
     }
 }

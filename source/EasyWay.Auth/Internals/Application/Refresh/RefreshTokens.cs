@@ -1,5 +1,6 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
 using EasyWay.Internals.Domain;
+using EasyWay.Internals.Domain.SeedWorks;
 using EasyWay.Internals.RefreshTokenCreators;
 
 namespace EasyWay.Internals.Application.Refresh
@@ -22,22 +23,32 @@ namespace EasyWay.Internals.Application.Refresh
             _storage = storage;
         }
 
-        public async Task<TokensDto> Refresh(string? oldRefreshToken)
+        public async Task<SecurityResult<TokensDto>> Refresh(string? oldRefreshToken)
         {
             if (string.IsNullOrEmpty(oldRefreshToken))
             {
-                throw new RefreshTokenCannotBeNullOrEmptyException();
+                return SecurityResult<TokensDto>.Failure(new RefreshTokenIsNotProvidedSecurityError());
             }
 
             var storageTokens = await _storage.Get(oldRefreshToken);
+
+            if (storageTokens is null)
+            {
+                return SecurityResult<TokensDto>.Failure(new RefreshTokenDoesNotExistSecurityError());
+            }
 
             var accessToken = _accessTokensCreator.Create(storageTokens.UserId);
 
             var newRefreshToken = _refreshTokenCreator.Create();
 
-            storageTokens.Refresh(newRefreshToken, accessToken.Expires);
+            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires);
 
-            return new TokensDto(newRefreshToken, storageTokens.RefreshTokenExpires, accessToken.Token);
+            if (refreshResult.IsFailure)
+            {
+                return SecurityResult<TokensDto>.Failure(refreshResult.Error);
+            }
+
+            return SecurityResult<TokensDto>.Success(new TokensDto(newRefreshToken, storageTokens.RefreshTokenExpires, accessToken.Token));
         }
     }
 }

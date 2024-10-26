@@ -40,7 +40,7 @@ namespace EasyWay.Internals.Application.Issue
                 var error = new RefreshTokenIsValidSecurityError();
 
                 //TODO Decorator
-                _logger.LogWarning("SECURITY ERROR {@error}", error.Message);
+                _logger.LogWarning("SECURITY ERROR {@error}", error.Code);
 
                 return SecurityResult<TokensDto>.Failure(error);
             }
