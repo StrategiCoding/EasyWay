@@ -2,6 +2,7 @@
 using EasyWay.Internals.Domain.Exceptions;
 using System.Net;
 using EasyWay.Internals.Cookies;
+using Microsoft.Extensions.Logging;
 
 namespace EasyWay.Internals.Middlewares
 {
@@ -11,12 +12,16 @@ namespace EasyWay.Internals.Middlewares
 
         private readonly IRefreshTokenCookie _refreshTokenCookie;
 
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
+
         public ExceptionHandlerMiddleware(
             RequestDelegate next,
-            IRefreshTokenCookie refreshTokenCookie)
+            IRefreshTokenCookie refreshTokenCookie,
+            ILogger<ExceptionHandlerMiddleware> logger)
         {
             _next = next;
             _refreshTokenCookie = refreshTokenCookie;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext httpContext)
@@ -29,12 +34,15 @@ namespace EasyWay.Internals.Middlewares
             {
                 //TODO log WARNING SECURITY
                 //TODO remove refresh token from storage
+                _logger.LogWarning("SECURITY ALERT {@name}", authException.GetType().Name);
+
                 _refreshTokenCookie.Remove(httpContext);
                 httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             catch (Exception exception)
             {
                 //TODO log ERROR
+                _logger.LogError("Exception {@exception}", exception);
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
         }
