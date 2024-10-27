@@ -5,7 +5,6 @@ using EasyWay.Internals.Application.Refresh;
 using EasyWay.Internals.Domain;
 using EasyWay.Internals.Infrastructure;
 using EasyWay.Internals.RefreshTokenCreators;
-using EasyWay.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals
@@ -22,8 +21,6 @@ namespace EasyWay.Internals
             services.AddScoped<ICancelRefreshToken, CancelRefreshToken>();
 
             services.AddScoped<ISecurityTokensRepository, SecurityTokensRepository>();
-
-            services.AddSingleton<IAuthSettings>(new AuthSettings());
 
             return services;
         }

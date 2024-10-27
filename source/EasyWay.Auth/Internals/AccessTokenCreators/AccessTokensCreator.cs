@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Domain.SeedWorks.Clocks;
+using EasyWay.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,18 +9,20 @@ namespace EasyWay.Internals.AccessTokenCreators
 {
     internal sealed class AccessTokensCreator : IAccessTokensCreator
     {
-        //TODO appsettings
-        private readonly string SecretKey = "XN32ifS0ZumZ0QZTAFyY86GdQRPnTHjwzh42KpflDemEZ+Ewlzpgb3N5l8u9/jWV";
+        private readonly IAuthSettings _settings;
 
-        private TimeSpan TokenLifetime = TimeSpan.FromSeconds(10);
+        public AccessTokensCreator(IAuthSettings settings) 
+        {
+            _settings = settings;
+        }
 
         public AccessToken Create(Guid userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey));
 
-            var expires = SecurityClock.UtcNow.Add(TokenLifetime);
+            var expires = SecurityClock.UtcNow.Add(_settings.AccessTokenLifetime);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

@@ -1,5 +1,6 @@
 ﻿using EasyWay.Internals.Cookies;
 using EasyWay.Internals.Settings;
+using EasyWay.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals
@@ -10,7 +11,10 @@ namespace EasyWay.Internals
         {
             services.AddSingleton<IRefreshTokenCookie, RefreshTokenCookie>();
 
-            services.AddSingleton<IAuthServerSettings>(new AuthServerSettings());
+            var settings = new AuthServerSettings();
+
+            services.AddSingleton<IAuthServerSettings>(settings);
+            services.AddSingleton<IAuthSettings>(settings);
 
             return services;
         }
