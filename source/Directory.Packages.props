@@ -9,7 +9,9 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="8.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
     <PackageVersion Include="Scrutor" Version="5.0.1" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
     <PackageVersion Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 </Project>
