@@ -6,6 +6,8 @@
 
         TimeSpan RefreshTokenLifetime { get; }
 
+        int RefreshTokenSize { get; }
+
         TimeSpan AccessTokenLifetime { get; }
     }
 }

@@ -13,6 +13,8 @@ namespace EasyWay.Internals.Settings
         //TODO
         public string SecretKey { get; set; } = "XN32ifS0ZumZ0QZTAFyY86GdQRPnTHjwzh42KpflDemEZ+Ewlzpgb3N5l8u9/jWV";
 
+        public int RefreshTokenSize { get; set; } = 32;
+
         internal AuthServerSettings() { }
     }
 }
