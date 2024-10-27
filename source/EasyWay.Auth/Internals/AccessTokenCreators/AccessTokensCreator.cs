@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using EasyWay.Internals.Domain.SeedWorks.Clocks;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,7 +19,7 @@ namespace EasyWay.Internals.AccessTokenCreators
 
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
-            var expires = DateTime.UtcNow.Add(TokenLifetime);
+            var expires = SecurityClock.UtcNow.Add(TokenLifetime);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

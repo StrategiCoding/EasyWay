@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Domain.Errors;
+using EasyWay.Internals.Domain.SeedWorks.Clocks;
 using EasyWay.Internals.Domain.SeedWorks.Results;
 
 namespace EasyWay.Internals.Domain
@@ -23,7 +24,7 @@ namespace EasyWay.Internals.Domain
 
         internal static SecurityTokens Issue(Guid userId, string hashedRefreshToken, TimeSpan refreshTokenLifetime, DateTime accessTokenExpires)
         {
-            var refreshTokenExpires = DateTime.UtcNow.Add(refreshTokenLifetime);
+            var refreshTokenExpires = SecurityClock.UtcNow.Add(refreshTokenLifetime);
 
             return new SecurityTokens(userId, hashedRefreshToken, refreshTokenExpires, accessTokenExpires);
         }
@@ -46,8 +47,8 @@ namespace EasyWay.Internals.Domain
             return SecurityResult.Success;
         }
 
-        private bool IsAccessTokenExpired() => DateTime.UtcNow >= AccessTokenExpires;
+        private bool IsAccessTokenExpired() => SecurityClock.UtcNow >= AccessTokenExpires;
 
-        private bool IsRefreshTokenExpired() => DateTime.UtcNow >= RefreshTokenExpires;
+        private bool IsRefreshTokenExpired() => SecurityClock.UtcNow >= RefreshTokenExpires;
     }
 }
