@@ -31,8 +31,8 @@ namespace EasyWay.Internals.Middlewares
             }
             catch (Exception exception)
             {
-                //TODO log ERROR
                 _logger.LogError("Exception {@exception}", exception);
+
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
         }
