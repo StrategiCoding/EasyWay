@@ -1,6 +1,6 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
 using EasyWay.Internals.Domain;
-using EasyWay.Internals.Domain.SeedWorks;
+using EasyWay.Internals.Domain.SeedWorks.Results;
 using EasyWay.Internals.RefreshTokenCreators;
 
 namespace EasyWay.Internals.Application.Refresh

@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.Domain.SeedWorks
+﻿namespace EasyWay.Internals.Domain.SeedWorks.Results
 {
     internal sealed class SecurityResult
     {
@@ -8,7 +8,7 @@
 
         internal SecurityError Error { get; }
 
-        private SecurityResult() 
+        private SecurityResult()
         {
             IsSuccess = true;
             Error = new NoneSecurityError();
@@ -23,7 +23,7 @@
         internal static SecurityResult Success => new();
 
         internal static SecurityResult Failure<TSecurityResult>(TSecurityResult error)
-            where TSecurityResult : SecurityError => new (error);
+            where TSecurityResult : SecurityError => new(error);
     }
 
     internal sealed class SecurityResult<TValue>

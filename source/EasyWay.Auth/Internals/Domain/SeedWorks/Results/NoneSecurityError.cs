@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.Domain.SeedWorks
+﻿namespace EasyWay.Internals.Domain.SeedWorks.Results
 {
     internal sealed class NoneSecurityError : SecurityError;
 }

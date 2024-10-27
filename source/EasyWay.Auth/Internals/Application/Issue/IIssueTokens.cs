@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.Domain.SeedWorks;
+﻿using EasyWay.Internals.Domain.SeedWorks.Results;
 
 namespace EasyWay.Internals.Application.Issue
 {
