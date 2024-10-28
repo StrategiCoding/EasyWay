@@ -13,14 +13,18 @@ namespace EasyWay.Internals.Application.Refresh
 
         private readonly ISecurityTokensRepository _storage;
 
+        private readonly IRefreshTokenHasher _refreshTokenHasher;
+
         public RefreshTokens(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
-            ISecurityTokensRepository storage)
+            ISecurityTokensRepository storage,
+            IRefreshTokenHasher refreshTokenHasher)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
+            _refreshTokenHasher = refreshTokenHasher;
         }
 
         public async Task<SecurityResult<TokensDto>> Refresh(string? oldRefreshToken)
@@ -30,7 +34,9 @@ namespace EasyWay.Internals.Application.Refresh
                 return SecurityResult<TokensDto>.Failure(new RefreshTokenIsNotProvidedSecurityError());
             }
 
-            var storageTokens = await _storage.Get(oldRefreshToken);
+            var hashedOldRefreshToken = _refreshTokenHasher.Hash(oldRefreshToken);
+
+            var storageTokens = await _storage.Get(hashedOldRefreshToken);
 
             if (storageTokens is null)
             {
@@ -41,7 +47,7 @@ namespace EasyWay.Internals.Application.Refresh
 
             var newRefreshToken = _refreshTokenCreator.Create();
 
-            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires);
+            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires,_refreshTokenHasher);
 
             if (refreshResult.IsFailure)
             {

@@ -2,10 +2,8 @@
 {
     internal interface IRefreshTokenHasher
     {
-        byte[] Salt();
+        string Hash(string refreshToken);
 
-        string Hash(string refreshToken, byte[] salt);
-
-        bool Verify(string refreshToken, byte[] salt, string hashedRefreshToken);
+        bool Verify(string refreshToken, string hashedRefreshToken);
     }
 }

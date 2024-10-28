@@ -1,5 +1,6 @@
 ﻿using EasyWay.Internals.Domain;
 using EasyWay.Internals.Domain.SeedWorks.Results;
+using EasyWay.Internals.RefreshTokenCreators;
 
 namespace EasyWay.Internals.Application.Cancel
 {
@@ -7,9 +8,14 @@ namespace EasyWay.Internals.Application.Cancel
     {
         private readonly ISecurityTokensRepository _repository;
 
-        public CancelRefreshToken(ISecurityTokensRepository repository) 
+        private readonly IRefreshTokenHasher _refreshTokenHasher;
+
+        public CancelRefreshToken(
+            ISecurityTokensRepository repository,
+            IRefreshTokenHasher refreshTokenHasher) 
         {
             _repository = repository;
+            _refreshTokenHasher = refreshTokenHasher;
         }
 
         public async Task<SecurityResult> Cancel(string? refreshToken)
@@ -19,7 +25,9 @@ namespace EasyWay.Internals.Application.Cancel
                 return SecurityResult.Failure(new RefreshTokenIsNotProvidedSecurityError());
             }
 
-            if (!await _repository.IfExistsRemove(refreshToken))
+            var hashedRefreshToken = _refreshTokenHasher.Hash(refreshToken);
+
+            if (!await _repository.IfExistsRemove(hashedRefreshToken))
             {
                 return SecurityResult.Failure(new RefreshTokenDoesNotExistSecurityError());
             }

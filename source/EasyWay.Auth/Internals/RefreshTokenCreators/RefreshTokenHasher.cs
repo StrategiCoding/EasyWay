@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using EasyWay.Settings;
+using System.Security.Cryptography;
 
 namespace EasyWay.Internals.RefreshTokenCreators
 {
@@ -10,18 +11,23 @@ namespace EasyWay.Internals.RefreshTokenCreators
 
         private readonly HashAlgorithmName AlgorithmName = HashAlgorithmName.SHA256;
 
-        public byte[] Salt() => RandomNumberGenerator.GetBytes(KeySize);
+        private readonly byte[] _salt;
 
-        public string Hash(string refreshToken, byte[] salt)
+        public RefreshTokenHasher(IAuthSettings settings)
         {
-            var key = Rfc2898DeriveBytes.Pbkdf2(refreshToken, salt, Iterations, AlgorithmName, KeySize);
+            _salt = Convert.FromBase64String(settings.RefreshTokenSalt);
+        }
+
+        public string Hash(string refreshToken)
+        {
+            var key = Rfc2898DeriveBytes.Pbkdf2(refreshToken,_salt, Iterations, AlgorithmName, KeySize);
 
             return Convert.ToBase64String(key);
         }
 
-        public bool Verify(string refreshToken, byte[] salt, string hashedRefreshToken)
+        public bool Verify(string refreshToken, string hashedRefreshToken)
         {
-            return Convert.FromBase64String(hashedRefreshToken) == Rfc2898DeriveBytes.Pbkdf2(refreshToken, salt, Iterations, AlgorithmName, KeySize);
+            return Convert.FromBase64String(hashedRefreshToken) == Rfc2898DeriveBytes.Pbkdf2(refreshToken, _salt, Iterations, AlgorithmName, KeySize);
         }
     }
 }

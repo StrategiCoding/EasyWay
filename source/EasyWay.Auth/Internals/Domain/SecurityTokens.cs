@@ -1,6 +1,7 @@
 ﻿using EasyWay.Internals.Domain.Errors;
 using EasyWay.Internals.Domain.SeedWorks.Clocks;
 using EasyWay.Internals.Domain.SeedWorks.Results;
+using EasyWay.Internals.RefreshTokenCreators;
 
 namespace EasyWay.Internals.Domain
 {
@@ -29,7 +30,7 @@ namespace EasyWay.Internals.Domain
             return new SecurityTokens(userId, hashedRefreshToken, refreshTokenExpires, accessTokenExpires);
         }
 
-        internal SecurityResult Refresh(string refreshToken, DateTime accessTokenExpires)
+        internal SecurityResult Refresh(string refreshToken, DateTime accessTokenExpires, IRefreshTokenHasher refreshTokenHasher)
         {
             if (!IsAccessTokenExpired())
             {
@@ -41,7 +42,7 @@ namespace EasyWay.Internals.Domain
                 return SecurityResult.Failure(new RefreshTokenIsExpiredException());
             }
 
-            HashedRefreshToken = refreshToken;
+            HashedRefreshToken = refreshTokenHasher.Hash(refreshToken);
             AccessTokenExpires = accessTokenExpires;
 
             return SecurityResult.Success;
