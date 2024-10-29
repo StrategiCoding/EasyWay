@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
+using EasyWay.Internals.Contracts;
 using EasyWay.Internals.Domain;
 using EasyWay.Internals.Domain.SeedWorks.Results;
 using EasyWay.Internals.RefreshTokenCreators;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EasyWay.Internals.Application.Issue
 {
-    internal sealed class IssueTokens : IIssueTokens
+    internal sealed class IssueTokensActionHandler : ISecurityActionHandler<IssueTokensAction, TokensDto>
     {
         private readonly IAccessTokensCreator _accessTokensCreator;
 
@@ -15,43 +16,39 @@ namespace EasyWay.Internals.Application.Issue
 
         private readonly ISecurityTokensRepository _storage;
 
-        private readonly ILogger<IssueTokens> _logger;
-
         private readonly IAuthSettings _authSettings;
 
         private readonly IRefreshTokenHasher _refreshTokenHasher;
 
-        public IssueTokens(
+        public IssueTokensActionHandler(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
             ISecurityTokensRepository storage,
-            ILogger<IssueTokens> logger,
             IAuthSettings authSettings,
             IRefreshTokenHasher refreshTokenHasher)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
-            _logger = logger;
             _authSettings = authSettings;
             _refreshTokenHasher = refreshTokenHasher;
         }
 
-        public async Task<SecurityResult<TokensDto>> Issue(Guid userId)
+        public async Task<SecurityResult<TokensDto>> Handle(IssueTokensAction action)
         {
-            if (await _storage.IfExistsRemove(userId))
+            if (await _storage.IfExistsRemove(action.UserId))
             {
-                _logger.LogInformation("Overwritten refresh token for user {@userId}", userId);
+                //TODO _logger.LogInformation("Overwritten refresh token for user {@userId}", action.UserId);
             }
 
             //TODO hash
             var refreshToken = _refreshTokenCreator.Create();
-            var accessToken = _accessTokensCreator.Create(userId);
+            var accessToken = _accessTokensCreator.Create(action.UserId);
 
             var hashedRefreshToken = _refreshTokenHasher.Hash(refreshToken);
 
             //TODO hash after check rules
-            var storageToken = SecurityTokens.Issue(userId, hashedRefreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
+            var storageToken = SecurityTokens.Issue(action.UserId, hashedRefreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
 
             await _storage.Add(storageToken);
 

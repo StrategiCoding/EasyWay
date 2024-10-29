@@ -20,7 +20,6 @@ namespace EasyWay.Internals
             services.AddSingleton<IRefreshTokenCreator, RefreshTokenCreator>();
             services.AddSingleton<IRefreshTokenHasher, RefreshTokenHasher>();
 
-            services.AddScoped<IIssueTokens, IssueTokens>();
             services.AddScoped<ICancelRefreshToken, CancelRefreshToken>();
 
             services.AddScoped<ISecurityTokensRepository, SecurityTokensRepository>();
