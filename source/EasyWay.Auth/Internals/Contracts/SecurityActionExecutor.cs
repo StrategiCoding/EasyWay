@@ -1,10 +1,6 @@
 ﻿using EasyWay.Internals.Domain.SeedWorks.Results;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace EasyWay.Internals.Contracts
 {
@@ -22,6 +18,13 @@ namespace EasyWay.Internals.Contracts
         {
             var result = await _serviceProvider.GetRequiredService<ISecurityActionHandler<TAction>>().Handle(action);
 
+            if (result.IsFailure)
+            {
+                var logger = _serviceProvider.GetRequiredService<ILogger<TAction>>();
+
+                logger.LogWarning(result.Error.Code);
+            }
+
             return result;
         }
 
@@ -29,6 +32,13 @@ namespace EasyWay.Internals.Contracts
             where TAction : class, ISecurityAction<TResult>
         {
             var result = await _serviceProvider.GetRequiredService<ISecurityActionHandler<TAction,TResult>>().Handle(action);
+
+            if (result.IsFailure)
+            {
+                var logger = _serviceProvider.GetRequiredService<ILogger<TAction>>();
+
+                logger.LogWarning(result.Error.Code);
+            }
 
             return result;
         }

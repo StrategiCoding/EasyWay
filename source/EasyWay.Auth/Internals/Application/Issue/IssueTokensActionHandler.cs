@@ -20,25 +20,29 @@ namespace EasyWay.Internals.Application.Issue
 
         private readonly IRefreshTokenHasher _refreshTokenHasher;
 
+        private readonly ILogger<IssueTokensAction> _logger;
+
         public IssueTokensActionHandler(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
             ISecurityTokensRepository storage,
             IAuthSettings authSettings,
-            IRefreshTokenHasher refreshTokenHasher)
+            IRefreshTokenHasher refreshTokenHasher,
+            ILogger<IssueTokensAction> logger)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
             _authSettings = authSettings;
             _refreshTokenHasher = refreshTokenHasher;
+            _logger = logger;
         }
 
         public async Task<SecurityResult<TokensDto>> Handle(IssueTokensAction action)
         {
             if (await _storage.IfExistsRemove(action.UserId))
             {
-                //TODO _logger.LogInformation("Overwritten refresh token for user {@userId}", action.UserId);
+                _logger.LogInformation("Overwritten refresh token for user {@userId}", action.UserId);
             }
 
             //TODO hash
