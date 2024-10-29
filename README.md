@@ -21,7 +21,7 @@
 #### :gear: Main
 - CQRS and DomainEvent handlers
 - Predefined domain building blocks (Tactical Domain-Driven Desing)
-- Automatic update of concurrency token in AggregateRoots
+- Automatic update of concurrency token in AggregateRoots (prevent lost update and write skew)
 - Automatic sequential Guid generation (in application)
 - Automatic publication of domain events
 - Automatic approval of all changes in one transaction (Unit of Work Pattern)
