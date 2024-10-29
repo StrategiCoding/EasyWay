@@ -1,11 +1,12 @@
 ﻿using EasyWay.Internals.AccessTokenCreators;
+using EasyWay.Internals.Contracts;
 using EasyWay.Internals.Domain;
 using EasyWay.Internals.Domain.SeedWorks.Results;
 using EasyWay.Internals.RefreshTokenCreators;
 
 namespace EasyWay.Internals.Application.Refresh
 {
-    internal sealed class RefreshTokens : IRefreshTokens
+    internal sealed class RefreshTokensActionHandler : ISecurityActionHandler<RefreshTokensAction, TokensDto>
     {
         private readonly IAccessTokensCreator _accessTokensCreator;
 
@@ -15,7 +16,7 @@ namespace EasyWay.Internals.Application.Refresh
 
         private readonly IRefreshTokenHasher _refreshTokenHasher;
 
-        public RefreshTokens(
+        public RefreshTokensActionHandler(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
             ISecurityTokensRepository storage,
@@ -27,14 +28,14 @@ namespace EasyWay.Internals.Application.Refresh
             _refreshTokenHasher = refreshTokenHasher;
         }
 
-        public async Task<SecurityResult<TokensDto>> Refresh(string? oldRefreshToken)
+        public async Task<SecurityResult<TokensDto>> Handle(RefreshTokensAction action)
         {
-            if (string.IsNullOrEmpty(oldRefreshToken))
+            if (string.IsNullOrEmpty(action.OldRefreshToken))
             {
                 return SecurityResult<TokensDto>.Failure(new RefreshTokenIsNotProvidedSecurityError());
             }
 
-            var hashedOldRefreshToken = _refreshTokenHasher.Hash(oldRefreshToken);
+            var hashedOldRefreshToken = _refreshTokenHasher.Hash(action.OldRefreshToken);
 
             var storageTokens = await _storage.Get(hashedOldRefreshToken);
 
@@ -47,7 +48,7 @@ namespace EasyWay.Internals.Application.Refresh
 
             var newRefreshToken = _refreshTokenCreator.Create();
 
-            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires,_refreshTokenHasher);
+            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires, _refreshTokenHasher);
 
             if (refreshResult.IsFailure)
             {
