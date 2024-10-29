@@ -2,6 +2,7 @@
 using EasyWay.Internals.Application;
 using Microsoft.Extensions.DependencyInjection;
 using EasyWay.Internals.Application.Issue;
+using EasyWay.Internals.Application.Cancel;
 
 namespace EasyWay.Internals.Contracts
 {
@@ -13,6 +14,7 @@ namespace EasyWay.Internals.Contracts
 
             services.AddScoped<ISecurityActionHandler<RefreshTokensAction, TokensDto>, RefreshTokensActionHandler>();
             services.AddScoped<ISecurityActionHandler<IssueTokensAction, TokensDto>, IssueTokensActionHandler>();
+            services.AddScoped<ISecurityActionHandler<CancelRefreshTokenAction>, CancelRefreshTokenActionHandler>();
 
             return services;
         }

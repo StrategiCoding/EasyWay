@@ -1,5 +1,5 @@
 ﻿using EasyWay.Internals.Application.Cancel;
-using EasyWay.Internals.Application.Issue;
+using EasyWay.Internals.Contracts;
 using EasyWay.Internals.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,13 +12,13 @@ namespace EasyWay.Internals
         internal static IEndpointRouteBuilder MapCancelEndpoint(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapPost(EasyWayAuthApiRoutes.CANCEL_TOKENS, async (
-                ICancelRefreshToken cancelRefreshToken,
+                ISecurityActionExecutor executor,
                 IRefreshTokenCookie refreshTokenCookie,
                 HttpContext httpContext) =>
             {
                 var refreshToken = refreshTokenCookie.Get(httpContext);
 
-                var tokensResult = await cancelRefreshToken.Cancel(refreshToken);
+                var tokensResult = await executor.Execute(new CancelRefreshTokenAction(refreshToken));
 
                 refreshTokenCookie.Remove(httpContext);
 
