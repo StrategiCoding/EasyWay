@@ -5,9 +5,9 @@ namespace EasyWay.Internals.RefreshTokenCreators
 {
     internal sealed class RefreshTokenHasher : IRefreshTokenHasher
     {
-        const int KeySize = 256 / 8;
+        private const int KeySize = 256 / 8;
 
-        const int Iterations = 3;
+        private const int Iterations = 3;
 
         private readonly HashAlgorithmName AlgorithmName = HashAlgorithmName.SHA256;
 
@@ -20,7 +20,7 @@ namespace EasyWay.Internals.RefreshTokenCreators
 
         public string Hash(string refreshToken)
         {
-            var key = Rfc2898DeriveBytes.Pbkdf2(refreshToken,_salt, Iterations, AlgorithmName, KeySize);
+            var key = Rfc2898DeriveBytes.Pbkdf2(refreshToken, _salt, Iterations, AlgorithmName, KeySize);
 
             return Convert.ToBase64String(key);
         }
