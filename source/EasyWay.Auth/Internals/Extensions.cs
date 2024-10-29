@@ -2,6 +2,7 @@
 using EasyWay.Internals.Application.Cancel;
 using EasyWay.Internals.Application.Issue;
 using EasyWay.Internals.Application.Refresh;
+using EasyWay.Internals.Contracts;
 using EasyWay.Internals.Domain;
 using EasyWay.Internals.Infrastructure;
 using EasyWay.Internals.RefreshTokenCreators;
@@ -13,12 +14,11 @@ namespace EasyWay.Internals
     {
         internal static IServiceCollection AddAuth(this IServiceCollection services)
         {
+            services.AddSecurityActions();
+
             services.AddSingleton<IAccessTokensCreator, AccessTokensCreator>();
             services.AddSingleton<IRefreshTokenCreator, RefreshTokenCreator>();
-
-            services.AddScoped<IIssueTokens, IssueTokens>();
-            services.AddScoped<IRefreshTokens, RefreshTokens>();
-            services.AddScoped<ICancelRefreshToken, CancelRefreshToken>();
+            services.AddSingleton<IRefreshTokenHasher, RefreshTokenHasher>();
 
             services.AddScoped<ISecurityTokensRepository, SecurityTokensRepository>();
 

@@ -8,6 +8,8 @@
 
         int RefreshTokenSize { get; }
 
+        string RefreshTokenSalt { get; }
+
         TimeSpan AccessTokenLifetime { get; }
     }
 }
