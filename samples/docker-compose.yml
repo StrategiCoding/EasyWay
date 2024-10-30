@@ -12,8 +12,8 @@ services:
     networks:
       - easyway-network
     build:
-      context: .
-      dockerfile: ./EasyWay.Samples/Dockerfile
+      context: ..
+      dockerfile: samples/EasyWay.Samples/Dockerfile
     depends_on:
       - database
 
