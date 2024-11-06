@@ -45,11 +45,11 @@ namespace EasyWay.Internals.Modules
             return commandResult;
         }
 
-        public async Task<TResult> ExecuteQuery<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
-            where TQuery : Query<TModule, TResult>
-            where TResult : ReadModel
+        public async Task<QueryResult<TReadModel>> ExecuteQuery<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+            where TQuery : Query<TModule, TReadModel>
+            where TReadModel : ReadModel
         {
-            TResult result;
+            QueryResult<TReadModel> result;
 
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -57,7 +57,7 @@ namespace EasyWay.Internals.Modules
 
                 result = await sp
                     .GetRequiredService<IQueryExecutor<TModule>>()
-                    .Execute<TQuery, TResult>(query, cancellationToken);
+                    .Execute<TQuery, TReadModel>(query, cancellationToken);
             }
 
             return result;

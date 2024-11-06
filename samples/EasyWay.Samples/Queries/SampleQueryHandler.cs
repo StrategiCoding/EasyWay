@@ -2,9 +2,11 @@
 {
     public class SampleQueryHandler : IQueryHandler<SampleModule, SampleQuery, SampleQueryResult>
     {
-        public Task<SampleQueryResult> Handle(SampleQuery query)
+        public Task<QueryResult<SampleQueryResult>> Handle(SampleQuery query)
         {
-            return Task.FromResult(new SampleQueryResult());
+            //return Task.FromResult(QueryResult<SampleQueryResult>.Forbidden);
+
+            return Task.FromResult(QueryResult<SampleQueryResult>.Ok(new SampleQueryResult()));
         }
     }
 }

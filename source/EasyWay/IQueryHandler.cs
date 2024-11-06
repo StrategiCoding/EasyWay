@@ -15,6 +15,6 @@ namespace EasyWay
         /// Handles a query
         /// </summary>
         /// <param name="query">Query</param>
-        Task<TReadModel> Handle(TQuery query);
+        Task<QueryResult<TReadModel>> Handle(TQuery query);
     }
 }

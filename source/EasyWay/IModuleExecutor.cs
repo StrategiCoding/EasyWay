@@ -10,8 +10,8 @@
             where TCommand : Command<TModule, TCommandResult>
             where TCommandResult : CommandResult;
 
-        Task<TResult> ExecuteQuery<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
-            where TQuery : Query<TModule, TResult>
-            where TResult : ReadModel;
+        Task<QueryResult<TReadModel>> ExecuteQuery<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+            where TQuery : Query<TModule, TReadModel>
+            where TReadModel : ReadModel;
     }
 }

@@ -18,7 +18,7 @@ namespace EasyWay.Internals.Queries
             _cancellationContextConstructor = cancellationContextConstructor;
         }  
 
-        public Task<TReadModel> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
+        public Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
