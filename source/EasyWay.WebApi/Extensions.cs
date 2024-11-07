@@ -22,6 +22,7 @@ namespace EasyWay
                 return queryResult.Error switch
                 {
                     QueryErrorEnum.None => Results.Ok(queryResult.ReadModel),
+                    QueryErrorEnum.Validation => Results.BadRequest(queryResult.Errors),
                     QueryErrorEnum.NotFound => Results.StatusCode(404),
                     QueryErrorEnum.Forbidden => Results.StatusCode(403),
                     _ => Results.StatusCode(500),

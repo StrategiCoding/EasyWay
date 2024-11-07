@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Queries
@@ -18,13 +19,25 @@ namespace EasyWay.Internals.Queries
             _cancellationContextConstructor = cancellationContextConstructor;
         }  
 
-        public Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
+        public async Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            return _serviceProvider
+            var validator = _serviceProvider.GetService<IValidator<TQuery>>();
+
+            if (validator is not null)
+            {
+                var result = validator.Validate(query);
+
+                if (!result.IsValid)
+                {
+                    return QueryResult<TReadModel>.Validation(result.ToDictionary());
+                }
+            }
+
+            return await _serviceProvider
                     .GetRequiredService<IQueryHandler<TModule, TQuery, TReadModel>>()
                     .Handle(query);
         }

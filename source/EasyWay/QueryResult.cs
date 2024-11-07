@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Queries.Results;
+using FluentValidation.Results;
 
 namespace EasyWay
 {
@@ -8,6 +9,8 @@ namespace EasyWay
         internal TReadModel ReadModel { get;  }
 
         internal QueryErrorEnum Error { get; }
+
+        internal IDictionary<string, string[]> Errors;
 
         private QueryResult(TReadModel readModel)
         {
@@ -21,7 +24,15 @@ namespace EasyWay
             Error = queryError;
         }
 
+        private QueryResult(IDictionary<string, string[]> errors)
+        {
+            Errors = errors;
+            Error = QueryErrorEnum.Validation;
+        }
+
         public static QueryResult<TReadModel> Ok(TReadModel readModel) => new QueryResult<TReadModel>(readModel);
+
+        public static QueryResult<TReadModel> Validation(IDictionary<string, string[]> errors) => new QueryResult<TReadModel>(errors);
 
         public static QueryResult<TReadModel> NotFound => new QueryResult<TReadModel>(QueryErrorEnum.NotFound);
 
