@@ -6,8 +6,8 @@
         Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command<TModule>;
 
-        Task<TCommandResult> Execute<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken)
-            where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : OperationResult;
+        Task<CommandResult<TOperationResult>> Execute<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken)
+            where TCommand : Command<TModule, TOperationResult>
+            where TOperationResult : OperationResult;
     }
 }

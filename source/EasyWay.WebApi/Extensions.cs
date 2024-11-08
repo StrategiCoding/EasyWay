@@ -55,7 +55,14 @@ namespace EasyWay
         {
             return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
-                return await executor.Execute<TCommand, TCommandResult>(command, cancellationToken);
+                var commandResult = await executor.Execute<TCommand, TCommandResult>(command, cancellationToken);
+
+                return commandResult.Error switch
+                {
+                    CommandErrorEnum.None => Results.Ok(),
+                    CommandErrorEnum.Validation => Results.BadRequest(commandResult.ValidationErrors),
+                    _ => Results.StatusCode(500),
+                };
             });
         }
     }
