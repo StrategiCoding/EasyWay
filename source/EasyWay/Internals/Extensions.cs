@@ -7,6 +7,7 @@ using EasyWay.Internals.Factories;
 using EasyWay.Internals.Policies;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Repositories;
+using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -26,7 +27,8 @@ namespace EasyWay.Internals
                 .AddRepositories(assemblies)
                 .AddPolicies(assemblies)
                 .AddDomainServices(assemblies)
-                .AddFactories(assemblies);
+                .AddFactories(assemblies)
+                .AddValidation(assemblies);
                 
         }
     }

@@ -3,6 +3,7 @@
     internal enum QueryErrorEnum
     {
         None,
+        Validation,
         NotFound,
         Forbidden,
     }
