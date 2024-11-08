@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Commands;
+using EasyWay.Internals.Commands.Results;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Queries.Results;
 using Microsoft.AspNetCore.Builder;
@@ -22,7 +23,7 @@ namespace EasyWay
                 return queryResult.Error switch
                 {
                     QueryErrorEnum.None => Results.Ok(queryResult.ReadModel),
-                    QueryErrorEnum.Validation => Results.BadRequest(queryResult.Errors),
+                    QueryErrorEnum.Validation => Results.BadRequest(queryResult.ValidationErrors),
                     QueryErrorEnum.NotFound => Results.StatusCode(404),
                     QueryErrorEnum.Forbidden => Results.StatusCode(403),
                     _ => Results.StatusCode(500),
@@ -36,14 +37,21 @@ namespace EasyWay
         {
             return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
-                await executor.Execute(command, cancellationToken);
+                var commandResult = await executor.Execute(command, cancellationToken);
+
+                return commandResult.Error switch
+                {
+                    CommandErrorEnum.None => Results.Ok(),
+                    CommandErrorEnum.Validation => Results.BadRequest(commandResult.ValidationErrors),
+                    _ => Results.StatusCode(500),
+                };
             });
         }
 
         public static IEndpointConventionBuilder MapCommand<TModule, TCommand, TCommandResult>(this IEndpointRouteBuilder endpoints)
             where TModule : EasyWayModule
             where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : CommandResult
+            where TCommandResult : OperationResult
         {
             return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {

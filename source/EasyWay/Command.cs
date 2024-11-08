@@ -8,5 +8,5 @@
 
     public abstract class Command<TModule, TCommandResult>
         where TModule : EasyWayModule
-        where TCommandResult : CommandResult;
+        where TCommandResult : OperationResult;
 }

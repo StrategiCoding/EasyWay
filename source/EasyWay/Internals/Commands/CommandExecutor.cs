@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands
@@ -22,21 +23,42 @@ namespace EasyWay.Internals.Commands
             _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
-        public async Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
+        public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command<TModule>
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-             await _serviceProvider
+            var validator = _serviceProvider.GetService<IValidator<TCommand>>();
+
+            if (validator is not null)
+            {
+                var result = validator.Validate(command);
+
+                if (!result.IsValid)
+                {
+                    var errors = result.Errors
+                    .GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorCode).ToArray()
+                    );
+
+                    return CommandResult.Validation(errors);
+                }
+            }
+
+            var commandResult = await _serviceProvider
                 .GetRequiredService<ICommandHandler<TModule, TCommand>>()
                 .Handle(command);
 
             await _unitOfWorkCommandHandler.Handle();
+
+            return commandResult;
         }
 
         public async Task<TCommandResult> Execute<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : CommandResult
+            where TCommandResult : OperationResult
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
