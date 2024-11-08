@@ -15,11 +15,11 @@
         Task<CommandResult> Handle(TCommand command);
     }
 
-    public interface ICommandHandler<TModule, TCommand, TCommandResult>
+    public interface ICommandHandler<TModule, TCommand, TOperationResult>
         where TModule : EasyWayModule
-        where TCommand : Command<TModule, TCommandResult>
-        where TCommandResult : OperationResult
+        where TCommand : Command<TModule, TOperationResult>
+        where TOperationResult : OperationResult
     {
-        Task<TCommandResult> Handle(TCommand command);
+        Task<CommandResult<TOperationResult>> Handle(TCommand command);
     }
 }

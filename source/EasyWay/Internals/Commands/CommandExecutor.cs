@@ -56,19 +56,38 @@ namespace EasyWay.Internals.Commands
             return commandResult;
         }
 
-        public async Task<TCommandResult> Execute<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken)
-            where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : OperationResult
+        public async Task<CommandResult<TOperationResult>> Execute<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken)
+            where TCommand : Command<TModule, TOperationResult>
+            where TOperationResult : OperationResult
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            var result = await _serviceProvider
-               .GetRequiredService<ICommandHandler<TModule, TCommand, TCommandResult>>()
+            var validator = _serviceProvider.GetService<IValidator<TCommand>>();
+
+            if (validator is not null)
+            {
+                var result = validator.Validate(command);
+
+                if (!result.IsValid)
+                {
+                    var errors = result.Errors
+                    .GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorCode).ToArray()
+                    );
+
+                    return CommandResult<TOperationResult>.Validation(errors);
+                }
+            }
+
+            var commandResult = await _serviceProvider
+               .GetRequiredService<ICommandHandler<TModule, TCommand, TOperationResult>>()
                .Handle(command);
 
             await _unitOfWorkCommandHandler.Handle();
 
-            return result;
+            return commandResult;
         }
     }
 }

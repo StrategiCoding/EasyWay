@@ -31,11 +31,11 @@ namespace EasyWay.Internals.Modules
             return commandResult;
         }
 
-        public async Task<TCommandResult> ExecuteCommand<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken = default)
-            where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : OperationResult
+        public async Task<CommandResult<TOperationResult>> ExecuteCommand<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
+            where TCommand : Command<TModule, TOperationResult>
+            where TOperationResult : OperationResult
         {
-            TCommandResult commandResult;
+            CommandResult<TOperationResult> commandResult;
 
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -43,7 +43,7 @@ namespace EasyWay.Internals.Modules
 
                 commandResult = await sp
                     .GetRequiredService<ICommandExecutor<TModule>>()
-                    .Execute<TCommand, TCommandResult>(command, cancellationToken);
+                    .Execute<TCommand, TOperationResult>(command, cancellationToken);
             }
 
             return commandResult;
