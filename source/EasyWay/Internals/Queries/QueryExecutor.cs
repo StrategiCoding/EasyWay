@@ -1,6 +1,7 @@
 ﻿using EasyWay.Internals.Contexts;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasyWay.Internals.Queries
 {
@@ -33,7 +34,14 @@ namespace EasyWay.Internals.Queries
 
                 if (!result.IsValid)
                 {
-                    return QueryResult<TReadModel>.Validation(result.ToDictionary());
+                    var errors = result.Errors
+                    .GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorCode).ToArray()
+                    );
+
+                    return QueryResult<TReadModel>.Validation(errors);
                 }
             }
 

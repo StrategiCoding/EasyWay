@@ -6,7 +6,9 @@ namespace EasyWay.Samples.Queries
     {
         public SampleQueryValidator() 
         {
-            RuleFor(x => x.Name).NotEmpty().WithErrorCode("EMPTY");
+            RuleFor(x => x.Name)
+                .NotEmpty().WithErrorCode("EMPTY")
+                .MinimumLength(3).WithErrorCode("MIN_3_CHARS");
         }
     }
 }
