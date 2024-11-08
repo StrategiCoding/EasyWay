@@ -37,7 +37,7 @@ namespace EasyWay.Samples.Commands
             _userContext = userContext;
         }
 
-        public async Task Handle(SampleCommand command)
+        public async Task<CommandResult> Handle(SampleCommand command)
         {
             var userId = _userContext.UserId;
 
@@ -53,6 +53,8 @@ namespace EasyWay.Samples.Commands
             _concurrencyTokenValidator.Validate(x, command);
 
             await _repository.Add(x);
+
+            return CommandResult.Ok;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.Commands;
+﻿ using EasyWay.Internals.Commands;
 using EasyWay.Internals.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,22 +14,26 @@ namespace EasyWay.Internals.Modules
             _serviceProvider = serviceProvider;
         }
 
-        public async Task ExecuteCommand<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
+        public async Task<CommandResult> ExecuteCommand<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
             where TCommand : Command<TModule>
         {
+            CommandResult commandResult;
+
             using (var scope = _serviceProvider.CreateScope())
             {
                 var sp = scope.ServiceProvider;
 
-                await sp
+                commandResult = await sp
                     .GetRequiredService<ICommandExecutor<TModule>>()
                     .Execute(command, cancellationToken);
             }
+
+            return commandResult;
         }
 
         public async Task<TCommandResult> ExecuteCommand<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : CommandResult
+            where TCommandResult : OperationResult
         {
             TCommandResult commandResult;
 

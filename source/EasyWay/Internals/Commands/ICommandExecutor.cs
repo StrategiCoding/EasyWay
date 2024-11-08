@@ -3,11 +3,11 @@
     internal interface ICommandExecutor<TModule>
         where TModule : EasyWayModule
     {
-        Task Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
+        Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command<TModule>;
 
         Task<TCommandResult> Execute<TCommand, TCommandResult>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command<TModule, TCommandResult>
-            where TCommandResult : CommandResult;
+            where TCommandResult : OperationResult;
     }
 }
