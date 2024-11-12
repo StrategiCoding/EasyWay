@@ -1,7 +1,4 @@
-﻿using EasyWay.Internals.Commands;
-using EasyWay.Internals.Commands.Results;
-using EasyWay.Internals.Modules;
-using EasyWay.Internals.Queries;
+﻿using EasyWay.Internals.Commands.Results;
 using EasyWay.Internals.Queries.Results;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,14 +7,14 @@ using Microsoft.AspNetCore.Routing;
 
 namespace EasyWay
 {
-    public static class Extensions
+    public static class RcpStyleExtensions
     {
-        public static IEndpointConventionBuilder MapQuery<TModule, TQuery, TReadModel>(this IEndpointRouteBuilder endpoints)
+        public static WebKernel MapQuery<TModule, TQuery, TReadModel>(this WebKernel webKernel)
             where TModule : EasyWayModule
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
-            return endpoints.MapPost(typeof(TModule).Name + "/_queries/" + typeof(TQuery).Name, async ([FromBody] TQuery query, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            webKernel.App.MapPost(typeof(TModule).Name + "/_queries/" + typeof(TQuery).Name, async ([FromBody] TQuery query, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 var queryResult = await executor.ExecuteQuery<TQuery, TReadModel>(query, cancellationToken);
 
@@ -30,13 +27,15 @@ namespace EasyWay
                     _ => Results.StatusCode(500),
                 };
             });
+
+            return webKernel;
         }
 
-        public static IEndpointConventionBuilder MapCommand<TModule, TCommand>(this IEndpointRouteBuilder endpoints)
+        public static WebKernel MapCommand<TModule, TCommand>(this WebKernel webKernel)
             where TModule : EasyWayModule
             where TCommand : Command<TModule>
         {
-            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            webKernel.App.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 var commandResult = await executor.ExecuteCommand(command, cancellationToken);
 
@@ -47,14 +46,16 @@ namespace EasyWay
                     _ => Results.StatusCode(500),
                 };
             });
+
+            return webKernel;
         }
 
-        public static IEndpointConventionBuilder MapCommand<TModule, TCommand, TCommandResult>(this IEndpointRouteBuilder endpoints)
+        public static WebKernel MapCommand<TModule, TCommand, TCommandResult>(this WebKernel webKernel)
             where TModule : EasyWayModule
             where TCommand : Command<TModule, TCommandResult>
             where TCommandResult : OperationResult
         {
-            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            webKernel.App.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 var commandResult = await executor.ExecuteCommand<TCommand, TCommandResult>(command, cancellationToken);
 
@@ -65,6 +66,8 @@ namespace EasyWay
                     _ => Results.StatusCode(500),
                 };
             });
+
+            return webKernel;
         }
     }
 }

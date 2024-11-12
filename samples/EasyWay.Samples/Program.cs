@@ -23,9 +23,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapCommand<SampleModule, SampleCommand>();
-app.MapCommand<SampleModule, SampleCommandWithResult, SampleCommandResult>();
-app.MapCommand<SampleModule, ErrorCommand>();
-app.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
+webKernel.MapCommand<SampleModule, SampleCommand>();
+webKernel.MapCommand<SampleModule, SampleCommandWithResult, SampleCommandResult>();
+webKernel.MapCommand<SampleModule, ErrorCommand>();
+webKernel.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
 
 await webKernel.RunAsync();
