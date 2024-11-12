@@ -1,6 +1,0 @@
-@EasyWay.ModularMonolith_HostAddress = http://localhost:5010
-
-GET {{EasyWay.ModularMonolith_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
