@@ -46,7 +46,6 @@ namespace EasyWay
             }
 
             var initializers = x.GetServices<IInitializer>();
-            //TODO register all IModuleExecutor
 
             foreach(var initializer in initializers)
             {
