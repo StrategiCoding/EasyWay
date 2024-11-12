@@ -4,17 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace EasyWay
 {
-    public class WebKernel
+    public sealed class WebKernel
     {
-        public static WebKernelBuilder CreateBuilder(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-
-            builder.WebHost.UseKestrel(option => option.AddServerHeader = false);
-
-            return new WebKernelBuilder(builder);
-        }
-
         public readonly WebApplication App;
 
         internal WebKernel(WebApplication webApplication) 

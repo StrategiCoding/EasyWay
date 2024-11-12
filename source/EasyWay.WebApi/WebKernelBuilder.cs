@@ -1,32 +1,42 @@
 ﻿using EasyWay.Internals;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EasyWay
 {
-    public class WebKernelBuilder
+    public sealed class WebKernelBuilder
     {
         public readonly WebApplicationBuilder AppBuilder;
 
-        internal WebKernelBuilder(WebApplicationBuilder webApplicationBuilder) 
+        private readonly Kernel _kernel;
+
+        private WebKernelBuilder(WebApplicationBuilder webApplicationBuilder) 
         {
             AppBuilder = webApplicationBuilder;
+            _kernel = Kernel.Create();
+        }
+
+        public static WebKernelBuilder Create(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            builder.WebHost.UseKestrel(option => option.AddServerHeader = false);
+
+            return new WebKernelBuilder(builder);
         }
 
         public void AddModule<TModule, TModuleConfigurator>()
             where TModule : EasyWayModule
             where TModuleConfigurator : ModuleConfigurator<TModule>, new()
         {
-            var services = AppBuilder.Services;
-            var configuration = AppBuilder.Configuration.GetSection(typeof(TModule).Name);
-
-            var moduleConfigurator = new TModuleConfigurator();
-
-            moduleConfigurator.Initialize(services, configuration);
+            _kernel.AddModule<TModule, TModuleConfigurator>();
         }
 
-        public WebKernel Build()
+        public async Task<WebKernel> BuildAsync()
         {
+            await _kernel.BuildAsync(AppBuilder.Services);
             AppBuilder.Services.AddEasyWayWebApi();
+
 
             return new WebKernel(AppBuilder.Build());
         }
