@@ -1,5 +1,6 @@
 ﻿using EasyWay.Internals.Commands;
 using EasyWay.Internals.Commands.Results;
+using EasyWay.Internals.Modules;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Queries.Results;
 using Microsoft.AspNetCore.Builder;
@@ -16,9 +17,9 @@ namespace EasyWay
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
-            return endpoints.MapPost(typeof(TModule).Name + "/_queries/" + typeof(TQuery).Name, async ([FromBody] TQuery query, IQueryExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TModule).Name + "/_queries/" + typeof(TQuery).Name, async ([FromBody] TQuery query, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
-                var queryResult = await executor.Execute<TQuery, TReadModel>(query, cancellationToken);
+                var queryResult = await executor.ExecuteQuery<TQuery, TReadModel>(query, cancellationToken);
 
                 return queryResult.Error switch
                 {
@@ -35,9 +36,9 @@ namespace EasyWay
             where TModule : EasyWayModule
             where TCommand : Command<TModule>
         {
-            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
-                var commandResult = await executor.Execute(command, cancellationToken);
+                var commandResult = await executor.ExecuteCommand(command, cancellationToken);
 
                 return commandResult.Error switch
                 {
@@ -53,9 +54,9 @@ namespace EasyWay
             where TCommand : Command<TModule, TCommandResult>
             where TCommandResult : OperationResult
         {
-            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, ICommandExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            return endpoints.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
-                var commandResult = await executor.Execute<TCommand, TCommandResult>(command, cancellationToken);
+                var commandResult = await executor.ExecuteCommand<TCommand, TCommandResult>(command, cancellationToken);
 
                 return commandResult.Error switch
                 {

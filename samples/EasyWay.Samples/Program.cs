@@ -1,10 +1,9 @@
 using EasyWay.Samples;
 using EasyWay.Samples.Commands;
 using EasyWay.Samples.Commands.WithResult;
-using EasyWay.Samples.Databases;
 using EasyWay.Samples.Queries;
 
-var webKernelBuilder = WebKernel.CreateBuilder(args);
+var webKernelBuilder = WebKernelBuilder.Create(args);
 
 var builder = webKernelBuilder.AppBuilder;
 
@@ -13,15 +12,9 @@ webKernelBuilder.AddModule<SampleModule, SampleModuleConfigurator>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var webKernel = webKernelBuilder.Build();
+var webKernel = await webKernelBuilder.BuildAsync();
 
 var app = webKernel.App;
-
-using (var scope = app.Services.CreateScope())
-{
-
-    scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

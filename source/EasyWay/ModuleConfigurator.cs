@@ -9,13 +9,15 @@ namespace EasyWay
     public abstract class ModuleConfigurator<TModule>
         where TModule : EasyWayModule
     {
-        internal void Initialize(IServiceCollection services, IConfiguration configuration)
+        internal Tuple<Type, Type> Initialize(IServiceCollection services, IConfiguration configuration)
         {
             services.AddEasyWay<TModule>(Assemblies);
 
             ConfigureDependencies(services, configuration);
 
             services.AddSingleton<IModuleExecutor<TModule>, ModuleExecutor<TModule>>();
+
+            return new Tuple<Type, Type>(typeof(IModuleExecutor<TModule>), typeof(ModuleExecutor<TModule>));
         }
 
         protected abstract IEnumerable<Assembly> Assemblies { get; }
