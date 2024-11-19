@@ -3,6 +3,7 @@ using EasyWay.Internals.Contracts;
 using EasyWay.Internals.Domain;
 using EasyWay.Internals.Domain.SeedWorks.Results;
 using EasyWay.Internals.RefreshTokenCreators;
+using EasyWay.Settings;
 
 namespace EasyWay.Internals.Application.Refresh
 {
@@ -16,16 +17,20 @@ namespace EasyWay.Internals.Application.Refresh
 
         private readonly IRefreshTokenHasher _refreshTokenHasher;
 
+        private readonly IAuthSettings _authSettings;
+
         public RefreshTokensActionHandler(
             IAccessTokensCreator accessTokensCreator,
             IRefreshTokenCreator refreshTokenCreator,
             ISecurityTokensRepository storage,
-            IRefreshTokenHasher refreshTokenHasher)
+            IRefreshTokenHasher refreshTokenHasher,
+            IAuthSettings authSettings)
         {
             _accessTokensCreator = accessTokensCreator;
             _refreshTokenCreator = refreshTokenCreator;
             _storage = storage;
             _refreshTokenHasher = refreshTokenHasher;
+            _authSettings = authSettings;
         }
 
         public async Task<SecurityResult<TokensDto>> Handle(RefreshTokensAction action)
@@ -48,7 +53,7 @@ namespace EasyWay.Internals.Application.Refresh
 
             var newRefreshToken = _refreshTokenCreator.Create();
 
-            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires, _refreshTokenHasher);
+            var refreshResult = storageTokens.Refresh(newRefreshToken, accessToken.Expires, _refreshTokenHasher, _authSettings.RefreshTokenMaxIdleTime);
 
             if (refreshResult.IsFailure)
             {

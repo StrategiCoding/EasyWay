@@ -52,7 +52,7 @@ namespace EasyWay.Internals.Application.Issue
             var hashedRefreshToken = _refreshTokenHasher.Hash(refreshToken);
 
             //TODO hash after check rules
-            var storageToken = SecurityTokens.Issue(action.UserId, hashedRefreshToken, _authSettings.RefreshTokenLifetime, accessToken.Expires);
+            var storageToken = SecurityTokens.Issue(action.UserId, hashedRefreshToken, _authSettings.RefreshTokenLifetime, _authSettings.RefreshTokenMaxIdleTime, accessToken.Expires);
 
             await _storage.Add(storageToken);
 

@@ -6,6 +6,8 @@
 
         TimeSpan RefreshTokenLifetime { get; }
 
+        TimeSpan? RefreshTokenMaxIdleTime { get; }
+
         int RefreshTokenSize { get; }
 
         string RefreshTokenSalt { get; }
