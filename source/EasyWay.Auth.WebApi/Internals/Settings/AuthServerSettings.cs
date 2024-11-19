@@ -8,7 +8,7 @@ namespace EasyWay.Internals.Settings
 
         public TimeSpan RefreshTokenLifetime { get; set; } = TimeSpan.FromDays(1);
 
-        public TimeSpan? RefreshTokenMaxIdleTime { get; set; } = TimeSpan.FromSeconds(10);
+        public TimeSpan? RefreshTokenMaxIdleTime { get; set; } = null;
 
         public TimeSpan AccessTokenLifetime { get; set; } = TimeSpan.FromSeconds(3);
 
