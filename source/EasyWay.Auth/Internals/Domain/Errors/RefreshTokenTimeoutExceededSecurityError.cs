@@ -2,5 +2,5 @@
 
 namespace EasyWay.Internals.Domain.Errors
 {
-    internal sealed class AccessTokenIsNotExpiredException : SecurityError;
+    internal sealed class RefreshTokenTimeoutExceededSecurityError : SecurityError;
 }
