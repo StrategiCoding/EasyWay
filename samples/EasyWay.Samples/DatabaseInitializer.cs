@@ -14,7 +14,8 @@ namespace EasyWay.Samples
 
         public Task Initialize()
         {
-            _serviceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
+            // TODO
+            //.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
 
             return Task.CompletedTask;
         }
