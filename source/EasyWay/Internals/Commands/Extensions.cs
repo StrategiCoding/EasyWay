@@ -5,12 +5,12 @@ namespace EasyWay.Internals.Commands
 {
     internal static class Extensions
     {
-        internal static IServiceCollection AddCommands<TModule>(
+        internal static IServiceCollection AddCommands(
             this IServiceCollection services,
+            Type moduleType,
             IEnumerable<Assembly> assemblies)
-            where TModule : EasyWayModule
         {
-            services.AddScoped<ICommandExecutor<TModule>, CommandExecutor<TModule>>();
+            services.AddScoped(typeof(ICommandExecutor<>).MakeGenericType(moduleType), typeof(CommandExecutor<>).MakeGenericType(moduleType));
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<,>)))
