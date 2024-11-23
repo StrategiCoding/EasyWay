@@ -23,13 +23,12 @@ namespace EasyWay
 
         public static Kernel Create() => new Kernel();
 
-        public void AddModule<TModule, TModuleConfigurator>()
-            where TModule : EasyWayModule
-            where TModuleConfigurator : ModuleConfigurator<TModule>, new()
+        public void AddModule<TModule>()
+            where TModule : EasyWayModule, new()
         {
             var configuration = _configuration.GetSection(typeof(TModule).Name);
 
-            var moduleExecutorType = new TModuleConfigurator().Initialize(_services, configuration);
+            var moduleExecutorType = new TModule().Initialize(_services, configuration);
 
             _moduleExecutorTypes.Add(moduleExecutorType);
         }

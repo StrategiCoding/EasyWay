@@ -25,11 +25,10 @@ namespace EasyWay
             return new WebKernelBuilder(builder);
         }
 
-        public void AddModule<TModule, TModuleConfigurator>()
-            where TModule : EasyWayModule
-            where TModuleConfigurator : ModuleConfigurator<TModule>, new()
+        public void AddModule<TModule>()
+            where TModule : EasyWayModule, new()
         {
-            _kernel.AddModule<TModule, TModuleConfigurator>();
+            _kernel.AddModule<TModule>();
         }
 
         public async Task<WebKernel> BuildAsync()
