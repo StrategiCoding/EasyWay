@@ -11,6 +11,7 @@ namespace EasyWay.Internals.Commands
             IEnumerable<Assembly> assemblies)
         {
             services.AddScoped(typeof(ICommandExecutor<>).MakeGenericType(moduleType), typeof(CommandExecutor<>).MakeGenericType(moduleType));
+            services.AddScoped(typeof(ICommandWithOperationResultExecutor<>).MakeGenericType(moduleType), typeof(CommandWithOperationResultExecutor<>).MakeGenericType(moduleType));
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<,>)))

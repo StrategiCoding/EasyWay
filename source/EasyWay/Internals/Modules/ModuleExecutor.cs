@@ -14,7 +14,7 @@ namespace EasyWay.Internals.Modules
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<CommandResult> ExecuteCommand<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
+        public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
             where TCommand : Command<TModule>
         {
             CommandResult commandResult;
@@ -31,8 +31,7 @@ namespace EasyWay.Internals.Modules
             return commandResult;
         }
 
-        public async Task<CommandResult<TOperationResult>> ExecuteCommand<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
-            where TCommand : Command<TModule, TOperationResult>
+        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TModule, TOperationResult> command, CancellationToken cancellationToken = default)
             where TOperationResult : OperationResult
         {
             CommandResult<TOperationResult> commandResult;
@@ -42,8 +41,8 @@ namespace EasyWay.Internals.Modules
                 var sp = scope.ServiceProvider;
 
                 commandResult = await sp
-                    .GetRequiredService<ICommandExecutor<TModule>>()
-                    .Execute<TCommand, TOperationResult>(command, cancellationToken);
+                    .GetRequiredService<ICommandWithOperationResultExecutor<TModule>>()
+                    .Execute(command, cancellationToken);
             }
 
             return commandResult;

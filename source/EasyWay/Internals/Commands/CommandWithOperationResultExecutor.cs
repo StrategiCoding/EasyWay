@@ -1,10 +1,10 @@
 ﻿using EasyWay.Internals.Contexts;
 using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+using FluentValidation.Results;
 
 namespace EasyWay.Internals.Commands
 {
-    internal sealed class CommandExecutor<TModule> : ICommandExecutor<TModule>
+    internal sealed class CommandWithOperationResultExecutor<TModule> : ICommandWithOperationResultExecutor<TModule>
         where TModule : EasyWayModule
     {
         private readonly IServiceProvider _serviceProvider;
@@ -13,26 +13,32 @@ namespace EasyWay.Internals.Commands
 
         private readonly IUnitOfWorkCommandHandler _unitOfWorkCommandHandler;
 
-        public CommandExecutor(
+        public CommandWithOperationResultExecutor(
             IServiceProvider serviceProvider,
             ICancellationContextConstructor cancellationContextConstructor,
-            IUnitOfWorkCommandHandler unitOfWorkCommandHandler) 
+            IUnitOfWorkCommandHandler unitOfWorkCommandHandler)
         {
             _serviceProvider = serviceProvider;
             _cancellationContextConstructor = cancellationContextConstructor;
             _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
-        public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
-            where TCommand : Command<TModule>
+        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TModule, TOperationResult> command, CancellationToken cancellationToken)
+            where TOperationResult : OperationResult
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            var validator = _serviceProvider.GetService<IValidator<TCommand>>();
+            var commandType = command.GetType();
+
+            var validatorType = typeof(IValidator<>).MakeGenericType(commandType);
+
+            var validator = _serviceProvider.GetService(validatorType);
 
             if (validator is not null)
             {
-                var result = validator.Validate(command);
+                var result = (ValidationResult)validatorType
+                    .GetMethod("Validate")
+                    ?.Invoke(validator, [command]);
 
                 if (!result.IsValid)
                 {
@@ -43,13 +49,15 @@ namespace EasyWay.Internals.Commands
                         g => g.Select(x => x.ErrorCode).ToArray()
                     );
 
-                    return CommandResult.Validation(errors);
+                    return CommandResult<TOperationResult>.Validation(errors);
                 }
             }
 
-            var commandResult = await _serviceProvider
-                .GetRequiredService<ICommandHandler<TModule, TCommand>>()
-                .Handle(command);
+            var commandHandlerType = typeof(ICommandHandler<,,>).MakeGenericType(typeof(TModule), commandType, typeof(TOperationResult));
+
+            var commandHandler = _serviceProvider.GetService(commandHandlerType);
+
+            var commandResult = await (Task<CommandResult<TOperationResult>>)commandHandlerType.GetMethod("Handle").Invoke(commandHandler, [command]);
 
             await _unitOfWorkCommandHandler.Handle();
 
