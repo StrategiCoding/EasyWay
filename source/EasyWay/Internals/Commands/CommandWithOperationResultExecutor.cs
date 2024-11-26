@@ -1,6 +1,7 @@
 ﻿using EasyWay.Internals.Contexts;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands
 {
@@ -55,7 +56,7 @@ namespace EasyWay.Internals.Commands
 
             var commandHandlerType = typeof(ICommandHandler<,,>).MakeGenericType(typeof(TModule), commandType, typeof(TOperationResult));
 
-            var commandHandler = _serviceProvider.GetService(commandHandlerType);
+            var commandHandler = _serviceProvider.GetRequiredService(commandHandlerType);
 
             var commandResult = await (Task<CommandResult<TOperationResult>>)commandHandlerType.GetMethod("Handle").Invoke(commandHandler, [command]);
 

@@ -3,8 +3,7 @@
     internal interface IQueryExecutor<TModule>
         where TModule : EasyWayModule
     {
-        Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
-            where TQuery : Query<TModule, TReadModel>
+        Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TModule, TReadModel> query, CancellationToken cancellationToken)
             where TReadModel : ReadModel;
     }
 }
