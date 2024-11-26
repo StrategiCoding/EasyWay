@@ -14,7 +14,7 @@ namespace EasyWay.Internals.Modules
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<CommandResult> ExecuteCommand<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
+        public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
             where TCommand : Command<TModule>
         {
             CommandResult commandResult;
@@ -31,8 +31,7 @@ namespace EasyWay.Internals.Modules
             return commandResult;
         }
 
-        public async Task<CommandResult<TOperationResult>> ExecuteCommand<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
-            where TCommand : Command<TModule, TOperationResult>
+        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TModule, TOperationResult> command, CancellationToken cancellationToken = default)
             where TOperationResult : OperationResult
         {
             CommandResult<TOperationResult> commandResult;
@@ -42,15 +41,14 @@ namespace EasyWay.Internals.Modules
                 var sp = scope.ServiceProvider;
 
                 commandResult = await sp
-                    .GetRequiredService<ICommandExecutor<TModule>>()
-                    .Execute<TCommand, TOperationResult>(command, cancellationToken);
+                    .GetRequiredService<ICommandWithOperationResultExecutor<TModule>>()
+                    .Execute(command, cancellationToken);
             }
 
             return commandResult;
         }
 
-        public async Task<QueryResult<TReadModel>> ExecuteQuery<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
-            where TQuery : Query<TModule, TReadModel>
+        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TModule, TReadModel> query, CancellationToken cancellationToken = default)
             where TReadModel : ReadModel
         {
             QueryResult<TReadModel> result;
@@ -61,7 +59,7 @@ namespace EasyWay.Internals.Modules
 
                 result = await sp
                     .GetRequiredService<IQueryExecutor<TModule>>()
-                    .Execute<TQuery, TReadModel>(query, cancellationToken);
+                    .Execute(query, cancellationToken);
             }
 
             return result;

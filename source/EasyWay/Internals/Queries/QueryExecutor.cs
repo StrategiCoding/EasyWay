@@ -1,7 +1,7 @@
 ﻿using EasyWay.Internals.Contexts;
 using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasyWay.Internals.Queries
 {
@@ -20,17 +20,22 @@ namespace EasyWay.Internals.Queries
             _cancellationContextConstructor = cancellationContextConstructor;
         }  
 
-        public async Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken)
-            where TQuery : Query<TModule, TReadModel>
+        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TModule, TReadModel> query, CancellationToken cancellationToken)
             where TReadModel : ReadModel
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            var validator = _serviceProvider.GetService<IValidator<TQuery>>();
+            var queryType = query.GetType();
+
+            var validatorType = typeof(IValidator<>).MakeGenericType(queryType);
+
+            var validator = _serviceProvider.GetService(validatorType);
 
             if (validator is not null)
             {
-                var result = validator.Validate(query);
+                var result = (ValidationResult)validatorType
+                    .GetMethod("Validate")
+                    ?.Invoke(validator, [query]);
 
                 if (!result.IsValid)
                 {
@@ -45,9 +50,13 @@ namespace EasyWay.Internals.Queries
                 }
             }
 
-            return await _serviceProvider
-                    .GetRequiredService<IQueryHandler<TModule, TQuery, TReadModel>>()
-                    .Handle(query);
+            var queryHandlerType = typeof(IQueryHandler<,,>).MakeGenericType(typeof(TModule), queryType, typeof(TReadModel));
+
+            var queryHandler = _serviceProvider.GetRequiredService(queryHandlerType);
+
+            var queryResult = await (Task<QueryResult<TReadModel>>) queryHandlerType.GetMethod("Handle").Invoke(queryHandler, [query]);
+
+            return queryResult;
         }
     }
 }
