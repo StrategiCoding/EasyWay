@@ -1,6 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
-using FluentValidation;
-using FluentValidation.Results;
+using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Queries
@@ -27,25 +26,18 @@ namespace EasyWay.Internals.Queries
 
             var queryType = query.GetType();
 
-            var validatorType = typeof(IValidator<>).MakeGenericType(queryType);
+            var validatorType = typeof(IEasyWayValidator<>).MakeGenericType(queryType);
 
             var validator = _serviceProvider.GetService(validatorType);
 
             if (validator is not null)
             {
-                var result = (ValidationResult)validatorType
+                var errors = (IDictionary<string, string[]>)validatorType
                     .GetMethod("Validate")
                     ?.Invoke(validator, [query]);
 
-                if (!result.IsValid)
+                if (errors.Any())
                 {
-                    var errors = result.Errors
-                    .GroupBy(x => x.PropertyName)
-                    .ToDictionary(
-                        g => g.Key,
-                        g => g.Select(x => x.ErrorCode).ToArray()
-                    );
-
                     return QueryResult<TReadModel>.Validation(errors);
                 }
             }

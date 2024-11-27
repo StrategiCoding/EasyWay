@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
-	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
 	  <PackageReference Include="Microsoft.Extensions.Configuration" />
 	  <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
 	  <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
@@ -16,6 +15,7 @@
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
 		<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
+		<InternalsVisibleTo Include="$(AssemblyName).FluentValidation" />
 		<InternalsVisibleTo Include="$(AssemblyName).WebApi" />
 	</ItemGroup>
 </Project>
