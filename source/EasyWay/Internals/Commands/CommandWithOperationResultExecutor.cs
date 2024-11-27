@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
+using EasyWay.Internals.Validation;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,25 +32,18 @@ namespace EasyWay.Internals.Commands
 
             var commandType = command.GetType();
 
-            var validatorType = typeof(IValidator<>).MakeGenericType(commandType);
+            var validatorType = typeof(IEasyWayValidator<>).MakeGenericType(commandType);
 
             var validator = _serviceProvider.GetService(validatorType);
 
             if (validator is not null)
             {
-                var result = (ValidationResult)validatorType
+                var errors = (IDictionary<string, string[]>)validatorType
                     .GetMethod("Validate")
                     ?.Invoke(validator, [command]);
 
-                if (!result.IsValid)
+                if (errors.Any())
                 {
-                    var errors = result.Errors
-                    .GroupBy(x => x.PropertyName)
-                    .ToDictionary(
-                        g => g.Key,
-                        g => g.Select(x => x.ErrorCode).ToArray()
-                    );
-
                     return CommandResult<TOperationResult>.Validation(errors);
                 }
             }
