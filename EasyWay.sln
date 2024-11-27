@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWay.Auth.WebApi", "sour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWay.AuthSamples", "samples\EasyWay.AuthSamples\EasyWay.AuthSamples.csproj", "{04307081-E971-4A1A-ACF2-D709EA7F8AD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWay.FluentValidation", "source\EasyWay.FluentValidation\EasyWay.FluentValidation.csproj", "{16C0EBA2-2E35-40E1-B655-70D6C16B2ECC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{04307081-E971-4A1A-ACF2-D709EA7F8AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04307081-E971-4A1A-ACF2-D709EA7F8AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04307081-E971-4A1A-ACF2-D709EA7F8AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C0EBA2-2E35-40E1-B655-70D6C16B2ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C0EBA2-2E35-40E1-B655-70D6C16B2ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C0EBA2-2E35-40E1-B655-70D6C16B2ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C0EBA2-2E35-40E1-B655-70D6C16B2ECC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{AE66C586-5C48-4A23-9186-63D90F0BC4A1} = {92D4A304-6772-4482-83CC-68FDF54087C4}
 		{2CF71C5B-0A95-416A-AB6A-6DB3545DCCF5} = {92D4A304-6772-4482-83CC-68FDF54087C4}
 		{04307081-E971-4A1A-ACF2-D709EA7F8AD3} = {B403E9EE-655A-481E-889B-F292845AE5BF}
+		{16C0EBA2-2E35-40E1-B655-70D6C16B2ECC} = {92D4A304-6772-4482-83CC-68FDF54087C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45C12B7C-F737-4C98-B967-CCB84BFB9080}

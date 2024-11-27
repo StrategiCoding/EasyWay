@@ -16,6 +16,7 @@
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
 		<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
+		<InternalsVisibleTo Include="$(AssemblyName).FluentValidation" />
 		<InternalsVisibleTo Include="$(AssemblyName).WebApi" />
 	</ItemGroup>
 </Project>

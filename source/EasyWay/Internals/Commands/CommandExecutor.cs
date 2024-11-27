@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
+using EasyWay.Internals.Validation;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,21 +29,14 @@ namespace EasyWay.Internals.Commands
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            var validator = _serviceProvider.GetService<IValidator<TCommand>>();
+            var validator = _serviceProvider.GetService<IEasyWayValidator>();
 
             if (validator is not null)
             {
-                var result = validator.Validate(command);
+                var errors = validator.Validate(command);
 
-                if (!result.IsValid)
+                if (errors.Any())
                 {
-                    var errors = result.Errors
-                    .GroupBy(x => x.PropertyName)
-                    .ToDictionary(
-                        g => g.Key,
-                        g => g.Select(x => x.ErrorCode).ToArray()
-                    );
-
                     return CommandResult.Validation(errors);
                 }
             }

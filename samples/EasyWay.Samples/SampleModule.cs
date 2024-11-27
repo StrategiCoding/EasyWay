@@ -15,6 +15,8 @@ namespace EasyWay.Samples
         {
             string connectionString = configuration.GetConnectionString("Database");
 
+            services.AddFluentValidation(Assemblies);
+
             services.AddEntityFrameworkCore<SampleDbContext>(x => x.UseNpgsql(connectionString));
         }
     }
