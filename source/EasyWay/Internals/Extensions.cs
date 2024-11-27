@@ -8,7 +8,6 @@ using EasyWay.Internals.Initializers;
 using EasyWay.Internals.Policies;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Repositories;
-using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
