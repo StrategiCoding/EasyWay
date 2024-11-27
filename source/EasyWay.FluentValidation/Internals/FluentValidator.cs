@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals
 {
-    internal sealed class FluentValidator : IEasyWayValidator
+    internal sealed class FluentValidator<T> : IEasyWayValidator<T>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -13,7 +13,7 @@ namespace EasyWay.Internals
             _serviceProvider = serviceProvider;
         }
 
-        public IDictionary<string, string[]> Validate<T>(T objectToValidate)
+        public IDictionary<string, string[]> Validate(T objectToValidate)
         {
             var validator = _serviceProvider.GetService<IValidator<T>>();
 

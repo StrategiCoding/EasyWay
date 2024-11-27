@@ -29,7 +29,7 @@ namespace EasyWay.Internals.Commands
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            var validator = _serviceProvider.GetService<IEasyWayValidator>();
+            var validator = _serviceProvider.GetService<IEasyWayValidator<TCommand>>();
 
             if (validator is not null)
             {

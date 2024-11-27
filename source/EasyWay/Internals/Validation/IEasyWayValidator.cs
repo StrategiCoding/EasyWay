@@ -1,7 +1,7 @@
 ﻿namespace EasyWay.Internals.Validation
 {
-    internal interface IEasyWayValidator
+    internal interface IEasyWayValidator<T>
     {
-        IDictionary<string, string[]> Validate<T>(T objectToValidate);
+        IDictionary<string, string[]> Validate(T objectToValidate);
     }
 }

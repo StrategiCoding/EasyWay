@@ -14,7 +14,7 @@ namespace EasyWay
         {
             services.AddValidatorsFromAssemblies(assemblies);
 
-            services.AddScoped<IEasyWayValidator, FluentValidator>();
+            services.AddScoped(typeof(IEasyWayValidator<>), typeof(FluentValidator<>));
 
             return services;
         }
