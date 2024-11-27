@@ -1,6 +1,5 @@
 ﻿using EasyWay.Internals.Contexts;
 using EasyWay.Internals.Validation;
-using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands

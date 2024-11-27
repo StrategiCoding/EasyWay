@@ -31,7 +31,6 @@ namespace EasyWay.Internals
                 .AddPolicies(assemblies)
                 .AddDomainServices(assemblies)
                 .AddFactories(assemblies)
-                .AddValidation(assemblies)
                 .AddInitializers(assemblies);
         }
     }
