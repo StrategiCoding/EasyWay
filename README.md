@@ -26,6 +26,10 @@
 - Automatic publication of domain events
 - Automatic approval of all changes in one transaction (Unit of Work Pattern)
 
+#### :gear: Integrations
+- EntityFrameworkCore
+- FluentValidation
+
 #### :globe_with_meridians: WebApi
 - Automatic translation of an exception into a response
 - Creating endpoints based on CQRS handlers (RPC Style)
