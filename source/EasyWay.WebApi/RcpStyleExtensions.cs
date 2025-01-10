@@ -14,7 +14,7 @@ namespace EasyWay
             where TQuery : Query<TModule, TReadModel>
             where TReadModel : ReadModel
         {
-            webKernel.App.MapPost(typeof(TModule).Name + "/_queries/" + typeof(TQuery).Name, async ([FromBody] TQuery query, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            webKernel.App.MapGet("api/" + typeof(TModule).Name + "/" + typeof(TQuery).Name, async ([AsParameters] TQuery query, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 var queryResult = await executor.Execute(query, cancellationToken);
 
@@ -35,7 +35,7 @@ namespace EasyWay
             where TModule : EasyWayModule
             where TCommand : Command<TModule>
         {
-            webKernel.App.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            webKernel.App.MapPost("api/" + typeof(TModule).Name + "/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 var commandResult = await executor.Execute(command, cancellationToken);
 
@@ -55,7 +55,7 @@ namespace EasyWay
             where TCommand : Command<TModule, TCommandResult>
             where TCommandResult : OperationResult
         {
-            webKernel.App.MapPost(typeof(TModule).Name + "/_commands/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
+            webKernel.App.MapPost("api/" + typeof(TModule).Name + "/" + typeof(TCommand).Name, async ([FromBody] TCommand command, IModuleExecutor<TModule> executor, CancellationToken cancellationToken) =>
             {
                 var commandResult = await executor.Execute(command, cancellationToken);
 

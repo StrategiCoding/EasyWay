@@ -2,6 +2,8 @@
 {
     public class SampleQuery : Query<SampleModule, SampleQueryResult>
     {
-        public string Name { get; set; }
+        public required string Name { get; init; }
+
+        public required int Age { get; init; }
     }
 }
