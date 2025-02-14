@@ -1,8 +1,8 @@
 ﻿namespace EasyWay.Internals.Contexts
 {
-    internal class DefaultUserContext : IUserContext
+    internal sealed class DefaultUserContext : IUserContext
     {
-        public Guid? UserId => null;
+        public string? UserId => null;
 
         public bool IsAuthenticated => false;
     }
