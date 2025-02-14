@@ -2,7 +2,7 @@ using EasyWay.Samples;
 using EasyWay.Samples.Commands;
 using EasyWay.Samples.Commands.WithResult;
 using EasyWay.Samples.Queries;
-
+/*
 var webKernelBuilder = WebKernelBuilder.Create(args);
 
 var builder = webKernelBuilder.AppBuilder;
@@ -28,4 +28,9 @@ webKernel.MapCommand<SampleModule, SampleCommandWithResult, SampleCommandResult>
 webKernel.MapCommand<SampleModule, ErrorCommand>();
 webKernel.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
 
+
+
 await webKernel.RunAsync();
+*/
+
+Console.WriteLine("TEST");
