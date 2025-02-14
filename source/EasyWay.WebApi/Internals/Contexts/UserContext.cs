@@ -6,17 +6,15 @@ namespace EasyWay.Internals.Contexts
     {
         public UserContext(IHttpContextAccessor httpContextAccessor) 
         {
-            var userId = httpContextAccessor
+            UserId = httpContextAccessor
                 .HttpContext?
                 .User?
                 .Claims?
                 .SingleOrDefault(x => x.Type == "sub")?
                 .Value;
-
-            UserId = userId is null ? null : new Guid(userId);
         }
 
-        public Guid? UserId { get; }
+        public string? UserId { get; }
 
         public bool IsAuthenticated => UserId is not null;
     }

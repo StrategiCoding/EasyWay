@@ -2,7 +2,7 @@
 {
     internal class DefaultUserContext : IUserContext
     {
-        public Guid? UserId => null;
+        public string? UserId => null;
 
         public bool IsAuthenticated => false;
     }
