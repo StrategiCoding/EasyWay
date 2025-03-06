@@ -1,36 +1,37 @@
 using EasyWay.Samples;
-using EasyWay.Samples.Commands;
-using EasyWay.Samples.Commands.WithResult;
 using EasyWay.Samples.Queries;
-/*
-var webKernelBuilder = WebKernelBuilder.Create(args);
+using Microsoft.AspNetCore.Mvc;
 
-var builder = webKernelBuilder.AppBuilder;
+var builder = WebApplication.CreateBuilder(args);
 
-webKernelBuilder.AddModule<SampleModule>();
+
+
+var kernel = Kernel.Create();
+
+await kernel
+    .AddModule<SampleModule>()
+    .BuildAsync(builder.Services);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var webKernel = await webKernelBuilder.BuildAsync();
+var app = builder.Build();
 
-var app = webKernel.App;
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-webKernel.MapCommand<SampleModule, SampleCommand>();
-webKernel.MapCommand<SampleModule, SampleCommandWithResult, SampleCommandResult>();
-webKernel.MapCommand<SampleModule, ErrorCommand>();
-webKernel.MapQuery<SampleModule, SampleQuery, SampleQueryResult>();
+app.UseHttpsRedirection();
 
 
+app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<SampleModule> executor) =>
+{
+    return await executor.Execute(query);
+});
 
-await webKernel.RunAsync();
-*/
+
+app.Run();
 
 Console.WriteLine("TEST");

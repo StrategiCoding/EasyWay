@@ -23,7 +23,7 @@ namespace EasyWay
 
         public static Kernel Create() => new Kernel();
 
-        public void AddModule<TModule>()
+        public Kernel AddModule<TModule>()
             where TModule : EasyWayModule, new()
         {
             var configuration = _configuration.GetSection(typeof(TModule).Name);
@@ -31,6 +31,8 @@ namespace EasyWay
             var moduleExecutorType = new TModule().Initialize(_services, configuration);
 
             _moduleExecutorTypes.Add(moduleExecutorType);
+
+            return this;
         }
 
         public async Task BuildAsync(IServiceCollection services)
