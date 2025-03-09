@@ -13,7 +13,7 @@ namespace EasyWay.Internals.Queries
             services.AddScoped(typeof(IQueryExecutor<>).MakeGenericType(moduleType), typeof(QueryExecutor<>).MakeGenericType(moduleType));
 
             services.Scan(s => s.FromAssemblies(assemblies)
-            .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,,>)))
+            .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 

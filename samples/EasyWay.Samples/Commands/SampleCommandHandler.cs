@@ -3,7 +3,7 @@ using EasyWay.Samples.Domain.Policies;
 
 namespace EasyWay.Samples.Commands
 {
-    internal sealed class SampleCommandHandler : ICommandHandler<SampleModule, SampleCommand>
+    internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
     {
         private readonly ICancellationContext _cancellationContext;
 
@@ -50,7 +50,7 @@ namespace EasyWay.Samples.Commands
 
             var x = _factory.Create();
 
-            _concurrencyTokenValidator.Validate(x, command);
+            //_concurrencyTokenValidator.Validate(x, command);
 
             await _repository.Add(x);
 

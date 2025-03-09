@@ -4,6 +4,6 @@
         where TModule : EasyWayModule
     {
         Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
-            where TCommand : Command<TModule>;
+            where TCommand : Command;
     }
 }

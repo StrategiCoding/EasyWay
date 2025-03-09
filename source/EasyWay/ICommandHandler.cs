@@ -4,9 +4,8 @@
     /// Defines a handler for a command
     /// </summary>
     /// <typeparam name="TCommand">The type of command being handled</typeparam>
-    public interface ICommandHandler<TModule, TCommand>
-        where TModule : EasyWayModule
-        where TCommand : Command<TModule>
+    public interface ICommandHandler<TCommand>
+        where TCommand : Command
     {
         /// <summary>
         /// Handles a command
@@ -15,9 +14,8 @@
         Task<CommandResult> Handle(TCommand command);
     }
 
-    public interface ICommandHandler<TModule, TCommand, TOperationResult>
-        where TModule : EasyWayModule
-        where TCommand : Command<TModule, TOperationResult>
+    public interface ICommandHandler<TCommand, TOperationResult>
+        where TCommand : Command<TOperationResult>
         where TOperationResult : OperationResult
     {
         Task<CommandResult<TOperationResult>> Handle(TCommand command);

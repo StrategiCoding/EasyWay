@@ -1,4 +1,6 @@
 using EasyWay.Samples;
+using EasyWay.Samples.Commands;
+using EasyWay.Samples.Commands.WithResult;
 using EasyWay.Samples.Queries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,7 @@ await kernel
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddEasyWayWebApi();
 
 var app = builder.Build();
 
@@ -25,12 +28,27 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseEasyWay();
 
-app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<SampleModule> executor) =>
+
+app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    return await executor.Execute(query);
+    var x = await executor.Execute(query);
+
+    return mapper.Map(x);
 });
 
+app.MapPost("/command", async ([FromBody] SampleCommand command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
+{
+    return  await executor.Execute(command);
+});
+
+app.MapPost("/commandwithresult", async ([FromBody] SampleCommandWithResult command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
+{
+    var x = await executor.Execute(command);
+
+    return mapper.Map(x);
+});
 
 app.Run();
 

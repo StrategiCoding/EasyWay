@@ -15,7 +15,7 @@ namespace EasyWay.Internals.Modules
         }
 
         public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default) 
-            where TCommand : Command<TModule>
+            where TCommand : Command
         {
             CommandResult commandResult;
 
@@ -31,7 +31,7 @@ namespace EasyWay.Internals.Modules
             return commandResult;
         }
 
-        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TModule, TOperationResult> command, CancellationToken cancellationToken = default)
+        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TOperationResult> command, CancellationToken cancellationToken = default)
             where TOperationResult : OperationResult
         {
             CommandResult<TOperationResult> commandResult;
@@ -48,7 +48,7 @@ namespace EasyWay.Internals.Modules
             return commandResult;
         }
 
-        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TModule, TReadModel> query, CancellationToken cancellationToken = default)
+        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TReadModel> query, CancellationToken cancellationToken = default)
             where TReadModel : ReadModel
         {
             QueryResult<TReadModel> result;

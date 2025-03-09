@@ -1,7 +1,7 @@
 ﻿
 namespace EasyWay.Samples.Commands.WithResult
 {
-    public sealed class SampleCommandWithResultHandler : ICommandHandler<SampleModule, SampleCommandWithResult, SampleCommandResult>
+    public sealed class SampleCommandWithResultHandler : ICommandHandler<SampleCommandWithResult, SampleCommandResult>
     {
         public Task<CommandResult<SampleCommandResult>> Handle(SampleCommandWithResult command)
         {

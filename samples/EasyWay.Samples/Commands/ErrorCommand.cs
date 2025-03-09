@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Commands
 {
-    public class ErrorCommand : Command<SampleModule>
+    public class ErrorCommand : Command
     {
 
     }

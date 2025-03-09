@@ -3,10 +3,8 @@
     /// <summary>
     /// Represents a command
     /// </summary>
-    public abstract class Command<TModule>
-        where TModule : EasyWayModule;
+    public abstract class Command;
 
-    public abstract class Command<TModule, TCommandResult>
-        where TModule : EasyWayModule
+    public abstract class Command<TCommandResult>
         where TCommandResult : OperationResult;
 }

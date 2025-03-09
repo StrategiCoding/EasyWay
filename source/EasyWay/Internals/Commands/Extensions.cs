@@ -19,7 +19,7 @@ namespace EasyWay.Internals.Commands
             .WithScopedLifetime());
 
             services.Scan(s => s.FromAssemblies(assemblies)
-            .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<,,>)))
+            .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 

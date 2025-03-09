@@ -2,7 +2,7 @@
 
 namespace EasyWay.Samples.Commands
 {
-    public class ErrorCommandHandler : ICommandHandler<SampleModule, ErrorCommand>
+    public class ErrorCommandHandler : ICommandHandler<ErrorCommand>
     {
         public Task<CommandResult> Handle(ErrorCommand command)
         {

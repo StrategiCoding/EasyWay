@@ -19,7 +19,7 @@ namespace EasyWay.Internals.Queries
             _cancellationContextConstructor = cancellationContextConstructor;
         }  
 
-        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TModule, TReadModel> query, CancellationToken cancellationToken)
+        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TReadModel> query, CancellationToken cancellationToken)
             where TReadModel : ReadModel
         {
             _cancellationContextConstructor.Set(cancellationToken);
@@ -42,7 +42,7 @@ namespace EasyWay.Internals.Queries
                 }
             }
 
-            var queryHandlerType = typeof(IQueryHandler<,,>).MakeGenericType(typeof(TModule), queryType, typeof(TReadModel));
+            var queryHandlerType = typeof(IQueryHandler<,>).MakeGenericType( queryType, typeof(TReadModel));
 
             var queryHandler = _serviceProvider.GetRequiredService(queryHandlerType);
 

@@ -23,7 +23,7 @@ namespace EasyWay.Internals.Commands
             _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
-        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TModule, TOperationResult> command, CancellationToken cancellationToken)
+        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TOperationResult> command, CancellationToken cancellationToken)
             where TOperationResult : OperationResult
         {
             _cancellationContextConstructor.Set(cancellationToken);
@@ -46,7 +46,7 @@ namespace EasyWay.Internals.Commands
                 }
             }
 
-            var commandHandlerType = typeof(ICommandHandler<,,>).MakeGenericType(typeof(TModule), commandType, typeof(TOperationResult));
+            var commandHandlerType = typeof(ICommandHandler<,>).MakeGenericType(commandType, typeof(TOperationResult));
 
             var commandHandler = _serviceProvider.GetRequiredService(commandHandlerType);
 

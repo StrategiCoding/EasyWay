@@ -20,7 +20,7 @@ namespace EasyWay.Internals
         {
             return commandResult.Error switch
             {
-                CommandErrorEnum.None => Results.Ok(),
+                CommandErrorEnum.None => Results.Ok(commandResult.OperationResult),
                 CommandErrorEnum.Validation => Results.BadRequest(commandResult.ValidationErrors),
                 _ => Results.StatusCode(500),
             };
