@@ -3,13 +3,14 @@
     public interface IModuleExecutor<TModule>
         where TModule : EasyWayModule
     {
-        Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken = default)
+        Task<CommandResult> Command<TCommand>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : Command;
 
-        Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TOperationResult> command, CancellationToken cancellationToken = default)
+        Task<CommandResult<TOperationResult>> Command<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
+            where TCommand : Command<TOperationResult>
             where TOperationResult : OperationResult;
 
-        Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+        Task<QueryResult<TReadModel>> Query<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : Query<TReadModel>
             where TReadModel : ReadModel;
     }

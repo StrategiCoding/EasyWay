@@ -14,9 +14,9 @@ namespace EasyWay.Internals.Commands
             services.AddScoped(typeof(ICommandWithOperationResultExecutor<>).MakeGenericType(moduleType), typeof(CommandWithOperationResultExecutor<>).MakeGenericType(moduleType));
 
             services.Scan(s => s.FromAssemblies(assemblies)
-                .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
-                .AsImplementedInterfaces()
-                .WithScopedLifetime());
+            .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
 
             services.Scan(s => s.FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<,>)))

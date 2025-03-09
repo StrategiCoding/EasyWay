@@ -23,22 +23,17 @@ namespace EasyWay.Internals.Commands
             _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
-        public async Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TOperationResult> command, CancellationToken cancellationToken)
+        public async Task<CommandResult<TOperationResult>> Command<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
+            where TCommand : Command<TOperationResult>
             where TOperationResult : OperationResult
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
-            var commandType = command.GetType();
-
-            var validatorType = typeof(IEasyWayValidator<>).MakeGenericType(commandType);
-
-            var validator = _serviceProvider.GetService(validatorType);
+            var validator = _serviceProvider.GetService<IEasyWayValidator<TCommand>>();
 
             if (validator is not null)
             {
-                var errors = (IDictionary<string, string[]>)validatorType
-                    .GetMethod("Validate")
-                    ?.Invoke(validator, [command]);
+                var errors = validator.Validate(command);
 
                 if (errors.Any())
                 {
@@ -46,11 +41,9 @@ namespace EasyWay.Internals.Commands
                 }
             }
 
-            var commandHandlerType = typeof(ICommandHandler<,>).MakeGenericType(commandType, typeof(TOperationResult));
+            var commandHandler = _serviceProvider.GetRequiredService<ICommandHandler<TCommand,TOperationResult>>();
 
-            var commandHandler = _serviceProvider.GetRequiredService(commandHandlerType);
-
-            var commandResult = await (Task<CommandResult<TOperationResult>>)commandHandlerType.GetMethod("Handle").Invoke(commandHandler, [command]);
+            var commandResult = await commandHandler.Handle(command);
 
             await _unitOfWorkCommandHandler.Handle();
 

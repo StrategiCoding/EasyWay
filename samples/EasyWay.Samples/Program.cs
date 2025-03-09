@@ -33,19 +33,19 @@ app.UseHttpsRedirection();
 
 app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    var x = await executor.Execute<SampleQuery, SampleQueryResult>(query);
+    var x = await executor.Query<SampleQuery, SampleQueryResult>(query);
 
     return mapper.Map(x);
 });
 
 app.MapPost("/command", async ([FromBody] SampleCommand command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    return  await executor.Execute(command);
+    return  await executor.Command(command);
 });
 
 app.MapPost("/commandwithresult", async ([FromBody] SampleCommandWithResult command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    var x = await executor.Execute(command);
+    var x = await executor.Command<SampleCommandWithResult, SampleCommandResult>(command);
 
     return mapper.Map(x);
 });
