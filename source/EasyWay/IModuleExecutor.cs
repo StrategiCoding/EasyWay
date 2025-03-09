@@ -9,7 +9,8 @@
         Task<CommandResult<TOperationResult>> Execute<TOperationResult>(Command<TOperationResult> command, CancellationToken cancellationToken = default)
             where TOperationResult : OperationResult;
 
-        Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TReadModel> query, CancellationToken cancellationToken = default)
+        Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+            where TQuery : Query<TReadModel>
             where TReadModel : ReadModel;
     }
 }

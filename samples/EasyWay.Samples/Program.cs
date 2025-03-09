@@ -33,7 +33,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    var x = await executor.Execute(query);
+    var x = await executor.Execute<SampleQuery, SampleQueryResult>(query);
 
     return mapper.Map(x);
 });

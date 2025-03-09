@@ -19,7 +19,8 @@ namespace EasyWay.Internals.Queries
             _cancellationContextConstructor = cancellationContextConstructor;
         }  
 
-        public async Task<QueryResult<TReadModel>> Execute<TReadModel>(Query<TReadModel> query, CancellationToken cancellationToken)
+        public async Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+            where TQuery : Query<TReadModel>
             where TReadModel : ReadModel
         {
             _cancellationContextConstructor.Set(cancellationToken);
@@ -28,13 +29,11 @@ namespace EasyWay.Internals.Queries
 
             var validatorType = typeof(IEasyWayValidator<>).MakeGenericType(queryType);
 
-            var validator = _serviceProvider.GetService(validatorType);
+            var validator = _serviceProvider.GetService<IEasyWayValidator<TQuery>>();
 
             if (validator is not null)
             {
-                var errors = (IDictionary<string, string[]>)validatorType
-                    .GetMethod("Validate")
-                    ?.Invoke(validator, [query]);
+                var errors = validator.Validate(query);
 
                 if (errors.Any())
                 {
@@ -42,11 +41,9 @@ namespace EasyWay.Internals.Queries
                 }
             }
 
-            var queryHandlerType = typeof(IQueryHandler<,>).MakeGenericType( queryType, typeof(TReadModel));
+            var queryHandler = _serviceProvider.GetRequiredService<IQueryHandler<TQuery, TReadModel>>();
 
-            var queryHandler = _serviceProvider.GetRequiredService(queryHandlerType);
-
-            var queryResult = await (Task<QueryResult<TReadModel>>) queryHandlerType.GetMethod("Handle").Invoke(queryHandler, [query]);
+            var queryResult = await queryHandler.Handle(query);
 
             return queryResult;
         }
