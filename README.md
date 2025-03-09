@@ -32,7 +32,6 @@
 
 #### :globe_with_meridians: WebApi
 - Automatic translation of an exception into a response
-- Creating endpoints based on CQRS handlers (RPC Style)
 
 ### :balance_scale: License
 This project is under the [MIT License](https://github.com/StrategiCoding/EasyWay/blob/main/LICENSE).
