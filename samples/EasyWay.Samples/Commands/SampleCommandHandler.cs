@@ -50,7 +50,7 @@ namespace EasyWay.Samples.Commands
 
             var x = _factory.Create();
 
-            //_concurrencyTokenValidator.Validate(x, command);
+            _concurrencyTokenValidator.Validate(x, command);
 
             await _repository.Add(x);
 

@@ -10,7 +10,15 @@ namespace EasyWay.Tests.Internals.Commands
 
         internal sealed class TestAggragate : AggregateRoot;
 
-        internal sealed record TestClass(short ConcurrencyToken) : IWithConcurrencyToken;
+        internal sealed class TestClass : Command, IWithConcurrencyToken
+        {
+            public short ConcurrencyToken { get; }
+
+            public TestClass(short concurrencyToken)
+            {
+                ConcurrencyToken = concurrencyToken;
+            }
+        }
 
         [Fact(DisplayName = $"When concurrency tokens are different validator should throw {nameof(ConcurrencyException)}")]
         public void WhenConcurrencyTokensAreDifferent()
