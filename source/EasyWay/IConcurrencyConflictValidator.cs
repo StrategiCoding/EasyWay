@@ -2,7 +2,7 @@
 {
     public interface IConcurrencyConflictValidator
     {
-        void Validate<TAggregateRoot>(TAggregateRoot aggregateRoot, IWithConcurrencyToken command)
-            where TAggregateRoot : AggregateRoot;
+        void Validate<TCommand>(AggregateRoot aggregateRoot, TCommand command)
+            where TCommand : Command, IWithConcurrencyToken;
     }
 }

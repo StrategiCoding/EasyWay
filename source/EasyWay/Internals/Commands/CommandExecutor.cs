@@ -24,7 +24,7 @@ namespace EasyWay.Internals.Commands
         }
 
         public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
-            where TCommand : Command<TModule>
+            where TCommand : Command
         {
             _cancellationContextConstructor.Set(cancellationToken);
 
@@ -41,7 +41,7 @@ namespace EasyWay.Internals.Commands
             }
 
             var commandResult = await _serviceProvider
-                .GetRequiredService<ICommandHandler<TModule, TCommand>>()
+                .GetRequiredService<ICommandHandler<TCommand>>()
                 .Handle(command);
 
             await _unitOfWorkCommandHandler.Handle();

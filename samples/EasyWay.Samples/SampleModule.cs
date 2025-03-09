@@ -1,4 +1,5 @@
-﻿using EasyWay.Samples.Databases;
+﻿using EasyWay.Samples.Commands;
+using EasyWay.Samples.Databases;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -8,7 +9,8 @@ namespace EasyWay.Samples
     {
         protected override IEnumerable<Assembly> Assemblies => new List<Assembly>
         {
-            typeof(SampleModule).Assembly
+            typeof(SampleModule).Assembly,
+            typeof(SampleCommand).Assembly
         };
 
         protected override void ConfigureDependencies(IServiceCollection services, IConfiguration configuration)

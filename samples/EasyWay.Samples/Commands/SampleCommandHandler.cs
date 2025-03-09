@@ -3,7 +3,7 @@ using EasyWay.Samples.Domain.Policies;
 
 namespace EasyWay.Samples.Commands
 {
-    internal sealed class SampleCommandHandler : ICommandHandler<SampleModule, SampleCommand>
+    internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
     {
         private readonly ICancellationContext _cancellationContext;
 

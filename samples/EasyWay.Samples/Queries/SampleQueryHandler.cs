@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Queries
 {
-    public class SampleQueryHandler : IQueryHandler<SampleModule, SampleQuery, SampleQueryResult>
+    public class SampleQueryHandler : IQueryHandler<SampleQuery, SampleQueryResult>
     {
         public Task<QueryResult<SampleQueryResult>> Handle(SampleQuery query)
         {

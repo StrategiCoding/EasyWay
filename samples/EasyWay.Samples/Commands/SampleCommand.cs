@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Commands
 {
-    public class SampleCommand : Command<SampleModule>, IWithConcurrencyToken
+    public class SampleCommand : Command, IWithConcurrencyToken
     {
         public Guid Id { get; init; }
 

@@ -2,10 +2,8 @@
 {
     internal sealed class ConcurrencyConflictValidator : IConcurrencyConflictValidator
     {
-        public void Validate<TAggregateRoot>(
-            TAggregateRoot aggregateRoot,
-            IWithConcurrencyToken command)
-            where TAggregateRoot : AggregateRoot
+        public void Validate<TCommand>(AggregateRoot aggregateRoot, TCommand command) 
+            where TCommand : Command, IWithConcurrencyToken
         {
             if (aggregateRoot.ConcurrencyToken == command.ConcurrencyToken)
             {

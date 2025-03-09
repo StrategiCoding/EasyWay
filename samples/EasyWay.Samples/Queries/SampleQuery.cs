@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Samples.Queries
 {
-    public class SampleQuery : Query<SampleModule, SampleQueryResult>
+    public class SampleQuery : Query<SampleQueryResult>
     {
         public required string Name { get; init; }
 
