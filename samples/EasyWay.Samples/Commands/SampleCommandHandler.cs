@@ -3,7 +3,7 @@ using EasyWay.Samples.Domain.Policies;
 
 namespace EasyWay.Samples.Commands
 {
-    internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
+    internal sealed class SampleCommandHandler : CommandHandler<SampleCommand>
     {
         private readonly ICancellationContext _cancellationContext;
 
@@ -37,7 +37,7 @@ namespace EasyWay.Samples.Commands
             _userContext = userContext;
         }
 
-        public async Task<CommandResult> Handle(SampleCommand command)
+        public sealed override async Task<CommandResult> Handle(SampleCommand command)
         {
             var userId = _userContext.UserId;
 

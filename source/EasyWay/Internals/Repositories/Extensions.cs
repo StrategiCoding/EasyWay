@@ -9,10 +9,7 @@ namespace EasyWay.Internals.Repositories
 
         internal static IServiceCollection AddRepositories(this IServiceCollection services, IEnumerable<Assembly> assemblies) 
         {
-            services.Scan(s => s.FromAssemblies(assemblies)
-            .AddClasses(c => c.Where(x => x.IsAssignableTo(_repositoryType)))
-            .AsImplementedInterfaces()
-            .WithScopedLifetime());
+            services.AddAsImplementedInterfaces(typeof(IRepository), ServiceLifetime.Scoped, assemblies);
 
             return services;
         }

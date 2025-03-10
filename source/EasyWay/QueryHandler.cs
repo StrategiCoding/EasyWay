@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace EasyWay
+﻿namespace EasyWay
 {
     /// <summary>
     /// Defines a handler for a query
     /// </summary>
     /// <typeparam name="TQuery">The type of query being handled</typeparam>
-    public interface IQueryHandler<TQuery, TReadModel>
+    public abstract class QueryHandler<TQuery, TReadModel>
         where TQuery : Query<TReadModel>
         where TReadModel : ReadModel
     {
@@ -14,6 +12,6 @@ namespace EasyWay
         /// Handles a query
         /// </summary>
         /// <param name="query">Query</param>
-        Task<QueryResult<TReadModel>> Handle(TQuery query);
+        public abstract Task<QueryResult<TReadModel>> Handle(TQuery query);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace EasyWay.Samples.Commands
 {
-    public class ErrorCommandHandler : ICommandHandler<ErrorCommand>
+    public sealed class ErrorCommandHandler : CommandHandler<ErrorCommand>
     {
-        public Task<CommandResult> Handle(ErrorCommand command)
+        public sealed override Task<CommandResult> Handle(ErrorCommand command)
         {
             var x = new SampleAggregateRoot();
 

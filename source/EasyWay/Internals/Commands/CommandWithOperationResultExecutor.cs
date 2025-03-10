@@ -41,7 +41,7 @@ namespace EasyWay.Internals.Commands
                 }
             }
 
-            var commandHandler = _serviceProvider.GetRequiredService<ICommandHandler<TCommand,TOperationResult>>();
+            var commandHandler = _serviceProvider.GetRequiredService<CommandHandler<TCommand,TOperationResult>>();
 
             var commandResult = await commandHandler.Handle(command);
 

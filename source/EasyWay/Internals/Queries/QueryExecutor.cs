@@ -41,7 +41,7 @@ namespace EasyWay.Internals.Queries
                 }
             }
 
-            var queryHandler = _serviceProvider.GetRequiredService<IQueryHandler<TQuery, TReadModel>>();
+            var queryHandler = _serviceProvider.GetRequiredService<QueryHandler<TQuery, TReadModel>>();
 
             var queryResult = await queryHandler.Handle(query);
 

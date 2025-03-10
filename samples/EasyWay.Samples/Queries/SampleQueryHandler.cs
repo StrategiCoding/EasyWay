@@ -1,11 +1,9 @@
 ﻿namespace EasyWay.Samples.Queries
 {
-    public class SampleQueryHandler : IQueryHandler<SampleQuery, SampleQueryResult>
+    internal sealed class SampleQueryHandler : QueryHandler<SampleQuery, SampleQueryResult>
     {
-        public Task<QueryResult<SampleQueryResult>> Handle(SampleQuery query)
+        public sealed override Task<QueryResult<SampleQueryResult>> Handle(SampleQuery query)
         {
-            //return Task.FromResult(QueryResult<SampleQueryResult>.Forbidden);
-
             return Task.FromResult(QueryResult<SampleQueryResult>.Ok(new SampleQueryResult()));
         }
     }

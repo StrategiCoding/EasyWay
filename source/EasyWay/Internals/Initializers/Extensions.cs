@@ -9,10 +9,7 @@ namespace EasyWay.Internals.Initializers
             this IServiceCollection services,
             IEnumerable<Assembly> assemblies) 
         {
-            services.Scan(s => s.FromAssemblies(assemblies)
-                .AddClasses(c => c.AssignableTo(typeof(IInitializer)))
-                .AsImplementedInterfaces()
-                .WithTransientLifetime());
+            services.AddAsImplementedInterfaces(typeof(IInitializer), ServiceLifetime.Transient, assemblies);
 
             return services;
         }

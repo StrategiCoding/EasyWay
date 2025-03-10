@@ -9,6 +9,7 @@ namespace EasyWay.Internals.Policies
             this IServiceCollection services,
             IEnumerable<Assembly> assemblies) 
         {
+            /*
             services.Scan(s => s.FromAssemblies(assemblies)
                 .AddClasses(c => c.AssignableTo(typeof(IPolicy<,>)))
                 .AsImplementedInterfaces()
@@ -18,6 +19,12 @@ namespace EasyWay.Internals.Policies
                 .AddClasses(c => c.AssignableTo(typeof(IPolicy<,,>)))
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
+            */
+
+            services.AddAsImplementedInterfaces(typeof(IPolicy<,>), ServiceLifetime.Transient, assemblies);
+
+            services.AddAsImplementedInterfaces(typeof(IPolicy<,,>), ServiceLifetime.Transient, assemblies);
+            
 
             return services;
         }

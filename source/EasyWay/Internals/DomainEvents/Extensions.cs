@@ -11,10 +11,7 @@ namespace EasyWay.Internals.DomainEvents
             services.AddScoped<IDomainEventBulkPublisher, DomainEventBulkPublisher>();
             services.AddScoped<IDomainEventContextDispacher, DomainEventContextDispacher>();
 
-            services.Scan(s => s.FromAssemblies(assemblies)
-            .AddClasses(c => c.AssignableTo(typeof(IDomainEventHandler<>)))
-            .AsImplementedInterfaces()
-            .WithScopedLifetime());
+            services.AddAsBasedType(typeof(DomainEventHandler<>), ServiceLifetime.Scoped, assemblies);
 
             return services;
         }

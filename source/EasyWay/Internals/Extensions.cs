@@ -32,5 +32,117 @@ namespace EasyWay.Internals
                 .AddFactories(assemblies)
                 .AddInitializers(assemblies);
         }
+
+        internal static IServiceCollection AddAsBasedType(
+            this IServiceCollection services,
+            Type baseType,
+            ServiceLifetime serviceLifetime,
+            IEnumerable<Assembly> assemblies)
+        {
+            var typesFromAsseblies = assemblies.SelectMany(x => x.GetTypes());
+
+            IEnumerable<Type> expectedTypes;
+
+            if (baseType.IsGenericType)
+            {
+                expectedTypes = typesFromAsseblies
+                .Where(x => x.IsClass && x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == baseType);
+            }
+            else
+            {
+                expectedTypes = typesFromAsseblies
+                .Where(x => x.IsClass && x.BaseType != null && x.BaseType == baseType);
+            }
+
+            expectedTypes = expectedTypes.Distinct();
+
+            foreach (var type in expectedTypes)
+            {
+                services.Add(new ServiceDescriptor(type.BaseType, type, serviceLifetime));
+            }
+
+            return services;
+        }
+
+        internal static IServiceCollection AddSelfOnBasedType(
+            this IServiceCollection services,
+            Type baseType,
+            ServiceLifetime serviceLifetime,
+            IEnumerable<Assembly> assemblies)
+        {
+            var typesFromAsseblies = assemblies.SelectMany(x => x.GetTypes());
+
+            IEnumerable<Type> expectedTypes;
+
+            if (baseType.IsGenericType)
+            {
+                expectedTypes = typesFromAsseblies
+                .Where(x => x.IsClass && x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == baseType);
+            }
+            else
+            {
+                expectedTypes = typesFromAsseblies
+                .Where(x => x.IsClass && x.BaseType != null && x.BaseType == baseType);
+            }
+
+            expectedTypes = expectedTypes.Distinct();
+
+            foreach (var type in expectedTypes)
+            {
+                services.Add(new ServiceDescriptor(type, type, serviceLifetime));
+            }
+
+            return services;
+        }
+
+        internal static IServiceCollection AddAsImplementedInterfaces(
+            this IServiceCollection services,
+            Type interfaceType,
+            ServiceLifetime serviceLifetime,
+            IEnumerable<Assembly> assemblies)
+        {
+            var typesFromAsseblies = assemblies.SelectMany(x => x.GetTypes());
+
+            IEnumerable<Type> expectedTypes;
+
+            if (interfaceType.IsGenericType)
+            {
+                expectedTypes = typesFromAsseblies
+                .Where(x => x.IsClass && x.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
+                .ToList();
+            }
+            else
+            {
+                expectedTypes = typesFromAsseblies
+                .Where(x => x.IsClass && x.GetInterfaces().Any(x => x == interfaceType));
+            }
+
+            expectedTypes = expectedTypes.Distinct();
+
+            foreach (var type in expectedTypes)
+            {
+                
+                if (interfaceType.IsGenericType)
+                {
+                    var interfaces = type.GetInterfaces().Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == interfaceType);
+
+                    foreach(var @interface in interfaces)
+                    {
+                        services.Add(new ServiceDescriptor(@interface, type, serviceLifetime));
+                    }
+                }
+                else
+                {
+                    var interfaces = type.GetInterfaces();
+
+                    foreach (var @interface in interfaces)
+                    {
+                        services.Add(new ServiceDescriptor(@interface, type, serviceLifetime));
+                    }
+                }
+            }
+
+            return services;
+        }
     }
 }

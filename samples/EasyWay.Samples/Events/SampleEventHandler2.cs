@@ -2,9 +2,9 @@
 
 namespace EasyWay.Samples.Events
 {
-    public class SampleEventHandler2 : IDomainEventHandler<CreatedSampleAggragete>
+    public sealed class SampleEventHandler2 : DomainEventHandler<CreatedSampleAggragete>
     {
-        public Task Handle(CreatedSampleAggragete @event)
+        public sealed override Task Handle(CreatedSampleAggragete domainEvent)
         {
             return Task.CompletedTask;
         }
