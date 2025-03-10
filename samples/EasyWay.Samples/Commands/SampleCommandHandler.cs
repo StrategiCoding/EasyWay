@@ -5,7 +5,7 @@ namespace EasyWay.Samples.Commands
 {
     internal sealed class SampleCommandHandler : CommandHandler<SampleCommand>
     {
-        private readonly ICancellationContext _cancellationContext;
+        private readonly CancellationContext _cancellationContext;
 
         private readonly ISampleAggragateRootRepository _repository;
 
@@ -20,7 +20,7 @@ namespace EasyWay.Samples.Commands
         private readonly IUserContext _userContext;
 
         public SampleCommandHandler(
-            ICancellationContext cancellationContext,
+            CancellationContext cancellationContext,
             ISampleAggragateRootRepository repository,
             SampleAggregateRootFactory factory,
             SampleDomainService domainService,

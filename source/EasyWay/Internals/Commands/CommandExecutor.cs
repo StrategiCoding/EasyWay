@@ -9,24 +9,24 @@ namespace EasyWay.Internals.Commands
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly ICancellationContextConstructor _cancellationContextConstructor;
+        private readonly CancellationContext _cancellationContext;
 
         private readonly IUnitOfWorkCommandHandler _unitOfWorkCommandHandler;
 
         public CommandExecutor(
             IServiceProvider serviceProvider,
-            ICancellationContextConstructor cancellationContextConstructor,
+            CancellationContext cancellationContext,
             IUnitOfWorkCommandHandler unitOfWorkCommandHandler) 
         {
             _serviceProvider = serviceProvider;
-            _cancellationContextConstructor = cancellationContextConstructor;
+            _cancellationContext = cancellationContext;
             _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
         public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : Command
         {
-            _cancellationContextConstructor.Set(cancellationToken);
+            _cancellationContext.Set(cancellationToken);
 
             var validator = _serviceProvider.GetService<IEasyWayValidator<TCommand>>();
 

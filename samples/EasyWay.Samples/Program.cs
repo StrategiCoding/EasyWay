@@ -41,9 +41,9 @@ app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<Sampl
 
 app.MapPost("/command", async ([FromBody] SampleCommand command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    
+    var x = await executor.Command(command);
 
-    return  await executor.Command(command);
+    return mapper.Map(x);
 });
 
 app.MapPost("/commandwithresult", async ([FromBody] SampleCommandWithResult command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
