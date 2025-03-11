@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.GuidGenerators;
+﻿using EasyWay.Internals.Clocks;
+using EasyWay.Internals.GuidGenerators;
 
 namespace EasyWay
 {
@@ -14,7 +15,7 @@ namespace EasyWay
         protected DomainEvent()
         {
             EventId = GuidGenerator.New;
-            OccurrenceOn = Clock.UtcNow;
+            OccurrenceOn = InternalClock.UtcNow;
         }
     }
 }

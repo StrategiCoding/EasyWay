@@ -1,4 +1,7 @@
-﻿namespace EasyWay.Tests.DomainEvents
+﻿using EasyWay.Internals.Clocks;
+using Microsoft.Extensions.Time.Testing;
+
+namespace EasyWay.Tests.DomainEvents
 {
     public sealed class DomainEventTests
     {
@@ -11,7 +14,7 @@
             var expectedDateTime = DateTime.UtcNow.AddMonths(-6);
             var precision = TimeSpan.FromMilliseconds(50);
 
-            Clock.Set(expectedDateTime);
+            InternalClock.Test(new FakeTimeProvider(expectedDateTime));
 
             // Act
             var domainEvent = new TestDomainEvent();

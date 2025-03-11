@@ -1,4 +1,6 @@
-﻿namespace EasyWay.Internals.GuidGenerators
+﻿using EasyWay.Internals.Clocks;
+
+namespace EasyWay.Internals.GuidGenerators
 {
     internal static class GuidGenerator
     {
@@ -10,6 +12,6 @@
 
         internal static void Reset() => _customId = null;
 
-        private static Guid Create() => Guid.CreateVersion7(Clock.UtcNow);
+        private static Guid Create() => Guid.CreateVersion7(InternalClock.UtcNow);
     }
 }
