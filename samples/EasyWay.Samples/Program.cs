@@ -1,6 +1,7 @@
 using EasyWay.Samples;
 using EasyWay.Samples.Commands;
 using EasyWay.Samples.Commands.WithResult;
+using EasyWay.Samples.Domain.Policies;
 using EasyWay.Samples.Queries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,7 +41,9 @@ app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<Sampl
 
 app.MapPost("/command", async ([FromBody] SampleCommand command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
 {
-    return  await executor.Command(command);
+    var x = await executor.Command(command);
+
+    return mapper.Map(x);
 });
 
 app.MapPost("/commandwithresult", async ([FromBody] SampleCommandWithResult command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>

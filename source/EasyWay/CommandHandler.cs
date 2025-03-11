@@ -4,20 +4,20 @@
     /// Defines a handler for a command
     /// </summary>
     /// <typeparam name="TCommand">The type of command being handled</typeparam>
-    public interface ICommandHandler<TCommand>
+    public abstract class CommandHandler<TCommand>
         where TCommand : Command
     {
         /// <summary>
         /// Handles a command
         /// </summary>
         /// <param name="command">Command</param>
-        Task<CommandResult> Handle(TCommand command);
+        public abstract Task<CommandResult> Handle(TCommand command);
     }
 
-    public interface ICommandHandler<TCommand, TOperationResult>
+    public abstract class CommandHandler<TCommand, TOperationResult>
         where TCommand : Command<TOperationResult>
         where TOperationResult : OperationResult
     {
-        Task<CommandResult<TOperationResult>> Handle(TCommand command);
+        public abstract Task<CommandResult<TOperationResult>> Handle(TCommand command);
     }
 }

@@ -9,21 +9,21 @@ namespace EasyWay.Internals.Queries
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly ICancellationContextConstructor _cancellationContextConstructor;
+        private readonly CancellationContext _cancellationContext;
 
         public QueryExecutor(
             IServiceProvider serviceProvider,
-            ICancellationContextConstructor cancellationContextConstructor) 
+            CancellationContext cancellationContext) 
         { 
             _serviceProvider = serviceProvider;
-            _cancellationContextConstructor = cancellationContextConstructor;
+            _cancellationContext = cancellationContext;
         }  
 
         public async Task<QueryResult<TReadModel>> Execute<TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : Query<TReadModel>
             where TReadModel : ReadModel
         {
-            _cancellationContextConstructor.Set(cancellationToken);
+            _cancellationContext.Set(cancellationToken);
 
             var queryType = query.GetType();
 
@@ -41,7 +41,7 @@ namespace EasyWay.Internals.Queries
                 }
             }
 
-            var queryHandler = _serviceProvider.GetRequiredService<IQueryHandler<TQuery, TReadModel>>();
+            var queryHandler = _serviceProvider.GetRequiredService<QueryHandler<TQuery, TReadModel>>();
 
             var queryResult = await queryHandler.Handle(query);
 

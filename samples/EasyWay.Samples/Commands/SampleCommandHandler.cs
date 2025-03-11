@@ -3,9 +3,9 @@ using EasyWay.Samples.Domain.Policies;
 
 namespace EasyWay.Samples.Commands
 {
-    internal sealed class SampleCommandHandler : ICommandHandler<SampleCommand>
+    internal sealed class SampleCommandHandler : CommandHandler<SampleCommand>
     {
-        private readonly ICancellationContext _cancellationContext;
+        private readonly CancellationContext _cancellationContext;
 
         private readonly ISampleAggragateRootRepository _repository;
 
@@ -20,7 +20,7 @@ namespace EasyWay.Samples.Commands
         private readonly IUserContext _userContext;
 
         public SampleCommandHandler(
-            ICancellationContext cancellationContext,
+            CancellationContext cancellationContext,
             ISampleAggragateRootRepository repository,
             SampleAggregateRootFactory factory,
             SampleDomainService domainService,
@@ -37,7 +37,7 @@ namespace EasyWay.Samples.Commands
             _userContext = userContext;
         }
 
-        public async Task<CommandResult> Handle(SampleCommand command)
+        public sealed override async Task<CommandResult> Handle(SampleCommand command)
         {
             var userId = _userContext.UserId;
 

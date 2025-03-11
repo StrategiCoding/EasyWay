@@ -9,17 +9,17 @@ namespace EasyWay.Internals.Commands
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly ICancellationContextConstructor _cancellationContextConstructor;
+        private readonly CancellationContext _cancellationContext;
 
         private readonly IUnitOfWorkCommandHandler _unitOfWorkCommandHandler;
 
         public CommandWithOperationResultExecutor(
             IServiceProvider serviceProvider,
-            ICancellationContextConstructor cancellationContextConstructor,
+            CancellationContext cancellationContext,
             IUnitOfWorkCommandHandler unitOfWorkCommandHandler)
         {
             _serviceProvider = serviceProvider;
-            _cancellationContextConstructor = cancellationContextConstructor;
+            _cancellationContext = cancellationContext;
             _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
         }
 
@@ -27,7 +27,7 @@ namespace EasyWay.Internals.Commands
             where TCommand : Command<TOperationResult>
             where TOperationResult : OperationResult
         {
-            _cancellationContextConstructor.Set(cancellationToken);
+            _cancellationContext.Set(cancellationToken);
 
             var validator = _serviceProvider.GetService<IEasyWayValidator<TCommand>>();
 
@@ -41,7 +41,7 @@ namespace EasyWay.Internals.Commands
                 }
             }
 
-            var commandHandler = _serviceProvider.GetRequiredService<ICommandHandler<TCommand,TOperationResult>>();
+            var commandHandler = _serviceProvider.GetRequiredService<CommandHandler<TCommand,TOperationResult>>();
 
             var commandResult = await commandHandler.Handle(command);
 
