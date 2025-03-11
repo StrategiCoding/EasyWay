@@ -19,7 +19,7 @@ namespace EasyWay.Internals.Modules
         {
             CommandResult commandResult;
 
-            using (var scope = _serviceProvider.CreateScope())
+            await using (var scope = _serviceProvider.CreateAsyncScope())
             {
                 var sp = scope.ServiceProvider;
 
@@ -37,7 +37,7 @@ namespace EasyWay.Internals.Modules
         {
             CommandResult<TOperationResult> commandResult;
 
-            using (var scope = _serviceProvider.CreateScope())
+            await using (var scope = _serviceProvider.CreateAsyncScope())
             {
                 var sp = scope.ServiceProvider;
 
@@ -55,7 +55,7 @@ namespace EasyWay.Internals.Modules
         {
             QueryResult<TReadModel> result;
 
-            using (var scope = _serviceProvider.CreateScope())
+            await using (var scope = _serviceProvider.CreateAsyncScope())
             {
                 var sp = scope.ServiceProvider;
 
