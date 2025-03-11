@@ -2,7 +2,7 @@
 
 namespace EasyWay.Samples.Databases
 {
-    public class SampleAggragateRootRepository : ISampleAggragateRootRepository
+    public class SampleAggragateRootRepository : ISampleAggragateRootRepository, IAsyncDisposable
     {
         private readonly IGenericRepository<SampleAggregateRoot> _repository;
 
@@ -14,6 +14,11 @@ namespace EasyWay.Samples.Databases
         public Task Add(SampleAggregateRoot aggregateRoot)
         {
             return _repository.Add(aggregateRoot);
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return ValueTask.CompletedTask;
         }
 
         public Task<SampleAggregateRoot?> Get(Guid id)
