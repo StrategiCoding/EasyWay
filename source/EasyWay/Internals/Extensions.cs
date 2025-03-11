@@ -108,8 +108,7 @@ namespace EasyWay.Internals
             if (interfaceType.IsGenericType)
             {
                 expectedTypes = typesFromAsseblies
-                .Where(x => x.IsClass && x.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
-                .ToList();
+                .Where(x => x.IsClass && x.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType));
             }
             else
             {
