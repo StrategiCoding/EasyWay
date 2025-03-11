@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.AggregateRoots;
+using EasyWay.Internals.Clocks;
 using EasyWay.Internals.Commands;
 using EasyWay.Internals.Contexts;
 using EasyWay.Internals.DomainEvents;
@@ -21,6 +22,7 @@ namespace EasyWay.Internals
             IEnumerable<Assembly> assemblies)
         {
             services
+                .AddClocks()
                 .AddContexts()
                 .AddAggregateRoots()
                 .AddCommands(moduleType, assemblies)
