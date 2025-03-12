@@ -34,7 +34,7 @@
 - Automatic translation of an exception into a response
 
 ### :balance_scale: License
-This project is under the [MIT License](https://github.com/StrategiCoding/EasyWay/blob/main/LICENSE).
+This project is under the [Apache License 2.0](https://github.com/StrategiCoding/EasyWay/blob/main/LICENSE).
 
 ### :radioactive: Disclaimer
 The project is under development and not ready for production use.
