@@ -13,7 +13,7 @@ namespace EasyWay.Samples.Commands
 
         private readonly SampleDomainService _domainService;
 
-        private readonly IConcurrencyConflictValidator _concurrencyTokenValidator;
+        private readonly ConcurrencyConflictValidator _concurrencyTokenValidator;
 
         private readonly IEnumerable<ISamplePolicy> _policies;
 
@@ -24,7 +24,7 @@ namespace EasyWay.Samples.Commands
             ISampleAggragateRootRepository repository,
             SampleAggregateRootFactory factory,
             SampleDomainService domainService,
-            IConcurrencyConflictValidator concurrencyTokenValidator,
+            ConcurrencyConflictValidator concurrencyTokenValidator,
             IEnumerable<ISamplePolicy> policies,
             IUserContext userContext)
         {

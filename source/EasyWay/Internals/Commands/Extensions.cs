@@ -19,7 +19,7 @@ namespace EasyWay.Internals.Commands
 
             services.AddScoped<IUnitOfWorkCommandHandler, UnitOfWorkCommandHandler>();
 
-            services.AddSingleton<IConcurrencyConflictValidator, ConcurrencyConflictValidator>();
+            services.AddSingleton(new ConcurrencyConflictValidator());
 
             return services;
         }
