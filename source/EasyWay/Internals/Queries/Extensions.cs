@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using EasyWay.Internals.Queries.Decorators;
+using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Queries
@@ -7,17 +9,26 @@ namespace EasyWay.Internals.Queries
     {
         internal static IServiceCollection AddQueries(
             this IServiceCollection services,
-            Type moduleType,
             IEnumerable<Assembly> assemblies)
         {
-            services.AddScoped(typeof(IQueryExecutor<>).MakeGenericType(moduleType), typeof(QueryExecutor<>).MakeGenericType(moduleType));
+            services.AddScoped<QueryExecutor>();
+
+            services.AddScoped<IQueryExecutor>(p =>
+            {
+                var executor = p.GetRequiredService<QueryExecutor>();
+
+                var cancellationContext = new QueryExecutorCancellationContextDecorator(executor, p);
+
+                var validator = new QueryExecutorValidatorDecorator(cancellationContext, p);
+
+                var logger = new QueryExecutorLoggerDecorator(validator, p);
+
+                return logger;
+            });
 
             services.AddAsBasedType(typeof(QueryHandler<,>), ServiceLifetime.Scoped, assemblies);
 
             return services;
         }
-
-
-
     }
 }
