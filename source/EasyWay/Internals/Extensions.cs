@@ -6,6 +6,7 @@ using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.DomainServices;
 using EasyWay.Internals.Factories;
 using EasyWay.Internals.Initializers;
+using EasyWay.Internals.Loggers;
 using EasyWay.Internals.Policies;
 using EasyWay.Internals.Queries;
 using EasyWay.Internals.Repositories;
@@ -24,9 +25,10 @@ namespace EasyWay.Internals
             services
                 .AddClocks()
                 .AddContexts()
+                .AddLoggers(moduleType)
                 .AddAggregateRoots()
                 .AddCommands(moduleType, assemblies)
-                .AddQueries(moduleType, assemblies)
+                .AddQueries(assemblies)
                 .AddDomainEvents(assemblies)
                 .AddRepositories(assemblies)
                 .AddPolicies(assemblies)

@@ -14,7 +14,7 @@ var kernel = Kernel.Create();
 await kernel
     .AddModule<SampleModule>()
     .BuildAsync(builder.Services);
-
+builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEasyWayWebApi();

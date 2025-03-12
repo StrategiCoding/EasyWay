@@ -60,8 +60,8 @@ namespace EasyWay.Internals.Modules
                 var sp = scope.ServiceProvider;
 
                 result = await sp
-                    .GetRequiredService<IQueryExecutor<TModule>>()
-                    .Execute<TQuery, TReadModel>(query, cancellationToken);
+                    .GetRequiredService<IQueryExecutor>()
+                    .Execute<TModule, TQuery, TReadModel>(query, cancellationToken);
             }
 
             return result;
