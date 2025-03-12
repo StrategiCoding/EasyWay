@@ -20,7 +20,7 @@
 		<PackageTags>$(AssemblyName)</PackageTags>
 		<Description>Create modern applications with the best practices using predefined building blocks in .NET</Description>
 		
-    	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+    		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		
 	</PropertyGroup>
