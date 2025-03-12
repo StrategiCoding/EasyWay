@@ -1,12 +1,11 @@
 ﻿using EasyWay.Internals;
-using EasyWay.Internals.Commands;
 using EasyWay.Internals.GuidGenerators;
 
 namespace EasyWay.Tests.Internals.Commands
 {
-    public sealed class ConcurrencyConflictValidatorTests
+    public sealed class ConcurrencyConflictValidatorCommandTests
     {
-        private readonly IConcurrencyConflictValidator _validator = new ConcurrencyConflictValidator();
+        private readonly ConcurrencyConflictValidator _validator = new ConcurrencyConflictValidator();
 
         internal sealed class TestAggragate : AggregateRoot;
 
