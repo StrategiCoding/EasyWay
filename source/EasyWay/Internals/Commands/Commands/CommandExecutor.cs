@@ -2,7 +2,7 @@
 using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyWay.Internals.Commands
+namespace EasyWay.Internals.Commands.Commands
 {
     internal sealed class CommandExecutor<TModule> : ICommandExecutor<TModule>
         where TModule : EasyWayModule

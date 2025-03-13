@@ -1,4 +1,5 @@
-﻿ using EasyWay.Internals.Commands;
+﻿using EasyWay.Internals.Commands.Commands;
+using EasyWay.Internals.Commands.CommandsWithResult;
 using EasyWay.Internals.Queries;
 using Microsoft.Extensions.DependencyInjection;
 

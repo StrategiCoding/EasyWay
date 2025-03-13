@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.Commands
+﻿namespace EasyWay.Internals.Commands.Commands
 {
     internal interface ICommandExecutor<TModule>
         where TModule : EasyWayModule

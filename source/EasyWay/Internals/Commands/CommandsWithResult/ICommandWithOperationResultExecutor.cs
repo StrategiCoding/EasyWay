@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.Commands
+﻿namespace EasyWay.Internals.Commands.CommandsWithResult
 {
     internal interface ICommandWithOperationResultExecutor<TModule>
         where TModule : EasyWayModule

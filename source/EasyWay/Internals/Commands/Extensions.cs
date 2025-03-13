@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using EasyWay.Internals.Commands.Commands;
+using EasyWay.Internals.Commands.CommandsWithResult;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands

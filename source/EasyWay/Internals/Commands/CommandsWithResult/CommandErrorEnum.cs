@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.Commands.Results
+﻿namespace EasyWay.Internals.Commands.CommandsWithResult
 {
     internal enum CommandErrorEnum
     {

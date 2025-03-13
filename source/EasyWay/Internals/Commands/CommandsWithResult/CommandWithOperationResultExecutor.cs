@@ -2,7 +2,7 @@
 using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyWay.Internals.Commands
+namespace EasyWay.Internals.Commands.CommandsWithResult
 {
     internal sealed class CommandWithOperationResultExecutor<TModule> : ICommandWithOperationResultExecutor<TModule>
         where TModule : EasyWayModule
