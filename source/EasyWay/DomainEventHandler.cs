@@ -1,4 +1,6 @@
-﻿namespace EasyWay
+﻿using EasyWay.Events.DomainEvents;
+
+namespace EasyWay
 {
     /// <summary>
     /// Defines a handler for an event
@@ -11,6 +13,6 @@
         /// Handles an event
         /// </summary>
         /// <param name="domainEvent">Event</param>
-        public abstract Task Handle(TDomainEvent domainEvent);
+        public abstract Task Handle(TDomainEvent domainEvent, Context context);
     }
 }

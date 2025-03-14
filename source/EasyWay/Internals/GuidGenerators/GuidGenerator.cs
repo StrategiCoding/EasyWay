@@ -12,6 +12,6 @@ namespace EasyWay.Internals.GuidGenerators
 
         internal static void Reset() => _customId = null;
 
-        private static Guid Create() => Guid.CreateVersion7(InternalClock.UtcNow);
+        private static Guid Create() => Guid.CreateVersion7(InternalClock.TimeProvider.GetUtcNow());
     }
 }

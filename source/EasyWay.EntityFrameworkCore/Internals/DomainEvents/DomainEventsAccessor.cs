@@ -11,7 +11,7 @@ namespace EasyWay.Internals.DomainEvents
             _dbContext = dbContext;
         }
 
-        public IReadOnlyCollection<DomainEvent> GetAllDomainEvents()
+        public IReadOnlyCollection<DomainEventContext> GetAllDomainEvents()
         {
             var domainEntities = _dbContext.ChangeTracker
                 .Entries<Entity>()

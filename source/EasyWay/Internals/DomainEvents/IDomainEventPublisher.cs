@@ -2,7 +2,6 @@
 {
     internal interface IDomainEventPublisher
     {
-        Task Publish<TEvent>(TEvent @event)
-            where TEvent : DomainEvent;
+        Task Publish(DomainEventContext domainEventContext);
     }
 }

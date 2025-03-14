@@ -2,7 +2,6 @@
 {
     internal interface IDomainEventBulkPublisher
     {
-        Task Publish<TDomainEvent>(IEnumerable<TDomainEvent> domainEvents)
-            where TDomainEvent : DomainEvent;
+        Task Publish(IEnumerable<DomainEventContext> domainEventContexts);
     }
 }

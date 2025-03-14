@@ -9,12 +9,11 @@
             _domainEventPublisher = domainEventPublisher;
         }
 
-        public async Task Publish<TDomainEvent>(IEnumerable<TDomainEvent> domainEvents) 
-            where TDomainEvent : DomainEvent
+        public async Task Publish(IEnumerable<DomainEventContext> domainEventContexts) 
         {
-            foreach (var domainEvent in domainEvents) 
+            foreach (var domainEventContext in domainEventContexts) 
             {
-                await _domainEventPublisher.Publish(domainEvent).ConfigureAwait(false);
+                await _domainEventPublisher.Publish(domainEventContext).ConfigureAwait(false);
             }
         }
     }

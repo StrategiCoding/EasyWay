@@ -2,7 +2,7 @@
 {
     internal interface IDomainEventsContext
     {
-        IReadOnlyCollection<DomainEvent> GetAllDomainEvents();
+        IReadOnlyCollection<DomainEventContext> GetAllDomainEvents();
 
         void ClearAllDomainEvents();
     }
