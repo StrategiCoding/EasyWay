@@ -4,7 +4,7 @@
     {
         None,
         Validation,
-        BusinessRule,
+        BrokenBusinessRule,
         NotFound,
         Forbidden,
     }
