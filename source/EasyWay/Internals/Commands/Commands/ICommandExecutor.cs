@@ -1,9 +1,9 @@
 ﻿namespace EasyWay.Internals.Commands.Commands
 {
-    internal interface ICommandExecutor<TModule>
-        where TModule : EasyWayModule
+    internal interface ICommandExecutor
     {
-        Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
+        Task<CommandResult> Execute<TModule, TCommand>(TCommand command, CancellationToken cancellationToken)
+            where TModule : EasyWayModule
             where TCommand : Command;
     }
 }

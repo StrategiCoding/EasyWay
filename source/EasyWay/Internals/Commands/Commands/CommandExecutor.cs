@@ -1,29 +1,28 @@
-﻿using EasyWay.Internals.Contexts;
-using EasyWay.Internals.Validation;
+﻿using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands.Commands
 {
-    internal sealed class CommandExecutor<TModule> : ICommandExecutor<TModule>
-        where TModule : EasyWayModule
+    internal sealed class CommandExecutor : ICommandExecutor
     {
         private readonly IServiceProvider _serviceProvider;
 
         private readonly CancellationContext _cancellationContext;
 
-        private readonly IUnitOfWorkCommandHandler _unitOfWorkCommandHandler;
+        private readonly UnitOfWork _unitOfWork;
 
         public CommandExecutor(
             IServiceProvider serviceProvider,
             CancellationContext cancellationContext,
-            IUnitOfWorkCommandHandler unitOfWorkCommandHandler) 
+            UnitOfWork unitOfWork)
         {
             _serviceProvider = serviceProvider;
             _cancellationContext = cancellationContext;
-            _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<CommandResult> Execute<TCommand>(TCommand command, CancellationToken cancellationToken)
+        public async Task<CommandResult> Execute<TModule, TCommand>(TCommand command, CancellationToken cancellationToken)
+            where TModule : EasyWayModule
             where TCommand : Command
         {
             _cancellationContext.Set(cancellationToken);
@@ -44,7 +43,7 @@ namespace EasyWay.Internals.Commands.Commands
                 .GetRequiredService<CommandHandler<TCommand>>()
                 .Handle(command);
 
-            await _unitOfWorkCommandHandler.Handle();
+            await _unitOfWork.Commit();
 
             return commandResult;
         }

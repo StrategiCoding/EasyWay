@@ -7,7 +7,7 @@ namespace EasyWay.Internals.AggregateRoots
         internal static IServiceCollection AddAggregateRoots(
             this IServiceCollection services)
         {
-            services.AddScoped<IConcurrencyTokenUpdater, ConcurrencyTokenUpdater>();
+            services.AddScoped<ConcurrencyTokenUpdater>();
 
             return services;
         }
