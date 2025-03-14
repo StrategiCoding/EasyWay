@@ -13,7 +13,8 @@ namespace EasyWay
         {
             services.AddHttpContextAccessor();
 
-            services.AddSingleton<IWebApiResultMapper, WebApiResultMapper>();
+            services.AddSingleton<WebApiResultMapper>();
+            services.AddSingleton(typeof(IWebApiModulExecutor<>), typeof(WebApiModulExecutor<>));
 
             services.AddScoped<IUserContext, UserContext>();
         }
