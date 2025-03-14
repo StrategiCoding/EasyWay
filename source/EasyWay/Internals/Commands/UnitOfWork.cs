@@ -1,34 +1,33 @@
 ﻿using EasyWay.Internals.AggregateRoots;
 using EasyWay.Internals.DomainEvents;
-using EasyWay.Internals.Transactions;
 
 namespace EasyWay.Internals.Commands
 {
-    internal sealed class UnitOfWorkCommandHandler : IUnitOfWorkCommandHandler
+    internal sealed class UnitOfWork
     {
         private readonly IDomainEventContextDispacher _domainEventDispacher;
 
-        private readonly IConcurrencyTokenUpdater _concurrencyTokenUpdater;
+        private readonly ConcurrencyTokenUpdater _concurrencyTokenUpdater;
 
-        private readonly ITransaction _unitOfWork;
+        private readonly ITransaction _transaction;
 
-        public UnitOfWorkCommandHandler(
+        public UnitOfWork(
             IDomainEventContextDispacher domainEventDispacher,
-            IConcurrencyTokenUpdater concurrencyTokenUpdater,
-            ITransaction unitOfWork)
+            ConcurrencyTokenUpdater concurrencyTokenUpdater,
+            ITransaction transaction)
         {
             _domainEventDispacher = domainEventDispacher;
             _concurrencyTokenUpdater = concurrencyTokenUpdater;
-            _unitOfWork = unitOfWork;
+            _transaction = transaction;
         }
 
-        public async Task Handle()
+        public async Task Commit()
         {
             await _domainEventDispacher.Dispach().ConfigureAwait(false);
 
             _concurrencyTokenUpdater.Update();
 
-            await _unitOfWork.Commit().ConfigureAwait(false);
+            await _transaction.Commit().ConfigureAwait(false);
         }
     }
 }

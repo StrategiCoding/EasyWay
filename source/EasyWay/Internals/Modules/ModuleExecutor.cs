@@ -1,4 +1,5 @@
-﻿ using EasyWay.Internals.Commands;
+﻿using EasyWay.Internals.Commands.Commands;
+using EasyWay.Internals.Commands.CommandsWithResult;
 using EasyWay.Internals.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,8 +25,8 @@ namespace EasyWay.Internals.Modules
                 var sp = scope.ServiceProvider;
 
                 commandResult = await sp
-                    .GetRequiredService<ICommandExecutor<TModule>>()
-                    .Execute(command, cancellationToken);
+                    .GetRequiredService<ICommandExecutor>()
+                    .Execute<TModule, TCommand>(command, cancellationToken);
             }
 
             return commandResult;
@@ -42,8 +43,8 @@ namespace EasyWay.Internals.Modules
                 var sp = scope.ServiceProvider;
 
                 commandResult = await sp
-                    .GetRequiredService<ICommandWithOperationResultExecutor<TModule>>()
-                    .Command<TCommand, TOperationResult>(command, cancellationToken);
+                    .GetRequiredService<ICommandWithOperationResultExecutor>()
+                    .Command<TModule, TCommand, TOperationResult>(command, cancellationToken);
             }
 
             return commandResult;

@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.Transactions.Policies;
+﻿using EasyWay.Internals.Commands;
+using EasyWay.Internals.Transactions.Policies;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Transactions

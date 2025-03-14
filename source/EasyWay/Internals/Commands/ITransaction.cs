@@ -1,4 +1,4 @@
-﻿namespace EasyWay.Internals.Transactions
+﻿namespace EasyWay.Internals.Commands
 {
     internal interface ITransaction
     {

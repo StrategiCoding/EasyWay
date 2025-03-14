@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.Commands.Results;
+﻿using EasyWay.Internals.Commands.CommandsWithResult;
 using EasyWay.Internals.Queries.Results;
 using Microsoft.AspNetCore.Http;
 

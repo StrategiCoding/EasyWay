@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Internals.AggregateRoots
 {
-    internal sealed class ConcurrencyTokenUpdater : IConcurrencyTokenUpdater
+    internal sealed class ConcurrencyTokenUpdater
     {
         private readonly IAggregateRootsContext _aggragateRootsContext;
 

@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using EasyWay.Internals.Commands.Commands;
+using EasyWay.Internals.Commands.CommandsWithResult;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands
@@ -10,14 +12,15 @@ namespace EasyWay.Internals.Commands
             Type moduleType,
             IEnumerable<Assembly> assemblies)
         {
-            services.AddScoped(typeof(ICommandExecutor<>).MakeGenericType(moduleType), typeof(CommandExecutor<>).MakeGenericType(moduleType));
-            services.AddScoped(typeof(ICommandWithOperationResultExecutor<>).MakeGenericType(moduleType), typeof(CommandWithOperationResultExecutor<>).MakeGenericType(moduleType));
+            services
+                .AddCommandExecutor()
+                .AddCommandExecutorWithResult();
 
             services.AddAsBasedType(typeof(CommandHandler<>), ServiceLifetime.Scoped, assemblies);
 
             services.AddAsBasedType(typeof(CommandHandler<,>), ServiceLifetime.Scoped, assemblies);
 
-            services.AddScoped<IUnitOfWorkCommandHandler, UnitOfWorkCommandHandler>();
+            services.AddScoped<UnitOfWork>();
 
             services.AddSingleton(new ConcurrencyConflictValidator());
 

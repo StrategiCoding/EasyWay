@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.Commands.Results;
+﻿using EasyWay.Internals.Commands.CommandsWithResult;
 
 namespace EasyWay
 {

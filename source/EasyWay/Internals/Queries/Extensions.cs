@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using EasyWay.Internals.Queries.Decorators;
-using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Queries
@@ -17,13 +15,7 @@ namespace EasyWay.Internals.Queries
             {
                 var executor = p.GetRequiredService<QueryExecutor>();
 
-                var cancellationContext = new QueryExecutorCancellationContextDecorator(executor, p);
-
-                var validator = new QueryExecutorValidatorDecorator(cancellationContext, p);
-
-                var logger = new QueryExecutorLoggerDecorator(validator, p);
-
-                return logger;
+                return new QueryExecutorLoggerDecorator(executor, p);
             });
 
             services.AddAsBasedType(typeof(QueryHandler<,>), ServiceLifetime.Scoped, assemblies);

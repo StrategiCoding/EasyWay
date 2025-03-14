@@ -1,7 +1,7 @@
 ﻿using EasyWay.Internals.Queries.Loggers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyWay.Internals.Queries.Decorators
+namespace EasyWay.Internals.Queries
 {
     internal sealed class QueryExecutorLoggerDecorator : IQueryExecutor
     {
@@ -17,7 +17,7 @@ namespace EasyWay.Internals.Queries.Decorators
             _serviceProvider = serviceProvider;
         }
 
-        public Task<QueryResult<TReadModel>> Execute<TModule, TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+        public async Task<QueryResult<TReadModel>> Execute<TModule, TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
             where TModule : EasyWayModule
             where TQuery : Query<TReadModel>
             where TReadModel : ReadModel
@@ -30,7 +30,7 @@ namespace EasyWay.Internals.Queries.Decorators
 
             try
             {
-                var result = _decoratedQueryExecutor.Execute<TModule, TQuery, TReadModel>(query, cancellationToken);
+                var result = await _decoratedQueryExecutor.Execute<TModule, TQuery, TReadModel>(query, cancellationToken);
 
                 logger.Executed();
 

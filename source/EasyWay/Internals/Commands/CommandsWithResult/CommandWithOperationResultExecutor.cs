@@ -1,29 +1,28 @@
-﻿using EasyWay.Internals.Contexts;
-using EasyWay.Internals.Validation;
+﻿using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasyWay.Internals.Commands
+namespace EasyWay.Internals.Commands.CommandsWithResult
 {
-    internal sealed class CommandWithOperationResultExecutor<TModule> : ICommandWithOperationResultExecutor<TModule>
-        where TModule : EasyWayModule
+    internal sealed class CommandWithOperationResultExecutor : ICommandWithOperationResultExecutor
     {
         private readonly IServiceProvider _serviceProvider;
 
         private readonly CancellationContext _cancellationContext;
 
-        private readonly IUnitOfWorkCommandHandler _unitOfWorkCommandHandler;
+        private readonly UnitOfWork _unitOfWork;
 
         public CommandWithOperationResultExecutor(
             IServiceProvider serviceProvider,
             CancellationContext cancellationContext,
-            IUnitOfWorkCommandHandler unitOfWorkCommandHandler)
+            UnitOfWork unitOfWork)
         {
             _serviceProvider = serviceProvider;
             _cancellationContext = cancellationContext;
-            _unitOfWorkCommandHandler = unitOfWorkCommandHandler;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<CommandResult<TOperationResult>> Command<TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
+        public async Task<CommandResult<TOperationResult>> Command<TModule, TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
+            where TModule : EasyWayModule
             where TCommand : Command<TOperationResult>
             where TOperationResult : OperationResult
         {
@@ -45,7 +44,7 @@ namespace EasyWay.Internals.Commands
 
             var commandResult = await commandHandler.Handle(command);
 
-            await _unitOfWorkCommandHandler.Handle();
+            await _unitOfWork.Commit();
 
             return commandResult;
         }
