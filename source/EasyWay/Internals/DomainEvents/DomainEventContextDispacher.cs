@@ -16,9 +16,9 @@
 
         public async Task Dispach()
         {
-            var domainEvents = _context.GetAllDomainEvents();
+            var domainEventContexts = _context.GetAllDomainEvents();
 
-            if (!domainEvents.Any()) 
+            if (!domainEventContexts.Any()) 
             {
                 return;
             }
@@ -26,20 +26,20 @@
             _context.ClearAllDomainEvents();
 
             await _publisher
-                .Publish(domainEvents)
+                .Publish(domainEventContexts)
                 .ConfigureAwait(false);
 
-            domainEvents = _context.GetAllDomainEvents();
+            domainEventContexts = _context.GetAllDomainEvents();
 
-            while (domainEvents.Any()) 
+            while (domainEventContexts.Any()) 
             {
                 _context.ClearAllDomainEvents();
 
                 await _publisher
-                    .Publish(domainEvents)
+                    .Publish(domainEventContexts)
                     .ConfigureAwait(false);
 
-                domainEvents = _context.GetAllDomainEvents();
+                domainEventContexts = _context.GetAllDomainEvents();
             }
         }
     }

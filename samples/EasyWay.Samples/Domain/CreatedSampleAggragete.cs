@@ -1,7 +1,7 @@
 ﻿namespace EasyWay.Samples.Domain
 {
-    public class CreatedSampleAggragete : DomainEvent
+    public sealed class CreatedSampleAggragete : DomainEvent
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public string test { get; } = "TEST";
     }
 }

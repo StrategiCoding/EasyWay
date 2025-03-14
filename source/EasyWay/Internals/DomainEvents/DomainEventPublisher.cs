@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EasyWay.Events.DomainEvents;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.DomainEvents
 {
@@ -11,18 +12,25 @@ namespace EasyWay.Internals.DomainEvents
             _serviceProvider = serviceProvider;
         }
 
-        public async Task Publish<TEvent>(TEvent @event)
-            where TEvent : DomainEvent
+        public async Task Publish(DomainEventContext domainEventContext)
         {
-            var handlerType = typeof(DomainEventHandler<>).MakeGenericType(@event.GetType());
+            var domainEvent = domainEventContext.DomainEvent;
+
+            var handlerType = typeof(DomainEventHandler<>).MakeGenericType(domainEvent.GetType());
 
             var eventHandlers = _serviceProvider.GetServices(handlerType);
+
+            var context = new Context(
+                eventId: domainEventContext.EntityId,
+                aggragetRootId: domainEventContext.AggragetRootId,
+                entityId: domainEventContext.EntityId,
+                occurrenceOnUtc: domainEventContext.OccurrenceOnUtc);
 
             foreach (var eventHandler in eventHandlers)
             {
                 await (Task)handlerType
-                    .GetMethod(nameof(DomainEventHandler<TEvent>.Handle))?
-                    .Invoke(eventHandler, new object[] { @event });
+                    .GetMethod(nameof(DomainEventHandler<DomainEvent>.Handle))?
+                    .Invoke(eventHandler, new object[] { domainEvent, context });
             }
         }
     }

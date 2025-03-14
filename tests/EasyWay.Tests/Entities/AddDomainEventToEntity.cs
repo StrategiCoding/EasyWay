@@ -19,7 +19,7 @@ namespace EasyWay.Tests.Entities
 
             // Assert
             Assert.Equal(1, entity.DomainEvents.Count);
-            Assert.Equal(domainEvent, entity.DomainEvents.Single());
+            Assert.Equal(domainEvent, entity.DomainEvents.Single().DomainEvent);
         }
 
         [Fact(DisplayName = $"When {nameof(DomainEvent)}s are added and then {nameof(Entity.ClearDomainEvents)} is executed, the domain event list should be empty")]

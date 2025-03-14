@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.BusinessRules;
+using EasyWay.Internals.Clocks;
 using EasyWay.Internals.DomainEvents;
 using EasyWay.Internals.GuidGenerators;
 using System.Diagnostics.CodeAnalysis;
@@ -9,9 +10,9 @@ namespace EasyWay
     {
         internal Guid Id { get; private set; } = GuidGenerator.New;
 
-        private List<DomainEvent> _domainEvents = new List<DomainEvent>();
+        private List<DomainEventContext> _domainEvents = new List<DomainEventContext>();
 
-        internal IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+        internal IReadOnlyCollection<DomainEventContext> DomainEvents => _domainEvents.AsReadOnly();
 
         internal void ClearDomainEvents() => _domainEvents.Clear();
 
@@ -33,7 +34,16 @@ namespace EasyWay
                 throw new DomainEventCannotBeNullException<TDomainEvent>();
             }
 
-            _domainEvents.Add(domainEvent);
+            var domainEventContext = new DomainEventContext()
+            {
+                EventId = GuidGenerator.New,
+                AggragetRootId = Id, // TODO what when we have object graph
+                EntityId = Id,
+                OccurrenceOnUtc = InternalClock.UtcNow,
+                DomainEvent = domainEvent,
+            };
+
+            _domainEvents.Add(domainEventContext);
         }
 
         public static bool operator ==(Entity x, Entity y) => EntityEquals(x, y);
