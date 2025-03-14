@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace EasyWay.Internals
 {
-    internal sealed class WebApiResultMapper : IWebApiResultMapper
+    internal sealed class WebApiResultMapper
     {
         public IResult Map(CommandResult commandResult)
         {

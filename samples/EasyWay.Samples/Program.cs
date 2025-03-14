@@ -32,32 +32,24 @@ app.UseHttpsRedirection();
 //app.UseEasyWay();
 
 
-app.MapPost("/query", async ([FromBody] SampleQuery query, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
+app.MapPost("/query", async ([FromBody] SampleQuery query, IWebApiModulExecutor<SampleModule> executor) =>
 {
-    var x = await executor.Query<SampleQuery, SampleQueryResult>(query);
-
-    return mapper.Map(x);
+    return await executor.Query<SampleQuery, SampleQueryResult>(query);
 });
 
-app.MapPost("/commandWithError", async ([FromBody] ErrorCommand command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
+app.MapPost("/commandWithError", async ([FromBody] ErrorCommand command, IWebApiModulExecutor<SampleModule> executor) =>
 {
-    var x = await executor.Command(command);
-
-    return mapper.Map(x);
+    return await executor.Command(command);
 });
 
-app.MapPost("/command", async ([FromBody] SampleCommand command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
+app.MapPost("/command", async ([FromBody] SampleCommand command, IWebApiModulExecutor<SampleModule> executor) =>
 {
-    var x = await executor.Command(command);
-
-    return mapper.Map(x);
+    return await executor.Command(command);
 });
 
-app.MapPost("/commandwithresult", async ([FromBody] SampleCommandWithResult command, IModuleExecutor<SampleModule> executor, IWebApiResultMapper mapper) =>
+app.MapPost("/commandwithresult", async ([FromBody] SampleCommandWithResult command, IWebApiModulExecutor<SampleModule> executor) =>
 {
-    var x = await executor.Command<SampleCommandWithResult, SampleCommandResult>(command);
-
-    return mapper.Map(x);
+    return await executor.Command<SampleCommandWithResult, SampleCommandResult>(command);
 });
 
 app.Run();
