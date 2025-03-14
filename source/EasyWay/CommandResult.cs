@@ -66,6 +66,7 @@ namespace EasyWay
             OperationResult = operationResult;
             Error = CommandErrorEnum.None;
             ValidationErrors = new Dictionary<string, string[]>();
+            BrokenBusinessRuleException = null;
         }
 
         private CommandResult(IDictionary<string, string[]> validationErrors)
@@ -73,6 +74,7 @@ namespace EasyWay
             OperationResult = null;
             Error = CommandErrorEnum.Validation;
             ValidationErrors = validationErrors;
+            BrokenBusinessRuleException = null;
         }
 
         private CommandResult(CommandErrorEnum error)
@@ -80,6 +82,7 @@ namespace EasyWay
             OperationResult = null;
             Error = error;
             ValidationErrors = new Dictionary<string, string[]>();
+            BrokenBusinessRuleException = null;
         }
 
         private CommandResult(BrokenBusinessRuleException brokenBusinessRuleException)
