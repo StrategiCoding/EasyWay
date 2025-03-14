@@ -1,4 +1,5 @@
-﻿using EasyWay.Internals.Validation;
+﻿using EasyWay.Internals.BusinessRules;
+using EasyWay.Internals.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Commands.Commands
@@ -39,9 +40,18 @@ namespace EasyWay.Internals.Commands.Commands
                 }
             }
 
-            var commandResult = await _serviceProvider
+            CommandResult commandResult;
+
+            try
+            {
+                commandResult = await _serviceProvider
                 .GetRequiredService<CommandHandler<TCommand>>()
                 .Handle(command);
+            }
+            catch (BrokenBusinessRuleException brokenBusinessRuleException)
+            {
+                return CommandResult.BrokenBusinessRule(brokenBusinessRuleException);
+            }
 
             await _unitOfWork.Commit();
 

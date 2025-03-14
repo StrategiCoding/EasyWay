@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Commands.CommandsWithResult;
+using EasyWay.Internals.Exceptions;
 using EasyWay.Internals.Queries.Results;
 using Microsoft.AspNetCore.Http;
 
@@ -12,6 +13,9 @@ namespace EasyWay.Internals
             {
                 CommandErrorEnum.None => Results.Ok(),
                 CommandErrorEnum.Validation => Results.BadRequest(commandResult.ValidationErrors),
+                CommandErrorEnum.BrokenBusinessRule => Results.Conflict(new BrokenBusinessRuleExceptionResponse(commandResult.BrokenBusinessRuleException)),
+                CommandErrorEnum.NotFound => Results.StatusCode(404),
+                CommandErrorEnum.Forbidden => Results.StatusCode(403),
                 _ => Results.StatusCode(500),
             };
         }
@@ -22,6 +26,9 @@ namespace EasyWay.Internals
             {
                 CommandErrorEnum.None => Results.Ok(commandResult.OperationResult),
                 CommandErrorEnum.Validation => Results.BadRequest(commandResult.ValidationErrors),
+                CommandErrorEnum.BrokenBusinessRule => Results.Conflict(new BrokenBusinessRuleExceptionResponse(commandResult.BrokenBusinessRuleException)),
+                CommandErrorEnum.NotFound => Results.StatusCode(404),
+                CommandErrorEnum.Forbidden => Results.StatusCode(403),
                 _ => Results.StatusCode(500),
             };
         }
