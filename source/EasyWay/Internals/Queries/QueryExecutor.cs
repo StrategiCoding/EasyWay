@@ -12,7 +12,7 @@ namespace EasyWay.Internals.Queries
             _serviceProvider = serviceProvider;
         }  
 
-        public Task<QueryResult<TReadModel>> Execute<TModule, TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
+        public async Task<QueryResult<TReadModel>> Execute<TModule, TQuery, TReadModel>(TQuery query, CancellationToken cancellationToken = default)
             where TModule : EasyWayModule
             where TQuery : Query<TReadModel>
             where TReadModel : ReadModel
@@ -27,11 +27,26 @@ namespace EasyWay.Internals.Queries
 
                 if (errors.Any())
                 {
-                    return Task.FromResult(QueryResult<TReadModel>.Validation(errors));
+                    return QueryResult<TReadModel>.Validation(errors);
                 }
             }
 
-            return _serviceProvider.GetRequiredService<QueryHandler<TQuery, TReadModel>>().Handle(query);
+            QueryResult<TReadModel> result;
+
+            try
+            {
+                result = await _serviceProvider.GetRequiredService<QueryHandler<TQuery, TReadModel>>().Handle(query);
+            }
+            catch (OperationCanceledException)
+            {
+                return QueryResult<TReadModel>.OperationCanceled();
+            }
+            catch (Exception exception)
+            {
+                return QueryResult<TReadModel>.UnknownException(exception);
+            }
+
+            return result;
         }
     }
 }
