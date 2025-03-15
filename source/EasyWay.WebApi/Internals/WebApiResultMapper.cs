@@ -18,7 +18,7 @@ namespace EasyWay.Internals
                 CommandErrorEnum.OperationCanceled => Results.StatusCode(499),
                 CommandErrorEnum.NotFound => Results.StatusCode(404),
                 CommandErrorEnum.Forbidden => Results.StatusCode(404),
-                _ => Results.StatusCode(500),
+                CommandErrorEnum.UnknownException or _ => Results.StatusCode(500),
             };
         }
 
@@ -33,7 +33,7 @@ namespace EasyWay.Internals
                 CommandErrorEnum.OperationCanceled => Results.StatusCode(499),
                 CommandErrorEnum.NotFound => Results.StatusCode(404),
                 CommandErrorEnum.Forbidden => Results.StatusCode(404),
-                _ => Results.StatusCode(500),
+                CommandErrorEnum.UnknownException or _ => Results.StatusCode(500),
             };
         }
 

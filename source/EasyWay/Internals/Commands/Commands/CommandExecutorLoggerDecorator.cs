@@ -30,7 +30,7 @@ namespace EasyWay.Internals.Commands.Commands
             try
             {
                 var result = await _decoratedCommandExecutor.Execute<TModule, TCommand>(command, cancellationToken);
-
+                // TODO warning when forbidden
                 logger.Executed();
 
                 return result;
