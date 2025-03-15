@@ -47,13 +47,25 @@ namespace EasyWay.Internals.Commands.Commands
                 commandResult = await _serviceProvider
                 .GetRequiredService<CommandHandler<TCommand>>()
                 .Handle(command);
+
+                await _unitOfWork.Commit();
             }
             catch (BrokenBusinessRuleException brokenBusinessRuleException)
             {
                 return CommandResult.BrokenBusinessRule(brokenBusinessRuleException);
             }
-
-            await _unitOfWork.Commit();
+            catch (ConcurrencyException concurrencyException)
+            {
+                return CommandResult.ConcurrencyConflict(concurrencyException);
+            }
+            catch (OperationCanceledException)
+            {
+                return CommandResult.OperationCanceled();
+            }
+            catch (Exception exception)
+            {
+                return CommandResult.UnknownException(exception);
+            }
 
             return commandResult;
         }

@@ -5,7 +5,7 @@ namespace EasyWay.Internals.Exceptions
 {
     internal sealed class BrokenBusinessRuleExceptionResponse : ExceptionResponse
     {
-        internal BrokenBusinessRuleExceptionResponse(BrokenBusinessRuleException ex)
+        internal BrokenBusinessRuleExceptionResponse(Exception ex)
         {
             Type = "BrokenBusinessRule";
             Detail = ex.Message;

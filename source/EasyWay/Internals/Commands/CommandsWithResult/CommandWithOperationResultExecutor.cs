@@ -48,13 +48,25 @@ namespace EasyWay.Internals.Commands.CommandsWithResult
             try
             {
                 commandResult = await commandHandler.Handle(command);
+
+                await _unitOfWork.Commit();
             }
             catch (BrokenBusinessRuleException brokenBusinessRuleException)
             {
                 return CommandResult<TOperationResult>.BrokenBusinessRule(brokenBusinessRuleException);
             }
-
-            await _unitOfWork.Commit();
+            catch (ConcurrencyException concurrencyException)
+            {
+                return CommandResult<TOperationResult>.ConcurrencyConflict(concurrencyException);
+            }
+            catch (OperationCanceledException)
+            {
+                return CommandResult<TOperationResult>.OperationCanceled();
+            }
+            catch (Exception exception)
+            {
+                return CommandResult<TOperationResult>.UnknownException(exception);
+            }
 
             return commandResult;
         }
