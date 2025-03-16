@@ -1,4 +1,5 @@
 ﻿using EasyWay.Internals.Queries.Loggers;
+using EasyWay.Internals.Queries.Results;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasyWay.Internals.Queries
@@ -24,7 +25,7 @@ namespace EasyWay.Internals.Queries
         {
             var logger = _serviceProvider.GetRequiredService<EasyWayLogger<TModule>>();
 
-            //TODO begin scope (correlation Id)
+            //TODO begin scope (correlation Id, userId)
 
             logger.Executing(query);
 
@@ -32,15 +33,24 @@ namespace EasyWay.Internals.Queries
             {
                 var result = await _decoratedQueryExecutor.Execute<TModule, TQuery, TReadModel>(query, cancellationToken);
 
-                logger.Executed();
+                switch (result.Error)
+                {
+                    case QueryErrorEnum.None: logger.Successed(result.ReadModel); break;
+                    case QueryErrorEnum.Validation: logger.Validation(result.ValidationErrors); break;
+                    case QueryErrorEnum.OperationCanceled: logger.OperationCanceled(); break;
+                    case QueryErrorEnum.NotFound: logger.NotFound(); break;
+                    case QueryErrorEnum.Forbidden: logger.Forbidden(); break;
+                    default: logger.UnexpectedException(result.Exception); break;
+                }
 
                 return result;
             }
             catch (Exception ex)
             {
                 logger.UnexpectedException(ex);
-                throw;
-            } 
+
+                return QueryResult<TReadModel>.UnknownException(ex);
+            }
         }
     }
 }

@@ -11,6 +11,8 @@ namespace EasyWay
 
         internal IDictionary<string, string[]> ValidationErrors;
 
+        internal BrokenBusinessRuleException? BrokenBusinessRuleException;
+
         internal Exception? Exception;
 
         private CommandResult() 
@@ -38,7 +40,7 @@ namespace EasyWay
         {
             Error = CommandErrorEnum.BrokenBusinessRule;
             ValidationErrors = new Dictionary<string, string[]>();
-            Exception = brokenBusinessRuleException;
+            BrokenBusinessRuleException = brokenBusinessRuleException;
         }
 
         private CommandResult(ConcurrencyException concurrencyException)
@@ -81,6 +83,8 @@ namespace EasyWay
 
         internal IDictionary<string, string[]> ValidationErrors;
 
+        internal BrokenBusinessRuleException? BrokenBusinessRuleException;
+
         internal Exception? Exception;
 
         private CommandResult(TOperationResult operationResult)
@@ -112,7 +116,7 @@ namespace EasyWay
             OperationResult = null;
             Error = CommandErrorEnum.BrokenBusinessRule;
             ValidationErrors = new Dictionary<string, string[]>();
-            Exception = brokenBusinessRuleException;
+            BrokenBusinessRuleException = brokenBusinessRuleException;
         }
 
         private CommandResult(ConcurrencyException concurrencyException)
