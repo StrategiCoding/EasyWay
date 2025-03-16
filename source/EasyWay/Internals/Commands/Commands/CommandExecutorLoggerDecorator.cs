@@ -23,7 +23,7 @@ namespace EasyWay.Internals.Commands.Commands
         {
             var logger = _serviceProvider.GetRequiredService<EasyWayLogger<TModule>>();
 
-            //TODO begin scope (correlation Id)
+            //TODO begin scope (correlation Id, userId)
 
             logger.Executing(command);
 
@@ -31,14 +31,25 @@ namespace EasyWay.Internals.Commands.Commands
             {
                 var result = await _decoratedCommandExecutor.Execute<TModule, TCommand>(command, cancellationToken);
 
-                logger.Executed();
+                switch (result.Error)
+                {
+                    case CommandErrorEnum.None: logger.Successed(); break;
+                    case CommandErrorEnum.Validation: logger.Validation(result.ValidationErrors); break;
+                    case CommandErrorEnum.BrokenBusinessRule: logger.BrokenBusinessRule(result.BrokenBusinessRuleException.BrokenBusinessRule); break;
+                    case CommandErrorEnum.ConcurrencyConflict: logger.ConcurrencyConflict(result.Exception); break;
+                    case CommandErrorEnum.OperationCanceled: logger.OperationCanceled(); break;
+                    case CommandErrorEnum.NotFound: logger.NotFound(); break;
+                    case CommandErrorEnum.Forbidden: logger.Forbidden(); break;
+                    default: logger.UnexpectedException(result.Exception); break;
+                }
 
                 return result;
             }
             catch (Exception ex)
             {
                 logger.UnexpectedException(ex);
-                throw;
+
+                return CommandResult.UnknownException(ex);
             }
         }
     }

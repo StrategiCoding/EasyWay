@@ -13,7 +13,7 @@ namespace EasyWay.Internals
             {
                 CommandErrorEnum.None => Results.Ok(),
                 CommandErrorEnum.Validation => Results.BadRequest(commandResult.ValidationErrors),
-                CommandErrorEnum.BrokenBusinessRule => Results.Conflict(new BrokenBusinessRuleExceptionResponse(commandResult.Exception)),
+                CommandErrorEnum.BrokenBusinessRule => Results.Conflict(new BrokenBusinessRuleExceptionResponse(commandResult.BrokenBusinessRuleException)),
                 CommandErrorEnum.ConcurrencyConflict => Results.StatusCode(409),
                 CommandErrorEnum.OperationCanceled => Results.StatusCode(499),
                 CommandErrorEnum.NotFound => Results.StatusCode(404),

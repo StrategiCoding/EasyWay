@@ -1,4 +1,7 @@
-﻿namespace EasyWay.Internals.Commands.CommandsWithResult
+﻿using EasyWay.Internals.Queries.Loggers;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace EasyWay.Internals.Commands.CommandsWithResult
 {
     internal sealed class CommandWithOperationResultExecutorLoggerDecorator : ICommandWithOperationResultExecutor
     {
@@ -14,12 +17,41 @@
             _serviceProvider = serviceProvider;
         }
 
-        public Task<CommandResult<TOperationResult>> Command<TModule, TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
+        public async Task<CommandResult<TOperationResult>> Command<TModule, TCommand, TOperationResult>(TCommand command, CancellationToken cancellationToken = default)
             where TModule : EasyWayModule
             where TCommand : Command<TOperationResult>
             where TOperationResult : OperationResult
         {
-            return _decoratedCommandExecutor.Command<TModule, TCommand, TOperationResult>(command, cancellationToken);
+            var logger = _serviceProvider.GetRequiredService<EasyWayLogger<TModule>>();
+
+            //TODO begin scope (correlation Id, userId)
+
+            logger.Executing(command);
+
+            try
+            {
+                var result = await _decoratedCommandExecutor.Command<TModule, TCommand, TOperationResult>(command, cancellationToken);
+
+                switch (result.Error)
+                {
+                    case CommandErrorEnum.None: logger.Successed(result.OperationResult); break;
+                    case CommandErrorEnum.Validation: logger.Validation(result.ValidationErrors); break;
+                    case CommandErrorEnum.BrokenBusinessRule: logger.BrokenBusinessRule(result.BrokenBusinessRuleException.BrokenBusinessRule); break;
+                    case CommandErrorEnum.ConcurrencyConflict: logger.ConcurrencyConflict(result.Exception); break;
+                    case CommandErrorEnum.OperationCanceled: logger.OperationCanceled(); break;
+                    case CommandErrorEnum.NotFound: logger.NotFound(); break;
+                    case CommandErrorEnum.Forbidden: logger.Forbidden(); break;
+                    default: logger.UnexpectedException(result.Exception); break;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.UnexpectedException(ex);
+
+                return CommandResult<TOperationResult>.UnknownException(ex);
+            }
         }
     }
 }
