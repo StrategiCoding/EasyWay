@@ -17,9 +17,28 @@ namespace EasyWay.Internals.Repositories
             return _aggregateRoots.AddAsync(aggregateRoot).AsTask();
         }
 
+        public Task Add(IEnumerable<TAggregateRoot> aggregateRoots)
+        {
+            return _aggregateRoots.AddRangeAsync(aggregateRoots);
+        }
+
         public Task<TAggregateRoot?> Get(Guid id)
         {
             return _aggregateRoots.FindAsync(id).AsTask();
+        }
+
+        public Task Remove(TAggregateRoot aggregateRoot)
+        {
+            _aggregateRoots.Remove(aggregateRoot);
+
+            return Task.CompletedTask;
+        }
+
+        public Task Remove(IEnumerable<TAggregateRoot> aggregateRoots)
+        {
+            _aggregateRoots.RemoveRange(aggregateRoots);
+
+            return Task.CompletedTask;
         }
     }
 }
