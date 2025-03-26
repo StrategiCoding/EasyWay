@@ -1,6 +1,6 @@
 ﻿namespace EasyWay
 {
-    public interface IGenericRepository<TAggregateRoot>
+    public interface IWriteGenericRepository<TAggregateRoot>
         where TAggregateRoot : AggregateRoot
     {
         Task Add(TAggregateRoot aggregateRoot);

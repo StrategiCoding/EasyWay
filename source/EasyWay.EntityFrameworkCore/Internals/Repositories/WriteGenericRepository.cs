@@ -2,12 +2,12 @@
 
 namespace EasyWay.Internals.Repositories
 {
-    internal sealed class GenericRepository<TAggregateRoot> : IGenericRepository<TAggregateRoot>
+    internal sealed class WriteGenericRepository<TAggregateRoot> : IWriteGenericRepository<TAggregateRoot>
         where TAggregateRoot : AggregateRoot
     {
         private readonly DbSet<TAggregateRoot> _aggregateRoots;
 
-        public GenericRepository(DbContext dbContext)
+        public WriteGenericRepository(DbContext dbContext)
         {
             _aggregateRoots = dbContext.Set<TAggregateRoot>();
         }
