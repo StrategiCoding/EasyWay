@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace EasyWay.Internals.Repositories
 {
@@ -20,6 +21,26 @@ namespace EasyWay.Internals.Repositories
         public Task Add(IEnumerable<TAggregateRoot> aggregateRoots)
         {
             return _aggregateRoots.AddRangeAsync(aggregateRoots);
+        }
+
+        public Task Any()
+        {
+            return _aggregateRoots.AnyAsync();
+        }
+
+        public Task Any(Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            return _aggregateRoots.AnyAsync(predicate);
+        }
+
+        public Task<int> Count()
+        {
+            return _aggregateRoots.CountAsync();
+        }
+
+        public Task<int> Count(Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            return _aggregateRoots.CountAsync(predicate);
         }
 
         public Task<TAggregateRoot?> Get(Guid id)
