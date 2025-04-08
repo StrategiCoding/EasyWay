@@ -4,9 +4,9 @@ namespace EasyWay.Samples.Databases
 {
     public class SampleAggragateRootRepository : ISampleAggragateRootRepository, IAsyncDisposable
     {
-        private readonly IWriteGenericRepository<SampleAggregateRoot> _repository;
+        private readonly IGenericRepository<SampleAggregateRoot> _repository;
 
-        public SampleAggragateRootRepository(IWriteGenericRepository<SampleAggregateRoot> repository)
+        public SampleAggragateRootRepository(IGenericRepository<SampleAggregateRoot> repository)
         {
             _repository = repository;
         }

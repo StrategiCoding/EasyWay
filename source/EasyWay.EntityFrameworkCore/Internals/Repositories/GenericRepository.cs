@@ -3,12 +3,12 @@ using System.Linq.Expressions;
 
 namespace EasyWay.Internals.Repositories
 {
-    internal sealed class WriteGenericRepository<TAggregateRoot> : IWriteGenericRepository<TAggregateRoot>
+    internal sealed class GenericRepository<TAggregateRoot> : IGenericRepository<TAggregateRoot>
         where TAggregateRoot : AggregateRoot
     {
         private readonly DbSet<TAggregateRoot> _aggregateRoots;
 
-        public WriteGenericRepository(DbContext dbContext)
+        public GenericRepository(DbContext dbContext)
         {
             _aggregateRoots = dbContext.Set<TAggregateRoot>();
         }
@@ -46,6 +46,11 @@ namespace EasyWay.Internals.Repositories
         public Task<TAggregateRoot?> Get(Guid id)
         {
             return _aggregateRoots.FindAsync(id).AsTask();
+        }
+
+        public async Task<IEnumerable<TAggregateRoot>> Get(Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            return await _aggregateRoots.Where(predicate).ToListAsync();
         }
 
         public Task Remove(TAggregateRoot aggregateRoot)
