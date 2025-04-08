@@ -3,12 +3,12 @@ using System.Linq.Expressions;
 
 namespace EasyWay.Internals.Repositories
 {
-    internal sealed class WriteGenericRepository<TAggregateRoot> : IWriteGenericRepository<TAggregateRoot>
+    internal sealed class GenericRepository<TAggregateRoot> : IGenericRepository<TAggregateRoot>
         where TAggregateRoot : AggregateRoot
     {
         private readonly DbSet<TAggregateRoot> _aggregateRoots;
 
-        public WriteGenericRepository(DbContext dbContext)
+        public GenericRepository(DbContext dbContext)
         {
             _aggregateRoots = dbContext.Set<TAggregateRoot>();
         }

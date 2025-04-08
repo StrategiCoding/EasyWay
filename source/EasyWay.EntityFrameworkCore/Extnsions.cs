@@ -21,7 +21,7 @@ namespace EasyWay
             services.AddScoped<IAggregateRootsContext, EntityFrameworkAggregateRootsContext>();
             services.AddTransient<IDomainEventsContext, DomainEventsAccessor>();
 
-            services.AddScoped(typeof(IWriteGenericRepository<>), typeof(WriteGenericRepository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddTransactions();
         }
