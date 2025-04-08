@@ -48,6 +48,11 @@ namespace EasyWay.Internals.Repositories
             return _aggregateRoots.FindAsync(id).AsTask();
         }
 
+        public async Task<IEnumerable<TAggregateRoot>> Get(Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            return await _aggregateRoots.Where(predicate).ToListAsync();
+        }
+
         public Task Remove(TAggregateRoot aggregateRoot)
         {
             _aggregateRoots.Remove(aggregateRoot);

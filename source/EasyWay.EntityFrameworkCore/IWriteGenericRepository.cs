@@ -11,6 +11,8 @@ namespace EasyWay
 
         Task<TAggregateRoot?> Get(Guid id);
 
+        Task<IEnumerable<TAggregateRoot>> Get(Expression<Func<TAggregateRoot, bool>> predicate);
+
         Task Remove(TAggregateRoot aggregateRoot);
 
         Task Remove(IEnumerable<TAggregateRoot> aggregateRoots);
