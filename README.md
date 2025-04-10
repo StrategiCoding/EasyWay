@@ -19,16 +19,19 @@
 ### ✨ Features
 
 #### :gear: Main
-- CQRS and DomainEvent handlers
+- CQRS (Command Query Responsibility Segregation)
+- Automatic publishing and handling of DomainEvents from Entities
 - Predefined domain building blocks (Tactical Domain-Driven Desing)
 - Automatic update of concurrency token in AggregateRoots (prevent lost update and write skew)
-- Automatic sequential Guid generation (in application)
-- Automatic publication of domain events
+- Automatic generation of sequential Guid for entities
 - Automatic approval of all changes in one transaction (Unit of Work Pattern)
+- Predefined logging
+- Support for TimeProvider
 
 #### :gear: Integrations
 - EntityFrameworkCore
 - FluentValidation
+- WebApi
 
 #### :globe_with_meridians: WebApi
 - Automatic translation of an exception into a response
