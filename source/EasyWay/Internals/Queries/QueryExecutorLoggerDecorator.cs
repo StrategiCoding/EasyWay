@@ -25,9 +25,18 @@ namespace EasyWay.Internals.Queries
         {
             var logger = _serviceProvider.GetRequiredService<EasyWayLogger<TModule>>();
 
+            var userContext = _serviceProvider.GetRequiredService<IUserContext>();
+
             //TODO begin scope (correlation Id, userId)
 
-            logger.Executing(query);
+            if (userContext.UserId is not null)
+            {
+                logger.ExecutingByUser(query, userContext.UserId);
+            }
+            else
+            {
+                logger.Executing(query);
+            }
 
             try
             {

@@ -1,5 +1,4 @@
-﻿using EasyWay.Internals.BusinessRules;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace EasyWay.Internals.Queries.Loggers
 {
@@ -12,6 +11,9 @@ namespace EasyWay.Internals.Queries.Loggers
 
         [LoggerMessage(0, LogLevel.Information, "Executing {@component}", SkipEnabledCheck = true)]
         public partial void Executing(object component);
+
+        [LoggerMessage(0, LogLevel.Information, "Executing {@component} by @userId", SkipEnabledCheck = true)]
+        public partial void ExecutingByUser(object component, string userId);
 
         [LoggerMessage(1, LogLevel.Information, "Successed", SkipEnabledCheck = true)]
         public partial void Successed();
