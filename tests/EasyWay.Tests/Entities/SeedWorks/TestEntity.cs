@@ -1,4 +1,6 @@
-﻿namespace EasyWay.Tests.Entities.SeedWorks
+﻿using static EasyWay.Tests.Entities.AddDomainEventToEntity;
+
+namespace EasyWay.Tests.Entities.SeedWorks
 {
     internal sealed class TestEntity : Entity
     {
@@ -10,7 +12,9 @@
         public void AddDomainEvent<TDomainEvent>(TDomainEvent domainEvent)
             where TDomainEvent : DomainEvent
         {
-            Add(domainEvent);
+            Apply(domainEvent);
         }
+
+        private void When(TestDomainEvent @event) { }
     }
 }

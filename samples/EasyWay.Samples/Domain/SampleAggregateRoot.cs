@@ -4,7 +4,12 @@
     {
         internal SampleAggregateRoot() 
         { 
-            Add(new CreatedSampleAggragete());
+            Apply(new CreatedSampleAggragete());
+        }
+
+        private void When(CreatedSampleAggragete @event)
+        {
+
         }
 
         public void SampleMethod()
