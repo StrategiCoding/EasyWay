@@ -1,8 +1,10 @@
 ﻿using EasyWay.Internals.BusinessRules;
 using EasyWay.Internals.Clocks;
 using EasyWay.Internals.DomainEvents;
+using EasyWay.Internals.Entities;
 using EasyWay.Internals.GuidGenerators;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace EasyWay
 {
@@ -26,13 +28,22 @@ namespace EasyWay
             }
         }
 
-        protected void Add<TDomainEvent>(TDomainEvent domainEvent)
+        protected void Apply<TDomainEvent>(TDomainEvent domainEvent)
             where TDomainEvent : DomainEvent
         {
             if (domainEvent is null)
             {
                 throw new DomainEventCannotBeNullException<TDomainEvent>();
             }
+
+            var method = GetType().GetMethod("When", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+
+            if (method is null)
+            {
+                throw new NotImplementedWhenMethodException<TDomainEvent>();
+            }
+
+            method.Invoke(this, new object[] { domainEvent });
 
             var domainEventContext = new DomainEventContext()
             {

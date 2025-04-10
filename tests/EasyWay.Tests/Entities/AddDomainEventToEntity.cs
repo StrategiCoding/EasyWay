@@ -1,4 +1,4 @@
-﻿using EasyWay.Internals.DomainEvents;
+﻿using EasyWay.Internals.Entities;
 using EasyWay.Tests.Entities.SeedWorks;
 
 namespace EasyWay.Tests.Entities
