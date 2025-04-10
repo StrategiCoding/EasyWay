@@ -1,6 +1,6 @@
 ﻿namespace EasyWay.Internals.DomainEvents
 {
-    internal interface IDomainEventsContext
+    internal interface IDomainEventsAccessor
     {
         IReadOnlyCollection<DomainEventContext> GetAllDomainEvents();
 

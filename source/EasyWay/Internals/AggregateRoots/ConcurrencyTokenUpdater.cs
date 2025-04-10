@@ -1,18 +1,19 @@
-﻿namespace EasyWay.Internals.AggregateRoots
+﻿using EasyWay.Internals.DomainEvents;
+
+namespace EasyWay.Internals.AggregateRoots
 {
     internal sealed class ConcurrencyTokenUpdater
     {
-        private readonly IAggregateRootsContext _aggragateRootsContext;
+        private readonly IEntitiesContext _context;
 
-        public ConcurrencyTokenUpdater(
-            IAggregateRootsContext aggragateRootsContext)
+        public ConcurrencyTokenUpdater(IEntitiesContext context)
         {
-            _aggragateRootsContext = aggragateRootsContext;
+            _context = context;
         }
 
         public void Update()
         {
-            var aggragateRoots = _aggragateRootsContext.GetAggregateRoots();
+            var aggragateRoots = _context.GetAggregateRoots();
 
             foreach (var aggragateRoot in aggragateRoots)
             {

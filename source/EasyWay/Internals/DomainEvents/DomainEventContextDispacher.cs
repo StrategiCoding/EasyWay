@@ -4,11 +4,11 @@
     {
         private readonly IDomainEventBulkPublisher _publisher;
 
-        private readonly IDomainEventsContext _context;
+        private readonly IDomainEventsAccessor _context;
 
         public DomainEventContextDispacher(
             IDomainEventBulkPublisher publisher,
-            IDomainEventsContext context) 
+            IDomainEventsAccessor context) 
         {
             _publisher = publisher;
             _context = context;

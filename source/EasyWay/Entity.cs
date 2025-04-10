@@ -37,8 +37,7 @@ namespace EasyWay
             var domainEventContext = new DomainEventContext()
             {
                 EventId = GuidGenerator.New,
-                AggragetRootId = Id, // TODO what when we have object graph
-                EntityId = Id,
+                Entity = this,
                 OccurrenceOnUtc = InternalClock.UtcNow,
                 DomainEvent = domainEvent,
             };
